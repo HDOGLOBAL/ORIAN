@@ -1,0 +1,25 @@
+{
+  "name": "HDO Trade - Tested Spare Parts Worldwide",
+  "short_name": "HDO Trade",
+  "description": "Tested, high-quality spare parts for commercial kitchen equipment with fast global shipping.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#fd3d57",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/client/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/client/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "business"]
+}
