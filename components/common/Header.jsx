@@ -160,6 +160,27 @@ export default function Header() {
         </div>
       </header>
 
+      {/* Mobile search bar — always visible below header on small screens */}
+      <div className="lg:hidden px-3 pb-3 bg-white">
+        <div className="flex w-full">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyPress={handleKeyPress}
+            className="flex-1 min-w-0 h-11 pl-4 pr-2 border border-gray-300 rounded-l-xl text-sm text-black focus:outline-none focus:ring-0 focus:border-gray-300"
+            style={{ borderRight: "none" }}
+          />
+          <button
+            onClick={handleSearch}
+            className="shrink-0 px-4 h-11 bg-[#e91325] text-white rounded-r-xl text-sm font-semibold hover:bg-[#e02d47] transition-colors border border-[#e91325]"
+          >
+            {getText("search")}
+          </button>
+        </div>
+      </div>
+
       {/* Mobile slide-out menu */}
       <div
         className={`lg:hidden fixed top-0 left-0 h-full w-full bg-white text-gray-800 z-50 flex flex-col items-center transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0 pointer-events-none"}`}
