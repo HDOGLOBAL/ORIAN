@@ -570,7 +570,13 @@ const handleChatOpen = () => {
       <div className="my-16 flex items-center gap-1">
         <p className="text-[16px]">{getText("home")}</p>
         <MdKeyboardArrowRight className="text-xl" />
-        <p className="text-[16px] text-gray-600">{getText("manufacturer")}</p>
+        <p className="text-[16px] text-gray-600">
+          {product?.manufacturerIds?.length > 0
+            ? product.manufacturerIds.map((m) => (typeof m === "object" ? m.name : null)).filter(Boolean).join(", ")
+            : typeof product?.manufacturerId === "object"
+            ? product.manufacturerId?.name
+            : getText("manufacturer")}
+        </p>
         <MdKeyboardArrowRight className="text-xl" />
         <p
           className="text-[14px] md:text-[16px] font-bold"
@@ -620,6 +626,23 @@ const handleChatOpen = () => {
                 </span>
               )}
             </p>
+
+            {/* Manufacturer */}
+            {(product?.manufacturerIds?.length > 0 || product?.manufacturerId) && (
+              <p className="flex items-center gap-2 mt-2 text-gray-700">
+                <span className="font-semibold">{getText("manufacturer")}:</span>
+                <span>
+                  {product?.manufacturerIds?.length > 0
+                    ? product.manufacturerIds
+                        .map((m) => (typeof m === "object" ? m.name : null))
+                        .filter(Boolean)
+                        .join(", ")
+                    : typeof product?.manufacturerId === "object"
+                    ? product.manufacturerId?.name
+                    : null}
+                </span>
+              </p>
+            )}
 
             {/* Price */}
             <p className="font-bold text-2xl mb-4" suppressHydrationWarning>
