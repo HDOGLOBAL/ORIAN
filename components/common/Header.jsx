@@ -141,8 +141,8 @@ export default function Header() {
               </div>
             </div>
 
-            {/* Cart only - flags removed from here, now in top bar */}
             <div className="flex items-center gap-3" dir="ltr">
+              <LanguageSwitcher />
               <Link href="/add-card" className="flex items-center gap-2 text-gray-800 hover:text-[#fd3d57] transition-colors relative">
                 <CartIcon />
                 <div className="block">
