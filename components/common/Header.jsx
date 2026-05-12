@@ -84,7 +84,7 @@ export default function Header() {
   return (
     <div className="bg-white">
       <header className="bg-white">
-        <div className="max-w-7xl mx-auto px-8 sm:px-12 lg:px-16 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className={`flex items-center justify-between h-16 py-2 ${isRtl ? "flex-row-reverse lg:flex-row-reverse" : "flex-row-reverse lg:flex-row"}`}>
 
             <button
@@ -107,15 +107,15 @@ export default function Header() {
               />
             </Link>
 
-            <nav className={`hidden lg:flex items-center gap-6 ${isRtl ? "text-right" : ""}`}>
-              <Link href="/" className={`text-gray-500 hover:text-[#fd3d57] hover:underline transition-colors duration-200 font-medium ${isActiveLink("/") ? "text-[#fd3d57]" : ""}`} style={{ fontSize: "18px", fontFamily: "Lato, sans-serif" }}>{getText("home")}</Link>
-              <Link href="/shop" className={`text-gray-500 hover:text-[#fd3d57] hover:underline transition-colors duration-200 font-medium ${isActiveLink("/shop") ? "text-[#fd3d57]" : ""}`} style={{ fontSize: "18px", fontFamily: "Lato, sans-serif" }}>{getText("store")}</Link>
-              <Link href="/about" className={`text-gray-500 hover:text-[#fd3d57] hover:underline transition-colors duration-200 font-medium ${isActiveLink("/about") ? "text-[#fd3d57]" : ""}`} style={{ fontSize: "18px", fontFamily: "Lato, sans-serif" }}>{getText("aboutUs")}</Link>
-              <Link href="/contact" className={`text-gray-500 hover:text-[#fd3d57] hover:underline transition-colors duration-200 font-medium ${isActiveLink("/contact") ? "text-[#fd3d57]" : ""}`} style={{ fontSize: "18px", fontFamily: "Lato, sans-serif" }}>{getText("contactUs")}</Link>
+            <nav className={`hidden lg:flex items-center gap-3 ${isRtl ? "text-right" : ""}`}>
+              <Link href="/" className={`text-gray-500 hover:text-[#fd3d57] hover:underline transition-colors duration-200 font-medium whitespace-nowrap ${isActiveLink("/") ? "text-[#fd3d57]" : ""}`} style={{ fontSize: "15px", fontFamily: "Lato, sans-serif" }}>{getText("home")}</Link>
+              <Link href="/shop" className={`text-gray-500 hover:text-[#fd3d57] hover:underline transition-colors duration-200 font-medium whitespace-nowrap ${isActiveLink("/shop") ? "text-[#fd3d57]" : ""}`} style={{ fontSize: "15px", fontFamily: "Lato, sans-serif" }}>{getText("store")}</Link>
+              <Link href="/about" className={`text-gray-500 hover:text-[#fd3d57] hover:underline transition-colors duration-200 font-medium whitespace-nowrap ${isActiveLink("/about") ? "text-[#fd3d57]" : ""}`} style={{ fontSize: "15px", fontFamily: "Lato, sans-serif" }}>{getText("aboutUs")}</Link>
+              <Link href="/contact" className={`text-gray-500 hover:text-[#fd3d57] hover:underline transition-colors duration-200 font-medium whitespace-nowrap ${isActiveLink("/contact") ? "text-[#fd3d57]" : ""}`} style={{ fontSize: "15px", fontFamily: "Lato, sans-serif" }}>{getText("contactUs")}</Link>
             </nav>
 
             <div className="hidden lg:flex items-center">
-              <div className="flex h-16 w-[400px]" dir="ltr">
+              <div className="flex h-16 w-[280px]" dir="ltr">
                 <input
                   type="text"
                   placeholder={isRtl ? "חיפוש..." : "Search..."}
