@@ -1,4 +1,7 @@
+// Supported UI languages — "he" falls back to "en", "it" is supported
 export function getUiLanguage(lang) {
-  return lang === "he" ? "en" : lang;
+  const supported = ["en", "pt", "fr", "es", "de", "it"];
+  if (lang === "he") return "en";
+  return supported.includes(lang) ? lang : "en";
 }
  

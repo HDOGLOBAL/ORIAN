@@ -34,14 +34,25 @@ const productSchema = new mongoose.Schema(
       maxlength: [100, "Hebrew name cannot exceed 100 characters"],
     },
     nameDe: {
-       type: String,
-       required: false,
-       trim: true,
+      type: String,
+      required: false,
+      trim: true,
       maxlength: [100, "German name cannot exceed 100 characters"],
-},
+    },
+    nameIt: {
+      type: String,
+      required: false,
+      trim: true,
+      maxlength: [100, "Italian name cannot exceed 100 characters"],
+    },
     image: {
       type: String,
       required: false,
+    },
+    images: {
+      type: [String],
+      required: false,
+      default: [],
     },
     price: {
       usd: {
@@ -116,6 +127,11 @@ const productSchema = new mongoose.Schema(
       required: false,
       index: true,
     },
+    manufacturerIds: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "manufacturers" }],
+      required: false,
+      default: [],
+    },
     categoryId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "categories",
@@ -150,9 +166,13 @@ const productSchema = new mongoose.Schema(
       required: false,
     },
     descriptionDe: {
-  type: String,
-  required: false,
-},
+      type: String,
+      required: false,
+    },
+    descriptionIt: {
+      type: String,
+      required: false,
+    },
     discountCodes: [
       {
         code: {

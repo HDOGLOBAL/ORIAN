@@ -293,6 +293,15 @@ const [currentDomain, setCurrentDomain] = useState("");
       domainMatch: ".fr",
     },
     {
+      // IT → Italian + EUR
+      code: "it",
+      countryCode: "IT",
+      language: "Italiano — € EUR",
+      title: "IT",
+      link: "https://hdotrade.it/",
+      domainMatch: ".it",
+    },
+    {
       // EU → English + EUR
       code: "eu",
       countryCode: "EU",

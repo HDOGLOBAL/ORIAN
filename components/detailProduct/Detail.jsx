@@ -153,7 +153,7 @@ export default function Detail({ product, userId, lan, currency, rates = { usd: 
   return (
     <>
       <div className="container grid grid-cols-2 gap-6">
-        <DetailGallery images={product?.image} />
+        <DetailGallery images={product?.images?.length > 0 ? product.images : (product?.image ? [product.image] : [])} />
         <div>
           <h2 className="text-3xl font-medium uppercase mb-2">
             {product?.name}
@@ -186,6 +186,16 @@ export default function Detail({ product, userId, lan, currency, rates = { usd: 
               </span>
               <span className="text-gray-600">{product?.brand}</span>
             </p>
+            {(product?.manufacturerIds?.length > 0 || product?.manufacturerId) && (
+              <p className="space-x-2">
+                <span className="text-gray-800 font-semibold">Manufacturer: </span>
+                <span className="text-gray-600">
+                  {product?.manufacturerIds?.length > 0
+                    ? product.manufacturerIds.map((m) => (typeof m === "object" ? m.name : null)).filter(Boolean).join(", ")
+                    : (typeof product?.manufacturerId === "object" ? product.manufacturerId?.name : null)}
+                </span>
+              </p>
+            )}
             <p className="space-x-2">
               <span className="text-gray-800 font-semibold">
                 {lan?.category}:{" "}

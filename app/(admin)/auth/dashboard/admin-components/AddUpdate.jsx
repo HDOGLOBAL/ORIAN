@@ -1025,6 +1025,7 @@ export default function AddUpdate({ updateId = false }) {
     nameEs: "",
     nameHe: "",
     nameDe: "",
+    nameIt: "",
     image: "",
     priceUSD: "",
     priceEUR: "",
@@ -1035,6 +1036,7 @@ export default function AddUpdate({ updateId = false }) {
     reviewsNumber: "",
     ratings: "",
     manufacturerId: "",
+    manufacturerIds: [],
     categoryId: "",
     subcategoryId: "",
     description: "",
@@ -1043,6 +1045,7 @@ export default function AddUpdate({ updateId = false }) {
     descriptionEs: "",
     descriptionHe: "",
     descriptionDe: "",
+    descriptionIt: "",
     sizes: [],
     colors: [],
     quantity: "",
@@ -1057,8 +1060,7 @@ export default function AddUpdate({ updateId = false }) {
     shippingSp: "",
     discountCodes: [],
   });
-  const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState("");
+  const [imagePreviews, setImagePreviews] = useState([]);
   const [manufacturers, setManufacturers] = useState([]);
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
@@ -1094,6 +1096,28 @@ export default function AddUpdate({ updateId = false }) {
     if (!value) return "";
     if (typeof value === "string") return value;
     return value.id || value._id?.toString() || "";
+  };
+
+  const handleManufacturerToggle = (id) => {
+    setForm((prev) => {
+      const already = prev.manufacturerIds.includes(id);
+      const next = already
+        ? prev.manufacturerIds.filter((mid) => mid !== id)
+        : [...prev.manufacturerIds, id];
+      // Update single manufacturerId (first selected) and reset category cascade
+      const primary = next[0] || "";
+      const categoryId = primary !== prev.manufacturerIds[0] ? "" : prev.categoryId;
+      const subcategoryId = primary !== prev.manufacturerIds[0] ? "" : prev.subcategoryId;
+      if (primary !== prev.manufacturerIds[0]) {
+        setSubcategories([]);
+        if (primary) {
+          fetchCategoriesByManufacturer(primary);
+        } else {
+          setCategories([]);
+        }
+      }
+      return { ...prev, manufacturerIds: next, manufacturerId: primary, categoryId, subcategoryId };
+    });
   };
 
   const handleChange = (e) => {
@@ -1222,6 +1246,7 @@ export default function AddUpdate({ updateId = false }) {
             nameEs: product.nameEs || "",
             nameHe: product.nameHe || "",
             nameDe: product.nameDe || "",
+            nameIt: product.nameIt || "",
             image: product.image || "",
             priceUSD: product.price?.usd?.toString() || "",
             priceEUR: product.price?.eur?.toString() || "",
@@ -1232,6 +1257,12 @@ export default function AddUpdate({ updateId = false }) {
             reviewsNumber: product.reviewsNumber?.toString() || "0",
             ratings: product.ratings?.toString() || "0",
             manufacturerId: getEntityId(product.manufacturerId),
+            manufacturerIds: (() => {
+              const ids = product.manufacturerIds?.length > 0
+                ? product.manufacturerIds.map(getEntityId)
+                : (product.manufacturerId ? [getEntityId(product.manufacturerId)] : []);
+              return ids.filter(Boolean);
+            })(),
             categoryId: getEntityId(product.categoryId),
             subcategoryId: getEntityId(product.subcategoryId),
             description: product.description || "",
@@ -1240,6 +1271,7 @@ export default function AddUpdate({ updateId = false }) {
             descriptionEs: product.descriptionEs || "",
             descriptionHe: product.descriptionHe || "",
             descriptionDe: product.descriptionDe || "",
+            descriptionIt: product.descriptionIt || "",
             sizes: product.sizes || [],
             colors: product.colors || [],
             quantity: product.quantity?.toString() || "0",
@@ -1261,9 +1293,11 @@ export default function AddUpdate({ updateId = false }) {
           if (product.categoryId) {
             fetchSubcategoriesByCategory(getEntityId(product.categoryId));
           }
-          if (product.image) {
-            setImagePreview(product.image);
-          }
+          // Load existing images into previews
+          const existingImages = product.images?.length > 0
+            ? product.images
+            : product.image ? [product.image] : [];
+          setImagePreviews(existingImages.map((url) => ({ url, file: null })));
         } catch (err) {
           console.error(err);
           toast.error("Failed to load product data");
@@ -1289,21 +1323,28 @@ export default function AddUpdate({ updateId = false }) {
   // No need to load all categories independently
 
   const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    if (file.size > MAX_IMAGE_SIZE_MB * 1024 * 1024) {
-      alert(`Image size exceeds ${MAX_IMAGE_SIZE_MB}MB limit`);
-      return;
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+    const oversized = files.filter((f) => f.size > MAX_IMAGE_SIZE_MB * 1024 * 1024);
+    if (oversized.length > 0) {
+      alert(`${oversized.length} file(s) exceed the ${MAX_IMAGE_SIZE_MB}MB limit and were skipped.`);
     }
-    const previewUrl = URL.createObjectURL(file);
-    setImageFile(file);
-    setImagePreview(previewUrl);
+    const valid = files.filter((f) => f.size <= MAX_IMAGE_SIZE_MB * 1024 * 1024);
+    const newPreviews = valid.map((file) => ({
+      url: URL.createObjectURL(file),
+      file,
+    }));
+    setImagePreviews((prev) => [...prev, ...newPreviews]);
+    // Reset input so same files can be re-selected
+    e.target.value = "";
   };
 
-  const handleRemoveImage = () => {
-    setImageFile(null);
-    setImagePreview("");
-    setForm((prev) => ({ ...prev, image: "" }));
+  const handleRemoveImage = (index) => {
+    setImagePreviews((prev) => {
+      const updated = [...prev];
+      updated.splice(index, 1);
+      return updated;
+    });
   };
 
   const uploadImageToImgBB = async (imageFile) => {
@@ -1337,37 +1378,42 @@ export default function AddUpdate({ updateId = false }) {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      let imageUrl = form.image;
-      if (imageFile) {
-        console.log(imageFile);
+      // Upload any new file-based images to ImgBB
+      const uploadedUrls = await Promise.all(
+        imagePreviews.map(async ({ url, file }) => {
+          if (file) return await uploadImageToImgBB(file);
+          return url; // already a remote URL
+        })
+      );
 
-        imageUrl = await uploadImageToImgBB(imageFile);
-      }
+      const primaryImage = uploadedUrls[0] || form.image || "";
       const eurPrice = form.priceEUR?.toString().trim() || "";
       const eurDiscount = form.discountEUR?.toString().trim() || "";
-      const gbpPrice = convertedGBP || form.priceGBP?.toString().trim() || "";       // ✅ GBP
-      const gbpDiscount = convertedDiscountGBP || form.discountGBP?.toString().trim() || ""; // ✅ GBP
+      const gbpPrice = convertedGBP || form.priceGBP?.toString().trim() || "";
+      const gbpDiscount = convertedDiscountGBP || form.discountGBP?.toString().trim() || "";
       const productData = {
         ...form,
         priceUSD: convertedUSD || eurPrice || form.priceUSD,
         priceEUR: eurPrice || form.priceEUR,
-        priceGBP: gbpPrice || form.priceGBP,           // ✅ GBP
+        priceGBP: gbpPrice || form.priceGBP,
         discountUSD: convertedDiscountUSD || eurDiscount || form.discountUSD,
         discountEUR: eurDiscount || form.discountEUR,
-        discountGBP: gbpDiscount || form.discountGBP,  // ✅ GBP
-        manufacturerId: getEntityId(form.manufacturerId),
+        discountGBP: gbpDiscount || form.discountGBP,
+        manufacturerId: form.manufacturerIds.length > 0 ? form.manufacturerIds[0] : getEntityId(form.manufacturerId),
+        manufacturerIds: form.manufacturerIds,
         categoryId: getEntityId(form.categoryId),
         subcategoryId: getEntityId(form.subcategoryId),
-        image: imageUrl,
+        image: primaryImage,
+        images: uploadedUrls,
         price: {
           usd: convertedUSD ? parseFloat(convertedUSD) : (eurPrice ? parseFloat(eurPrice) : undefined),
           eur: eurPrice ? parseFloat(eurPrice) : undefined,
-          gbp: gbpPrice ? parseFloat(gbpPrice) : undefined, // ✅ GBP
+          gbp: gbpPrice ? parseFloat(gbpPrice) : undefined,
         },
         discountPrice: {
           usd: convertedDiscountUSD ? parseFloat(convertedDiscountUSD) : (eurDiscount ? parseFloat(eurDiscount) : undefined),
           eur: eurDiscount ? parseFloat(eurDiscount) : undefined,
-          gbp: gbpDiscount ? parseFloat(gbpDiscount) : undefined, // ✅ GBP
+          gbp: gbpDiscount ? parseFloat(gbpDiscount) : undefined,
         },
         isActive: form.visibility === "public",
         quantity: parseInt(form.quantity),
@@ -1411,6 +1457,7 @@ export default function AddUpdate({ updateId = false }) {
             nameEs: "",
             nameHe: "",
     nameDe: "",
+            nameIt: "",
             image: "",
             priceUSD: "",
             priceEUR: "",
@@ -1421,6 +1468,7 @@ export default function AddUpdate({ updateId = false }) {
             reviewsNumber: "0",
             ratings: "0",
             manufacturerId: "",
+            manufacturerIds: [],
             categoryId: "",
             subcategoryId: "",
             description: "",
@@ -1429,6 +1477,7 @@ export default function AddUpdate({ updateId = false }) {
             descriptionEs: "",
             descriptionHe: "",
     descriptionDe: "",
+            descriptionIt: "",
             sizes: [],
             colors: [],
             quantity: "0",
@@ -1443,8 +1492,8 @@ export default function AddUpdate({ updateId = false }) {
             shippingSp: "",
             discountCodes: [],
           });
-          setImageFile(null);
-          setImagePreview("");
+          setForm((prev) => ({ ...prev, image: "", images: [] }));
+          setImagePreviews([]);
           setSubcategories([]);
         }
       } else {
@@ -1540,35 +1589,53 @@ export default function AddUpdate({ updateId = false }) {
               className="w-full border p-2 rounded"
             />
           </div>
+          <div>
+            <Label>Name (Italian / Italiano)</Label>
+            <input
+              type="text"
+              name="nameIt"
+              value={form.nameIt || ""}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+            />
+          </div>
         </div>
 
-        {/* Image field */}
+        {/* Multi-image upload */}
         <div>
-          <Label required>Image</Label>
+          <Label>Product Images (up to 10, first = main image)</Label>
           <input
             type="file"
             accept="image/*"
+            multiple
             onChange={handleImageUpload}
             className="w-full border p-2 rounded"
           />
-          {imagePreview && (
-            <div className="mt-4">
-              <div className="relative w-48 h-48">
-                <Image
-                  src={imagePreview}
-                  alt="Preview"
-                  className="w-full h-full object-cover rounded border"
-                  width={100}
-                  height={100}
-                />
-                <button
-                  type="button"
-                  onClick={handleRemoveImage}
-                  className="absolute top-0 right-0 bg-red-600 text-white text-xs px-2 py-1 rounded"
-                >
-                  Remove
-                </button>
-              </div>
+          <p className="text-xs text-gray-400 mt-1">Max {MAX_IMAGE_SIZE_MB}MB per image · first image is the main thumbnail</p>
+          {imagePreviews.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-3">
+              {imagePreviews.map((item, idx) => (
+                <div key={idx} className="relative w-32 h-32 flex-shrink-0">
+                  <Image
+                    src={item.url}
+                    alt={`Product image ${idx + 1}`}
+                    className="w-full h-full object-cover rounded border"
+                    width={128}
+                    height={128}
+                    unoptimized
+                  />
+                  {idx === 0 && (
+                    <span className="absolute bottom-0 left-0 bg-blue-600 text-white text-xs px-1 rounded-br">Main</span>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveImage(idx)}
+                    className="absolute top-0 right-0 bg-red-600 text-white text-xs px-2 py-1 rounded"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
             </div>
           )}
         </div>
@@ -1707,25 +1774,37 @@ export default function AddUpdate({ updateId = false }) {
             <Label>Description (German / Deutsch)</Label>
             <JoditRich setForm={setForm} form={form} field="descriptionDe" />
           </div>
+          <div>
+            <Label>Description (Italian / Italiano)</Label>
+            <JoditRich setForm={setForm} form={form} field="descriptionIt" />
+          </div>
         </div>
 
         {/* Category and manufacturer fields */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <Label>Manufacturer</Label>
-            <select
-              name="manufacturerId"
-              value={form.manufacturerId}
-              onChange={handleChange}
-              className="w-full border p-2 rounded"
-            >
-              <option value="">Select manufacturer</option>
+            <Label>Manufacturer (select one or more)</Label>
+            <div className="w-full border rounded p-2 max-h-40 overflow-y-auto bg-white">
+              {manufacturers.length === 0 && (
+                <p className="text-sm text-gray-400">No manufacturers available</p>
+              )}
               {manufacturers.map((manu) => (
-                <option key={manu.id} value={manu.id}>
-                  {manu.name}
-                </option>
+                <label key={manu.id} className="flex items-center gap-2 py-0.5 cursor-pointer hover:bg-gray-50">
+                  <input
+                    type="checkbox"
+                    checked={form.manufacturerIds.includes(manu.id)}
+                    onChange={() => handleManufacturerToggle(manu.id)}
+                    className="accent-blue-600"
+                  />
+                  <span className="text-sm">{manu.name}</span>
+                </label>
               ))}
-            </select>
+            </div>
+            {form.manufacturerIds.length > 0 && (
+              <p className="text-xs text-gray-500 mt-1">
+                {form.manufacturerIds.length} selected — categories load for first selected
+              </p>
+            )}
           </div>
           <div>
             <Label>Category</Label>

@@ -19,6 +19,8 @@ export function useDomain() {
         setLang("pt"); // Portuguese
       } else if (hostname.includes(".eu")) {
         setLang("en"); // EU → English + EUR
+      } else if (hostname.includes(".it")) {
+        setLang("it"); // Italian
       } else if (hostname.includes(".co.il") || hostname.includes(".il")) {
         setLang("he"); // Hebrew
       } else {

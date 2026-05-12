@@ -628,6 +628,7 @@ export async function searchProducts(query) {
   const products = await productModel
     .find({ name: { $regex: regexName } })
     .populate('manufacturerId', 'name')
+    .populate('manufacturerIds', 'name')
     .populate('categoryId', 'name slug')
     .populate('subcategoryId', 'name')
     .lean();
@@ -639,6 +640,7 @@ export async function searchProducts(query) {
       _id: product.manufacturerId._id.toString(),
       name: product.manufacturerId.name
     } : null,
+    manufacturerIds: Array.isArray(product.manufacturerIds) ? product.manufacturerIds.map(m => m && m._id ? { _id: m._id.toString(), name: m.name } : null).filter(Boolean) : [],
     categoryId: product.categoryId ? {
       _id: product.categoryId._id.toString(),
       name: product.categoryId.name,
@@ -825,6 +827,7 @@ export async function getProducts(filters = {}) {
       productModel
         .find(query)
         .populate('manufacturerId', 'name')
+    .populate('manufacturerIds', 'name')
         .populate('categoryId', 'name slug')
         .populate('subcategoryId', 'name')
         .skip(skip)
@@ -846,6 +849,7 @@ export async function getProducts(filters = {}) {
         _id: product.manufacturerId._id.toString(),
         name: product.manufacturerId.name
       } : null,
+      manufacturerIds: Array.isArray(product.manufacturerIds) ? product.manufacturerIds.map(m => m && m._id ? { _id: m._id.toString(), name: m.name } : null).filter(Boolean) : [],
       categoryId: product.categoryId ? {
         _id: product.categoryId._id.toString(),
         name: product.categoryId.name,
@@ -1015,6 +1019,7 @@ export async function getProductById(productId) {
   const product = await productModel
     .findById(productId)
     .populate('manufacturerId', 'name')
+    .populate('manufacturerIds', 'name')
     .populate('categoryId', 'name slug')
     .populate('subcategoryId', 'name')
     .lean();
@@ -1028,6 +1033,7 @@ export async function getProductById(productId) {
       _id: product.manufacturerId._id.toString(),
       name: product.manufacturerId.name
     } : null,
+    manufacturerIds: Array.isArray(product.manufacturerIds) ? product.manufacturerIds.map(m => m && m._id ? { _id: m._id.toString(), name: m.name } : null).filter(Boolean) : [],
     categoryId: product.categoryId ? {
       _id: product.categoryId._id.toString(),
       name: product.categoryId.name,
@@ -1070,6 +1076,7 @@ export async function getProductByCategory(categoryId) {
     const products = await productModel
       .find({ categoryId: categoryId, isActive: true }) // Changed to categoryId to match schema
       .populate('manufacturerId', 'name')
+    .populate('manufacturerIds', 'name')
       .populate('categoryId', 'name slug')
       .populate('subcategoryId', 'name')
       .select(
@@ -1090,6 +1097,7 @@ export async function getProductByCategory(categoryId) {
         _id: product.manufacturerId._id.toString(),
         name: product.manufacturerId.name
       } : null,
+      manufacturerIds: Array.isArray(product.manufacturerIds) ? product.manufacturerIds.map(m => m && m._id ? { _id: m._id.toString(), name: m.name } : null).filter(Boolean) : [],
       categoryId: product.categoryId ? {
         _id: product.categoryId._id.toString(),
         name: product.categoryId.name,
@@ -1115,6 +1123,7 @@ export async function getNewArivalProduct() {
   const newArivalProduct = await productModel
     .find()
     .populate('manufacturerId', 'name')
+    .populate('manufacturerIds', 'name')
     .populate('categoryId', 'name slug')
     .populate('subcategoryId', 'name')
     .sort({ published: -1 })
@@ -1127,6 +1136,7 @@ export async function getNewArivalProduct() {
       _id: product.manufacturerId._id.toString(),
       name: product.manufacturerId.name
     } : null,
+    manufacturerIds: Array.isArray(product.manufacturerIds) ? product.manufacturerIds.map(m => m && m._id ? { _id: m._id.toString(), name: m.name } : null).filter(Boolean) : [],
     categoryId: product.categoryId ? {
       _id: product.categoryId._id.toString(),
       name: product.categoryId.name,
@@ -1146,6 +1156,7 @@ export async function getTrendingProduct() {
   const trendingProduct = await productModel
     .find({ ratings: { $gte: 4.8, $lte: 5 } })
     .populate('manufacturerId', 'name')
+    .populate('manufacturerIds', 'name')
     .populate('categoryId', 'name slug')
     .populate('subcategoryId', 'name')
     .sort({ published: -1 })
@@ -1158,6 +1169,7 @@ export async function getTrendingProduct() {
       _id: product.manufacturerId._id.toString(),
       name: product.manufacturerId.name
     } : null,
+    manufacturerIds: Array.isArray(product.manufacturerIds) ? product.manufacturerIds.map(m => m && m._id ? { _id: m._id.toString(), name: m.name } : null).filter(Boolean) : [],
     categoryId: product.categoryId ? {
       _id: product.categoryId._id.toString(),
       name: product.categoryId.name,
@@ -1850,6 +1862,7 @@ export async function createProduct(data) {
 
     const priceEur = parseProductPriceNumber(data.priceEUR);
     const priceUsdInput = parseProductPriceNumber(data.priceUSD);
+    const priceGbpInput = parseProductPriceNumber(data.priceGBP ?? data.price?.gbp);
     const priceMain = Number.isFinite(priceEur) ? priceEur : priceUsdInput;
     if (!Number.isFinite(priceMain)) {
       return {
@@ -1863,8 +1876,10 @@ export async function createProduct(data) {
     const numericFields = [
       "priceUSD",
       "priceEUR",
+      "priceGBP",
       "discountUSD",
       "discountEUR",
+      "discountGBP",
       "quantity",
       "minStock"
     ];
@@ -1881,6 +1896,7 @@ export async function createProduct(data) {
 
     const discEur = parseProductPriceNumber(data.discountEUR);
     const discUsdInput = parseProductPriceNumber(data.discountUSD);
+    const discGbpInput = parseProductPriceNumber(data.discountGBP ?? data.discountPrice?.gbp);
     const hasDiscount =
       Number.isFinite(discEur) || Number.isFinite(discUsdInput);
     const discMain = Number.isFinite(discEur) ? discEur : discUsdInput;
@@ -1892,21 +1908,27 @@ export async function createProduct(data) {
       nameFr: productStrTrim(data.nameFr),
       nameEs: productStrTrim(data.nameEs),
       nameHe: productStrTrim(data.nameHe),
+      nameDe: productStrTrim(data.nameDe),
+      nameIt: productStrTrim(data.nameIt),
       image: data.image,
+      images: Array.isArray(data.images) ? data.images.filter(Boolean) : (data.image ? [data.image] : []),
       price: {
         usd: priceMain,
         eur: priceMain,
+        ...(Number.isFinite(priceGbpInput) && { gbp: priceGbpInput }),
       },
       discountPrice:
         hasDiscount && Number.isFinite(discMain)
           ? {
               usd: discMain,
               eur: discMain,
+              ...(Number.isFinite(discGbpInput) && { gbp: discGbpInput }),
             }
           : undefined,
       reviewsNumber: data.reviewsNumber ? parseInt(data.reviewsNumber) : 0,
       ratings: data.ratings ? parseFloat(data.ratings) : undefined,
-      manufacturerId: data.manufacturerId || undefined,
+      manufacturerId: data.manufacturerId || (Array.isArray(data.manufacturerIds) && data.manufacturerIds[0]) || undefined,
+      manufacturerIds: Array.isArray(data.manufacturerIds) ? data.manufacturerIds.filter(Boolean) : (data.manufacturerId ? [data.manufacturerId] : []),
       categoryId: data.categoryId || undefined,
       subcategoryId: data.subcategoryId || undefined,
       description: productStrTrim(data.description),
@@ -1914,6 +1936,8 @@ export async function createProduct(data) {
       descriptionFr: productStrTrim(data.descriptionFr),
       descriptionEs: productStrTrim(data.descriptionEs),
       descriptionHe: productStrTrim(data.descriptionHe),
+      descriptionDe: productStrTrim(data.descriptionDe),
+      descriptionIt: productStrTrim(data.descriptionIt),
       isActive: data?.visibility === "public" ? true : false,
       quantity: parseInt(data.quantity),
       minStock: parseInt(data.minStock),
@@ -2037,6 +2061,7 @@ export async function updateProduct(productId, data) {
 
     const priceEur = parseProductPriceNumber(data.priceEUR);
     const priceUsdInput = parseProductPriceNumber(data.priceUSD);
+    const priceGbpInput = parseProductPriceNumber(data.priceGBP ?? data.price?.gbp);
     const priceMain = Number.isFinite(priceEur) ? priceEur : priceUsdInput;
     if (!Number.isFinite(priceMain)) {
       return {
@@ -2050,8 +2075,10 @@ export async function updateProduct(productId, data) {
     const numericFields = [
       "priceUSD",
       "priceEUR",
+      "priceGBP",
       "discountUSD",
       "discountEUR",
+      "discountGBP",
       "reviewsNumber",
       "ratings",
       "quantity",
@@ -2071,6 +2098,7 @@ export async function updateProduct(productId, data) {
 
     const discEur = parseProductPriceNumber(data.discountEUR);
     const discUsdInput = parseProductPriceNumber(data.discountUSD);
+    const discGbpInput = parseProductPriceNumber(data.discountGBP ?? data.discountPrice?.gbp);
     const hasDiscount =
       Number.isFinite(discEur) || Number.isFinite(discUsdInput);
     const discMain = Number.isFinite(discEur) ? discEur : discUsdInput;
@@ -2082,16 +2110,23 @@ export async function updateProduct(productId, data) {
       nameFr: productStrTrim(data.nameFr),
       nameEs: productStrTrim(data.nameEs),
       nameHe: productStrTrim(data.nameHe),
+      nameDe: productStrTrim(data.nameDe),
+      nameIt: productStrTrim(data.nameIt),
       image: data.image || existingProduct.image,
+      images: Array.isArray(data.images) && data.images.length > 0
+        ? data.images.filter(Boolean)
+        : (existingProduct.images?.length > 0 ? existingProduct.images : (existingProduct.image ? [existingProduct.image] : [])),
       price: {
         usd: priceMain,
         eur: priceMain,
+        ...(Number.isFinite(priceGbpInput) && { gbp: priceGbpInput }),
       },
       discountPrice:
         hasDiscount && Number.isFinite(discMain)
           ? {
               usd: discMain,
               eur: discMain,
+              ...(Number.isFinite(discGbpInput) && { gbp: discGbpInput }),
             }
           : undefined,
       reviewsNumber: data.reviewsNumber
@@ -2100,7 +2135,8 @@ export async function updateProduct(productId, data) {
       ratings: data.ratings
         ? parseFloat(data.ratings)
         : existingProduct.ratings,
-      manufacturerId: data.manufacturerId || existingProduct.manufacturerId,
+      manufacturerId: data.manufacturerId || (Array.isArray(data.manufacturerIds) && data.manufacturerIds[0]) || existingProduct.manufacturerId,
+      manufacturerIds: Array.isArray(data.manufacturerIds) && data.manufacturerIds.length > 0 ? data.manufacturerIds.filter(Boolean) : (existingProduct.manufacturerIds?.length > 0 ? existingProduct.manufacturerIds : (existingProduct.manufacturerId ? [existingProduct.manufacturerId] : [])),
       categoryId: data.categoryId || existingProduct.categoryId,
       subcategoryId: data.subcategoryId || existingProduct.subcategoryId,
       description: productStrTrim(data.description),
@@ -2108,6 +2144,8 @@ export async function updateProduct(productId, data) {
       descriptionFr: productStrTrim(data.descriptionFr),
       descriptionEs: productStrTrim(data.descriptionEs),
       descriptionHe: productStrTrim(data.descriptionHe),
+      descriptionDe: productStrTrim(data.descriptionDe),
+      descriptionIt: productStrTrim(data.descriptionIt),
       isActive: data?.visibility === "public" ? true : false,
       quantity: parseInt(data.quantity),
       minStock: parseInt(data.minStock),

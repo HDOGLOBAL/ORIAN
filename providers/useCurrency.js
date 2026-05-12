@@ -13,7 +13,7 @@ function getCurrencyFromDomain() {
   if (h.includes(".co.uk") || (h.includes(".uk") && !h.includes(".co.uk"))) return "pound";
 
   // All EU country domains → always EUR
-  if (h.includes(".de") || h.includes(".fr") || h.includes(".es") || h.includes(".pt") || h.includes(".eu")) return "euro";
+  if (h.includes(".de") || h.includes(".fr") || h.includes(".es") || h.includes(".pt") || h.includes(".eu") || h.includes(".it")) return "euro";
 
   // .com → let cookie decide (USD or EUR toggle)
   return null;
