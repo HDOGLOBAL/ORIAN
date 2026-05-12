@@ -125,7 +125,6 @@ const productSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "manufacturers",
       required: false,
-      index: true,
     },
     manufacturerIds: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: "manufacturers" }],
@@ -136,13 +135,11 @@ const productSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "categories",
       required: false,
-      index: true,
     },
     subcategoryId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "subcategories",
       required: false,
-      index: true,
     },
     description: {
       required: false,
@@ -283,11 +280,9 @@ productSchema.index({
 
 productSchema.index({ "price.usd": 1 });
 productSchema.index({ "price.eur": 1 });
-productSchema.index({ "price.gbp": 1 }); // ✅ GBP index
+productSchema.index({ "price.gbp": 1 });
 productSchema.index({ quantity: 1 });
-productSchema.index({ manufacturerId: 1 });
-productSchema.index({ categoryId: 1 });
-productSchema.index({ subcategoryId: 1 });
+// manufacturerId, categoryId, subcategoryId indexed inline via index:true on the field
 
 // Virtual property
 productSchema.virtual("inStock").get(function () {
