@@ -813,7 +813,22 @@ export async function getProducts(filters = {}) {
     
     // Add manufacturer, category, and subcategory filters to query
     if (hasManufacturer) {
-      query.manufacturerId = manufacturerId;
+      query.$or = query.$or
+        ? [...query.$or]
+        : undefined;
+      // Match products where manufacturerId OR manufacturerIds contains the value
+      const manuFilter = {
+        $or: [
+          { manufacturerId: manufacturerId },
+          { manufacturerIds: manufacturerId },
+        ],
+      };
+      if (query.$or) {
+        query.$and = [{ $or: query.$or }, manuFilter];
+        delete query.$or;
+      } else {
+        Object.assign(query, manuFilter);
+      }
     }
     if (hasCategory) {
       query.categoryId = categoryId;

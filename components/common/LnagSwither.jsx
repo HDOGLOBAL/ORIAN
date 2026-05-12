@@ -247,14 +247,14 @@ const [currentDomain, setCurrentDomain] = useState("");
       domainMatch: ".uk", 
     },
     {
-      // COM → English + USD/EUR toggle
+      // COM → English + USD only
       code: "com",
       countryCode: "US",
-      language: "English (USA / Global)",
-      title: "COM",
+      language: "English (USA) — $ USD",
+      title: "USA",
       link: "https://hdotrade.com/",
       domainMatch: "hdotrade.com",
-      hasCurrencyToggle: true,
+      hasCurrencyToggle: false,
     },
     {
       // PT → Portuguese + EUR
@@ -332,7 +332,7 @@ const [currentDomain, setCurrentDomain] = useState("");
     !currentDomain.includes("hdotrade.com.");
 
   return (
-    <div className="flex items-start gap-3" dir="ltr" suppressHydrationWarning>
+    <div className="flex items-center gap-3" dir="ltr" suppressHydrationWarning>
       {languages.map((langItem) => {
         const active =
           langItem.code === "com"
@@ -397,17 +397,17 @@ const [currentDomain, setCurrentDomain] = useState("");
           <a
             href={langItem.link}
             key={langItem.code}
-            className={`flex w-8 shrink-0 flex-col items-center justify-start text-center leading-none group cursor-pointer transition-all ${
-              active ? "text-blue-900 font-bold" : "text-gray-700"
+            className={`flex shrink-0 flex-col items-center justify-center text-center leading-none cursor-pointer transition-all ${
+              active ? "opacity-100 font-bold" : "opacity-70 hover:opacity-100"
             }`}
             title={langItem.language}
           >
             <ReactCountryFlag
               countryCode={langItem.countryCode}
               svg
-              style={{ width: "2em", height: "1em" }}
+              style={{ width: "1.8em", height: "1.2em" }}
             />
-            <span className="mt-1 text-xs leading-none">{langItem.title}</span>
+            <span className="mt-0.5 text-[10px] leading-none">{langItem.title}</span>
           </a>
         );
       })}

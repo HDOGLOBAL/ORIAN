@@ -1104,19 +1104,28 @@ export default function AddUpdate({ updateId = false }) {
       const next = already
         ? prev.manufacturerIds.filter((mid) => mid !== id)
         : [...prev.manufacturerIds, id];
-      // Update single manufacturerId (first selected) and reset category cascade
       const primary = next[0] || "";
-      const categoryId = primary !== prev.manufacturerIds[0] ? "" : prev.categoryId;
-      const subcategoryId = primary !== prev.manufacturerIds[0] ? "" : prev.subcategoryId;
-      if (primary !== prev.manufacturerIds[0]) {
-        setSubcategories([]);
-        if (primary) {
-          fetchCategoriesByManufacturer(primary);
-        } else {
-          setCategories([]);
-        }
+      // Fetch and merge categories from ALL selected manufacturers
+      setSubcategories([]);
+      setCategories([]);
+      if (next.length > 0) {
+        Promise.all(next.map((mid) => getCategoriesByManufacturer(mid)))
+          .then((results) => {
+            const merged = results.flat();
+            const unique = merged.filter(
+              (cat, idx, arr) => arr.findIndex((c) => c.id === cat.id) === idx
+            );
+            setCategories(unique);
+          })
+          .catch(() => setCategories([]));
       }
-      return { ...prev, manufacturerIds: next, manufacturerId: primary, categoryId, subcategoryId };
+      return {
+        ...prev,
+        manufacturerIds: next,
+        manufacturerId: primary,
+        categoryId: "",
+        subcategoryId: "",
+      };
     });
   };
 
