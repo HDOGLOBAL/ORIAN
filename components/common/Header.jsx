@@ -84,7 +84,7 @@ export default function Header() {
   return (
     <div className="bg-white">
       <header className="bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-8 sm:px-12 lg:px-16 py-8">
           <div className={`flex items-center justify-between h-16 py-2 ${isRtl ? "flex-row-reverse lg:flex-row-reverse" : "flex-row-reverse lg:flex-row"}`}>
 
             <button
