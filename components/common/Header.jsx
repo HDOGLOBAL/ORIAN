@@ -107,7 +107,7 @@ export default function Header() {
               />
             </Link>
 
-            <nav className={`hidden lg:flex items-center gap-3 ${isRtl ? "text-right" : ""}`}>
+            <nav className={`hidden lg:flex items-center gap-5 ${isRtl ? "text-right" : ""}`}>
               <Link href="/" className={`text-gray-500 hover:text-[#fd3d57] hover:underline transition-colors duration-200 font-medium whitespace-nowrap ${isActiveLink("/") ? "text-[#fd3d57]" : ""}`} style={{ fontSize: "15px", fontFamily: "Lato, sans-serif" }}>{getText("home")}</Link>
               <Link href="/shop" className={`text-gray-500 hover:text-[#fd3d57] hover:underline transition-colors duration-200 font-medium whitespace-nowrap ${isActiveLink("/shop") ? "text-[#fd3d57]" : ""}`} style={{ fontSize: "15px", fontFamily: "Lato, sans-serif" }}>{getText("store")}</Link>
               <Link href="/about" className={`text-gray-500 hover:text-[#fd3d57] hover:underline transition-colors duration-200 font-medium whitespace-nowrap ${isActiveLink("/about") ? "text-[#fd3d57]" : ""}`} style={{ fontSize: "15px", fontFamily: "Lato, sans-serif" }}>{getText("aboutUs")}</Link>
@@ -115,7 +115,7 @@ export default function Header() {
             </nav>
 
             <div className="hidden lg:flex items-center">
-              <div className="flex h-16 w-[280px]" dir="ltr">
+              <div className="flex h-16 w-[340px]" dir="ltr">
                 <input
                   type="text"
                   placeholder={isRtl ? "חיפוש..." : "Search..."}
