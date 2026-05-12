@@ -332,7 +332,7 @@ const [currentDomain, setCurrentDomain] = useState("");
     !currentDomain.includes("hdotrade.com.");
 
   return (
-    <div className="flex items-center gap-3" dir="ltr" suppressHydrationWarning>
+    <div className="flex items-center gap-2" dir="ltr" suppressHydrationWarning>
       {languages.map((langItem) => {
         const active =
           langItem.code === "com"
@@ -405,9 +405,9 @@ const [currentDomain, setCurrentDomain] = useState("");
             <ReactCountryFlag
               countryCode={langItem.countryCode}
               svg
-              style={{ width: "1.8em", height: "1.2em" }}
+              style={{ width: "1.5em", height: "1em" }}
             />
-            <span className="mt-0.5 text-[10px] leading-none">{langItem.title}</span>
+            <span className="mt-0.5 text-[9px] leading-none">{langItem.title}</span>
           </a>
         );
       })}
