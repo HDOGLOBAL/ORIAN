@@ -268,6 +268,7 @@ import ChatButton from "../chatbot/ChatButton";
 import { useSupportStatus } from "@/providers/SupportStatusProvider";
 import { convertPrice, formatPrice } from "@/utils/getExchangeRates";
 import { getUiLanguage } from "@/utils/uiLanguage";
+import DetailGallery from "@/components/detailProduct/DetailGallery";
 
 const ProductPage = ({ product, currency, lang: langProp, rates = { usd: 1.08, gbp: 0.86 } }) => {
   const [isClient, setIsClient] = useState(false);
@@ -581,14 +582,16 @@ const handleChatOpen = () => {
 
       {/* Content */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Image */}
-        <div className="border border-gray-600 p-11 rounded-2xl flex justify-center">
-          <Image
-            src={product?.image || placeholder}
-            width={700}
-            height={700}
-            alt={productName || "Product image"}
-            priority
+        {/* Image Gallery */}
+        <div className="border border-gray-600 p-4 rounded-2xl">
+          <DetailGallery
+            images={
+              product?.images?.length > 0
+                ? product.images
+                : product?.image
+                ? [product.image]
+                : []
+            }
           />
         </div>
 
