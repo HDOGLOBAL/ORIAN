@@ -99,11 +99,11 @@ export default function Header() {
               <Image
                 src={logo}
                 alt="HDO Logo"
-                width={150}
-                height={150}
+                width={180}
+                height={180}
                 priority
-                sizes="120px"
-                className="relative z-10 flex items-center justify-center h-[90px] w-[120px] object-contain p-0 m-0"
+                sizes="145px"
+                className="relative z-10 flex items-center justify-center h-[110px] w-[145px] object-contain p-0 m-0"
               />
             </Link>
 

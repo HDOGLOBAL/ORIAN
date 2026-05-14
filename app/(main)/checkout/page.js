@@ -11,8 +11,7 @@ export default async function Checkout() {
 
   if (!trackingId) redirect("/cart");
 
-  const [, rates] = await Promise.all([getCurrency(), getExchangeRates()]);
-  const currency = "euro"; // always show EUR at checkout
+  const [currency, rates] = await Promise.all([getCurrency(), getExchangeRates()]);
 
   let products = [];
   try {
