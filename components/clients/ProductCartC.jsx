@@ -770,13 +770,13 @@ const handleChatOpen = () => {
               <AddCard
                 productId={product?.id}
                 quantity={count}
+                quantities={product?.quantity}
                 singleProduct={true}
-                disabled={true}
               />
               <button
                 onClick={handleShopNow}
-                disabled={true}
-                className="bg-gray-400 rounded-full text-white font-bold text-[16px] cursor-not-allowed disabled:opacity-50 flex items-center justify-center"
+                disabled={isLoading}
+                className="bg-black rounded-full text-white font-bold text-[16px] cursor-pointer hover:bg-gray-800 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {getText("shopNow")}
               </button>
