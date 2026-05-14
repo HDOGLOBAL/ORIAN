@@ -22,7 +22,7 @@ export default function CheckoutPage({
 }) {
   // Form state
   const savedCountry = Cookies.get("selectedCountry");
-  const parsed = JSON.parse(savedCountry);
+  const parsed = savedCountry ? JSON.parse(savedCountry) : null;
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",

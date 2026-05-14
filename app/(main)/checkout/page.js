@@ -9,7 +9,7 @@ export default async function Checkout() {
   const cookieStore = await cookies();
   const trackingId = cookieStore.get("trackingId")?.value;
 
-  if (!trackingId) redirect("/cart");
+  if (!trackingId) redirect("/add-card");
 
   const [currency, rates] = await Promise.all([getCurrency(), getExchangeRates()]);
 
@@ -18,7 +18,7 @@ export default async function Checkout() {
     products = await getCartByTrackingId(trackingId);
   } catch (error) {
     console.error("Error fetching cart items:", error);
-    redirect("/cart");
+    redirect("/add-card");
   }
 
   // Subtotal in the display currency (converted live from EUR)
