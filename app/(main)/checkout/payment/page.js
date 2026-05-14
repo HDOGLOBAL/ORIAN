@@ -3,7 +3,7 @@ import {
   getOrderByTrackingId,
   StripeFun,
 } from "@/database/queries";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export default async function PaymentPage() {
@@ -20,10 +20,12 @@ export default async function PaymentPage() {
 
   const { totals, email, firstName, lastName, vatValid, vatNumber } = order;
   const currency = totals.currency === "euro" ? "eur" : "usd";
-  const siteUrl =
-    process.env.NEXTAUTH_URL ||
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    "https://hdotrade.eu";
+
+  // Use the actual request host so domain (.eu / .uk / localhost) is preserved
+  const headersList = await headers();
+  const host = headersList.get("host") || "hdotrade.eu";
+  const protocol = host.includes("localhost") ? "http" : "https";
+  const siteUrl = `${protocol}://${host}`;
 
   const toAmount = (val) => Math.round((parseFloat(val) || 0) * 100);
 
