@@ -1,169 +1,140 @@
-import { clearGuestCart, StripeFun } from "@/database/queries";
+import { clearGuestCart, StripeFun, markOrderAsPaid } from "@/database/queries";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { markOrderAsPaid } from "@/database/queries";
-import { FaCheck, FaTimes, FaInfoCircle } from "react-icons/fa";
 import { cookies } from "next/headers";
-
-const STATUS_CONTENT_MAP = {
-  succeeded: {
-    text: "Payment Succeeded",
-    icon: <FaCheck className="text-white" size={16} />,
-    iconColor: "#30B130",
-    bgColor: "bg-green-50",
-    textColor: "text-green-800",
-  },
-  processing: {
-    text: "Payment Processing",
-    icon: <FaInfoCircle className="text-white" size={16} />,
-    iconColor: "#6D6E78",
-    bgColor: "bg-blue-50",
-    textColor: "text-blue-800",
-  },
-  requires_payment_method: {
-    text: "Payment Failed",
-    icon: <FaTimes className="text-white" size={16} />,
-    iconColor: "#DF1B41",
-    bgColor: "bg-red-50",
-    textColor: "text-red-800",
-  },
-  default: {
-    text: "Payment Error",
-    icon: <FaTimes className="text-white" size={16} />,
-    iconColor: "#DF1B41",
-    bgColor: "bg-red-50",
-    textColor: "text-red-800",
-  },
-};
+import ClearCookie from "./ClearCookie";
 
 export default async function SuccessPage({ searchParams }) {
   const params = await searchParams;
   const { session_id: sessionId, payment_intent: paymentIntentId } = params;
 
-  const stripe = await StripeFun();
+  if (!sessionId && !paymentIntentId) redirect("/");
+
+  let stripe;
+  try {
+    stripe = await StripeFun();
+  } catch {
+    return <ErrorPage message="Payment service unavailable. Please contact support." />;
+  }
+
   const cookieStore = await cookies();
   const trackingId = cookieStore.get("trackingId")?.value;
 
-  let status, displayId, amount, currencyCode;
+  let status = "default";
+  let displayId = "";
+  let amount = 0;
+  let currencyCode = "eur";
 
-  if (sessionId) {
-    // Stripe Checkout Session flow
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
-    if (!session) redirect("/");
+  try {
+    if (sessionId) {
+      const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-    displayId = session.payment_intent || sessionId;
-    amount = session.amount_total;
-    currencyCode = session.currency;
+      displayId = session.payment_intent || sessionId;
+      amount = session.amount_total || 0;
+      currencyCode = session.currency || "eur";
 
-    if (session.payment_status === "paid") {
-      status = "succeeded";
-      await markOrderAsPaid(trackingId, session.payment_intent);
-      await clearGuestCart(trackingId);
-      cookieStore.delete("trackingId");
-    } else if (session.payment_status === "unpaid") {
-      status = "requires_payment_method";
+      if (session.payment_status === "paid") {
+        status = "succeeded";
+        if (trackingId) {
+          try { await markOrderAsPaid(trackingId, session.payment_intent); } catch {}
+          try { await clearGuestCart(trackingId); } catch {}
+        }
+      } else if (session.payment_status === "unpaid") {
+        status = "requires_payment_method";
+      } else {
+        status = "processing";
+      }
     } else {
-      status = "processing";
-    }
-  } else if (paymentIntentId) {
-    // Legacy PaymentIntent flow (backward compat)
-    const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-    if (!paymentIntent) redirect("/");
+      const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
 
-    status = paymentIntent.status;
-    displayId = paymentIntentId;
-    amount = paymentIntent.amount;
-    currencyCode = paymentIntent.currency;
+      status = paymentIntent.status;
+      displayId = paymentIntentId;
+      amount = paymentIntent.amount || 0;
+      currencyCode = paymentIntent.currency || "eur";
 
-    if (status === "succeeded") {
-      await markOrderAsPaid(trackingId, paymentIntentId);
-      await clearGuestCart(trackingId);
-      cookieStore.delete("trackingId");
+      if (status === "succeeded" && trackingId) {
+        try { await markOrderAsPaid(trackingId, paymentIntentId); } catch {}
+        try { await clearGuestCart(trackingId); } catch {}
+      }
     }
-  } else {
-    redirect("/");
+  } catch (err) {
+    console.error("Success page error:", err);
+    return <ErrorPage message="Failed to retrieve payment details. If you were charged, please contact support with your order reference." />;
   }
 
-  const statusContent =
-    STATUS_CONTENT_MAP[status] || STATUS_CONTENT_MAP.default;
+  const isSuccess = status === "succeeded";
+  const isFailed = status === "requires_payment_method";
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      {isSuccess && <ClearCookie />}
       <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden">
-        <div className={`p-6 ${statusContent.bgColor} text-center`}>
+        <div className={`p-6 text-center ${isSuccess ? "bg-green-50" : isFailed ? "bg-red-50" : "bg-blue-50"}`}>
           <div
             className="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4"
-            style={{ backgroundColor: statusContent.iconColor }}
+            style={{ backgroundColor: isSuccess ? "#30B130" : isFailed ? "#DF1B41" : "#6D6E78" }}
           >
-            <div className="text-white">{statusContent.icon}</div>
+            {isSuccess ? (
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+              </svg>
+            ) : (
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            )}
           </div>
-          <h2 className={`text-2xl font-bold ${statusContent.textColor} mb-2`}>
-            {statusContent.text}
+          <h2 className={`text-2xl font-bold mb-2 ${isSuccess ? "text-green-800" : isFailed ? "text-red-800" : "text-blue-800"}`}>
+            {isSuccess ? "Payment Succeeded" : isFailed ? "Payment Failed" : "Payment Processing"}
           </h2>
           <p className="text-gray-600">
-            {status === "succeeded"
-              ? "Your payment was successfully processed."
-              : status === "processing"
-              ? "This may take a few moments to complete."
-              : "Please try again or contact support."}
+            {isSuccess
+              ? "Your order has been confirmed. Thank you!"
+              : isFailed
+              ? "Your payment was not completed. Please try again."
+              : "Your payment is being processed. We'll update you shortly."}
           </p>
         </div>
 
         <div className="p-6">
           <div className="mb-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">
-              Payment Details
-            </h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">Payment Details</h3>
             <div className="border rounded-lg overflow-hidden">
               <table className="min-w-full divide-y divide-gray-200">
                 <tbody className="bg-white divide-y divide-gray-200">
                   <tr>
-                    <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-500">
-                      ID
-                    </td>
-                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 font-mono truncate max-w-[200px]">
-                      {displayId}
-                    </td>
+                    <td className="px-4 py-3 text-sm font-medium text-gray-500 w-24">Reference</td>
+                    <td className="px-4 py-3 text-sm text-gray-900 font-mono break-all">{displayId}</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-500">
-                      Status
-                    </td>
-                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 capitalize">
-                      {status.replace(/_/g, " ")}
-                    </td>
+                    <td className="px-4 py-3 text-sm font-medium text-gray-500">Status</td>
+                    <td className="px-4 py-3 text-sm text-gray-900 capitalize">{status.replace(/_/g, " ")}</td>
                   </tr>
-                  <tr>
-                    <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-500">
-                      Amount
-                    </td>
-                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900">
-                      {(amount / 100).toLocaleString("en-US", {
-                        style: "currency",
-                        currency: currencyCode?.toUpperCase() || "EUR",
-                      })}
-                    </td>
-                  </tr>
+                  {amount > 0 && (
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-gray-500">Amount</td>
+                      <td className="px-4 py-3 text-sm text-gray-900">
+                        {(amount / 100).toLocaleString("en-US", {
+                          style: "currency",
+                          currency: currencyCode.toUpperCase(),
+                        })}
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
           </div>
 
-          <div className="flex flex-col space-y-4">
-            {displayId && displayId.startsWith("pi_") && (
-              <a
-                href={`https://dashboard.stripe.com/payments/${displayId}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 transition-colors"
+          <div className="flex flex-col space-y-3">
+            {isFailed && (
+              <Link
+                href="/checkout"
+                className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 transition-colors"
               >
-                View in Stripe Dashboard
-                <svg className="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-              </a>
+                Try Again
+              </Link>
             )}
-
             <Link
               href="/"
               className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
@@ -172,6 +143,25 @@ export default async function SuccessPage({ searchParams }) {
             </Link>
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function ErrorPage({ message }) {
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <div className="max-w-md w-full bg-white rounded-xl shadow-md p-8 text-center">
+        <div className="w-16 h-16 mx-auto rounded-full bg-red-100 flex items-center justify-center mb-4">
+          <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M12 3a9 9 0 100 18A9 9 0 0012 3z" />
+          </svg>
+        </div>
+        <h2 className="text-xl font-bold text-gray-900 mb-2">Something went wrong</h2>
+        <p className="text-gray-600 mb-6">{message}</p>
+        <Link href="/" className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+          Go Home
+        </Link>
       </div>
     </div>
   );
