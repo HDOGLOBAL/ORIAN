@@ -59,6 +59,7 @@ export default async function SuccessPage({ searchParams }) {
       status = "succeeded";
       await markOrderAsPaid(trackingId, session.payment_intent);
       await clearGuestCart(trackingId);
+      cookieStore.delete("trackingId");
     } else if (session.payment_status === "unpaid") {
       status = "requires_payment_method";
     } else {
@@ -77,6 +78,7 @@ export default async function SuccessPage({ searchParams }) {
     if (status === "succeeded") {
       await markOrderAsPaid(trackingId, paymentIntentId);
       await clearGuestCart(trackingId);
+      cookieStore.delete("trackingId");
     }
   } else {
     redirect("/");

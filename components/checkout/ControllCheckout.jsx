@@ -486,6 +486,7 @@ export default function CheckoutPage({
   const [vatLoading, setVatLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const router = useRouter();
 
   // Calculate discount amount
@@ -597,6 +598,8 @@ export default function CheckoutPage({
       return;
     }
     setIsSubmitting(true);
+    setSubmitError("");
+    try {
     const payload = {
       ...formData,
       vatValid: vatResult?.valid || false,
@@ -623,7 +626,15 @@ export default function CheckoutPage({
     const res = await placeOrder(payload);
     if (res.success == true) {
       router.push("/checkout/payment");
+    } else {
+      setSubmitError(res.error || "Order placement failed. Please try again.");
+      setIsSubmitting(false);
     }
+  } catch (err) {
+    console.error("Submit error:", err);
+    setSubmitError("Something went wrong. Please try again.");
+    setIsSubmitting(false);
+  }
   };
 
   return (
@@ -1043,6 +1054,9 @@ export default function CheckoutPage({
               </label>
               {errors.agreeTerms && (
                 <p className="text-red-500 text-sm mt-1">{errors.agreeTerms}</p>
+              )}
+              {submitError && (
+                <p className="text-red-600 text-sm mt-2 font-medium">{submitError}</p>
               )}
             </div>
             <button
