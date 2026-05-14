@@ -476,6 +476,7 @@ export async function deleteSubcategory(id) {
 
 export async function getSubcategoriesByCategory(categoryId) {
   try {
+    await dbConnect();
     const subcategories = await subcategoryModel
       .find({ categoryId: new mongoose.Types.ObjectId(categoryId) })
       .sort({ createdAt: -1 });
