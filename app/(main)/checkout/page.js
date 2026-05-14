@@ -1,5 +1,5 @@
 import CheckoutPage from "@/components/checkout/ControllCheckout";
-import { checkOrderExists, getCartByTrackingId } from "@/database/queries";
+import { getCartByTrackingId } from "@/database/queries";
 import { getCurrency } from "@/utils/getCookieServer";
 import { getExchangeRates, convertPrice } from "@/utils/getExchangeRates";
 import { cookies } from "next/headers";
@@ -10,9 +10,6 @@ export default async function Checkout() {
   const trackingId = cookieStore.get("trackingId")?.value;
 
   if (!trackingId) redirect("/cart");
-
-  const isOrderExist = await checkOrderExists(trackingId);
-  if (isOrderExist) redirect("/checkout/payment");
 
   const [, rates] = await Promise.all([getCurrency(), getExchangeRates()]);
   const currency = "euro"; // always show EUR at checkout

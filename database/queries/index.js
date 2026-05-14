@@ -1647,8 +1647,13 @@ export const placeOrder = async (formData) => {
       },
     };
 
-    // Save order to database
-    await OrderModel.create(order);
+    // Upsert: update if unpaid order exists for this trackingId, otherwise create
+    const { trackingId: tid, ...fields } = order;
+    await OrderModel.findOneAndUpdate(
+      { trackingId: tid, paid: false },
+      { $set: fields },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
     return {
       success: true,
       grandTotal: order.totals.grandTotal,
