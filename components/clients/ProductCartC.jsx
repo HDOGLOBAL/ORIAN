@@ -260,12 +260,8 @@ import AddCard from "../shop/AddCard";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import { v4 as uuidv4 } from "uuid";
-import { addToCart } from "@/database/queries";
+import { addToCart, setCartItemQuantity } from "@/database/queries";
 import { serverRevalidate } from "@/utils/serverRev";
-import { useCart } from "@/providers/CartContext";
-import { useRouter } from "next/navigation";
-import { useDomain } from "@/providers/useDomain";
-import ChatButton from "../chatbot/ChatButton";
 import { useSupportStatus } from "@/providers/SupportStatusProvider";
 import { convertPrice, formatPrice } from "@/utils/getExchangeRates";
 import { getUiLanguage } from "@/utils/uiLanguage";
@@ -486,11 +482,14 @@ const ProductPage = ({ product, currency, lang: langProp, rates = { usd: 1.08, g
         country: parsedCountry?.name || "",
       });
 
-      if (response?.success || response?.message) {
-        await serverRevalidate();
-        await fetchCart();
-        router.push("/checkout");
+      // If item already existed, update its quantity to the selected count
+      if (!response?.success && response?.message === "Item already exists in cart") {
+        await setCartItemQuantity(trackingId, product?.id, finalCount);
       }
+
+      await serverRevalidate();
+      await fetchCart();
+      router.push("/add-card");
     } catch (error) {
       console.error("Add to cart error:", error);
       toast.error(getText("somethingWentWrong"), { position: "bottom-right" });

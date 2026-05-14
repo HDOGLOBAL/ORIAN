@@ -1510,6 +1510,18 @@ export async function removeCardList(userId, trackingId, productId) {
   return { success: true, source: "guest", result };
 }
 
+export async function setCartItemQuantity(trackingId, productId, quantity) {
+  await dbConnect();
+  if (!mongoose.Types.ObjectId.isValid(productId)) {
+    throw new Error("Invalid product ID");
+  }
+  await cartModel.updateOne(
+    { trackingId, "items.productId": new mongoose.Types.ObjectId(productId) },
+    { $set: { "items.$.quantity": quantity } }
+  );
+  return { success: true };
+}
+
 export const getSummary = async () => {
   await dbConnect();
   const session = await auth();
