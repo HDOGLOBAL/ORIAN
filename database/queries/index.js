@@ -831,10 +831,39 @@ export async function getProducts(filters = {}) {
       }
     }
     if (hasCategory) {
-      query.categoryId = categoryId;
+      query.$or = query.$or
+        ? [...query.$or]
+        : undefined;
+      const catFilter = {
+        $or: [
+          { categoryId: categoryId },
+          { categoryIds: categoryId },
+        ],
+      };
+      if (query.$and) {
+        query.$and = [...query.$and, catFilter];
+      } else if (query.$or) {
+        query.$and = [{ $or: query.$or }, catFilter];
+        delete query.$or;
+      } else {
+        Object.assign(query, catFilter);
+      }
     }
     if (hasSubcategory) {
-      query.subcategoryId = subcategoryId;
+      const subFilter = {
+        $or: [
+          { subcategoryId: subcategoryId },
+          { subcategoryIds: subcategoryId },
+        ],
+      };
+      if (query.$and) {
+        query.$and = [...query.$and, subFilter];
+      } else if (query.$or) {
+        query.$and = [{ $or: query.$or }, subFilter];
+        delete query.$or;
+      } else {
+        Object.assign(query, subFilter);
+      }
     }
 
     // Get paginated products with populated data
@@ -1036,7 +1065,9 @@ export async function getProductById(productId) {
     .populate('manufacturerId', 'name')
     .populate('manufacturerIds', 'name')
     .populate('categoryId', 'name slug')
+    .populate('categoryIds', 'name slug')
     .populate('subcategoryId', 'name')
+    .populate('subcategoryIds', 'name')
     .lean();
 
   if (!product) return null;
@@ -1054,10 +1085,12 @@ export async function getProductById(productId) {
       name: product.categoryId.name,
       slug: product.categoryId.slug
     } : null,
+    categoryIds: Array.isArray(product.categoryIds) ? product.categoryIds.map(c => c && c._id ? { _id: c._id.toString(), name: c.name, slug: c.slug } : null).filter(Boolean) : [],
     subcategoryId: product.subcategoryId ? {
       _id: product.subcategoryId._id.toString(),
       name: product.subcategoryId.name
-    } : null
+    } : null,
+    subcategoryIds: Array.isArray(product.subcategoryIds) ? product.subcategoryIds.map(s => s && s._id ? { _id: s._id.toString(), name: s.name } : null).filter(Boolean) : [],
   };
 
   return replaceMongoIdInObject(serializedProduct);
@@ -1944,7 +1977,8 @@ export async function createProduct(data) {
       ratings: data.ratings ? parseFloat(data.ratings) : undefined,
       manufacturerId: data.manufacturerId || (Array.isArray(data.manufacturerIds) && data.manufacturerIds[0]) || undefined,
       manufacturerIds: Array.isArray(data.manufacturerIds) ? data.manufacturerIds.filter(Boolean) : (data.manufacturerId ? [data.manufacturerId] : []),
-      categoryId: data.categoryId || undefined,
+      categoryId: data.categoryId || (Array.isArray(data.categoryIds) && data.categoryIds[0]) || undefined,
+      categoryIds: Array.isArray(data.categoryIds) ? data.categoryIds.filter(Boolean) : (data.categoryId ? [data.categoryId] : []),
       subcategoryId: data.subcategoryId || (Array.isArray(data.subcategoryIds) && data.subcategoryIds[0]) || undefined,
       subcategoryIds: Array.isArray(data.subcategoryIds) ? data.subcategoryIds.filter(Boolean) : (data.subcategoryId ? [data.subcategoryId] : []),
       description: productStrTrim(data.description),
@@ -2153,7 +2187,8 @@ export async function updateProduct(productId, data) {
         : existingProduct.ratings,
       manufacturerId: data.manufacturerId || (Array.isArray(data.manufacturerIds) && data.manufacturerIds[0]) || existingProduct.manufacturerId,
       manufacturerIds: Array.isArray(data.manufacturerIds) && data.manufacturerIds.length > 0 ? data.manufacturerIds.filter(Boolean) : (existingProduct.manufacturerIds?.length > 0 ? existingProduct.manufacturerIds : (existingProduct.manufacturerId ? [existingProduct.manufacturerId] : [])),
-      categoryId: data.categoryId || existingProduct.categoryId,
+      categoryId: data.categoryId || (Array.isArray(data.categoryIds) && data.categoryIds[0]) || existingProduct.categoryId,
+      categoryIds: Array.isArray(data.categoryIds) && data.categoryIds.length > 0 ? data.categoryIds.filter(Boolean) : (existingProduct.categoryIds?.length > 0 ? existingProduct.categoryIds : (existingProduct.categoryId ? [existingProduct.categoryId] : [])),
       subcategoryId: data.subcategoryId || (Array.isArray(data.subcategoryIds) && data.subcategoryIds[0]) || existingProduct.subcategoryId,
       subcategoryIds: Array.isArray(data.subcategoryIds) && data.subcategoryIds.length > 0 ? data.subcategoryIds.filter(Boolean) : (existingProduct.subcategoryIds?.length > 0 ? existingProduct.subcategoryIds : (existingProduct.subcategoryId ? [existingProduct.subcategoryId] : [])),
       description: productStrTrim(data.description),

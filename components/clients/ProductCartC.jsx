@@ -573,10 +573,21 @@ const handleChatOpen = () => {
         <MdKeyboardArrowRight className="text-xl" />
         <p className="text-[16px] text-gray-600">
           {product?.manufacturerIds?.length > 0
-            ? product.manufacturerIds.map((m) => (typeof m === "object" ? m.name : null)).filter(Boolean).join(", ")
-            : typeof product?.manufacturerId === "object"
-            ? product.manufacturerId?.name
-            : getText("manufacturer")}
+            ? product.manufacturerIds.map((m, idx) =>
+                typeof m === "object" && m ? (
+                  <span key={m.id || m._id || idx}>
+                    {idx > 0 && ", "}
+                    <Link href={`/shop?manufacturer=${m.id || m._id}`} className="hover:underline hover:text-red-600 transition-colors">
+                      {m.name}
+                    </Link>
+                  </span>
+                ) : null
+              ).filter(Boolean)
+            : typeof product?.manufacturerId === "object" && product?.manufacturerId ? (
+                <Link href={`/shop?manufacturer=${product.manufacturerId.id || product.manufacturerId._id}`} className="hover:underline hover:text-red-600 transition-colors">
+                  {product.manufacturerId?.name}
+                </Link>
+              ) : getText("manufacturer")}
         </p>
         <MdKeyboardArrowRight className="text-xl" />
         <p
@@ -655,6 +666,72 @@ const handleChatOpen = () => {
                           className="hover:underline hover:text-red-600 transition-colors"
                         >
                           {product.manufacturerId?.name}
+                        </Link>
+                      ) : null}
+                </span>
+              </p>
+            )}
+
+            {/* Category */}
+            {(product?.categoryIds?.length > 0 || product?.categoryId) && (
+              <p className="flex items-center gap-2 mt-2 text-gray-700">
+                <span className="font-semibold">CATEGORY:</span>
+                <span>
+                  {product?.categoryIds?.length > 0
+                    ? product.categoryIds
+                        .map((c, idx) =>
+                          typeof c === "object" && c ? (
+                            <span key={c.id || c._id || idx}>
+                              {idx > 0 && ", "}
+                              <Link
+                                href={`/shop?category=${c.id || c._id}`}
+                                className="hover:underline hover:text-red-600 transition-colors"
+                              >
+                                {c.name}
+                              </Link>
+                            </span>
+                          ) : null
+                        )
+                        .filter(Boolean)
+                    : typeof product?.categoryId === "object" && product?.categoryId ? (
+                        <Link
+                          href={`/shop?category=${product.categoryId.id || product.categoryId._id}`}
+                          className="hover:underline hover:text-red-600 transition-colors"
+                        >
+                          {product.categoryId?.name}
+                        </Link>
+                      ) : null}
+                </span>
+              </p>
+            )}
+
+            {/* Subcategory */}
+            {(product?.subcategoryIds?.length > 0 || product?.subcategoryId) && (
+              <p className="flex items-center gap-2 mt-2 text-gray-700">
+                <span className="font-semibold">SUBCATEGORY:</span>
+                <span>
+                  {product?.subcategoryIds?.length > 0
+                    ? product.subcategoryIds
+                        .map((s, idx) =>
+                          typeof s === "object" && s ? (
+                            <span key={s.id || s._id || idx}>
+                              {idx > 0 && ", "}
+                              <Link
+                                href={`/shop?subcategory=${s.id || s._id}`}
+                                className="hover:underline hover:text-red-600 transition-colors"
+                              >
+                                {s.name}
+                              </Link>
+                            </span>
+                          ) : null
+                        )
+                        .filter(Boolean)
+                    : typeof product?.subcategoryId === "object" && product?.subcategoryId ? (
+                        <Link
+                          href={`/shop?subcategory=${product.subcategoryId.id || product.subcategoryId._id}`}
+                          className="hover:underline hover:text-red-600 transition-colors"
+                        >
+                          {product.subcategoryId?.name}
                         </Link>
                       ) : null}
                 </span>

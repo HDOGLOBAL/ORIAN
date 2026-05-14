@@ -1038,6 +1038,7 @@ export default function AddUpdate({ updateId = false }) {
     manufacturerId: "",
     manufacturerIds: [],
     categoryId: "",
+    categoryIds: [],
     subcategoryId: "",
     subcategoryIds: [],
     description: "",
@@ -1133,7 +1134,39 @@ export default function AddUpdate({ updateId = false }) {
         manufacturerIds: next,
         manufacturerId: primary,
         categoryId: "",
+        categoryIds: [],
         subcategoryId: "",
+        subcategoryIds: [],
+      };
+    });
+  };
+
+  const handleCategoryToggle = (id) => {
+    setForm((prev) => {
+      const already = prev.categoryIds.includes(id);
+      const next = already
+        ? prev.categoryIds.filter((cid) => cid !== id)
+        : [...prev.categoryIds, id];
+      setSubcategories([]);
+      if (next.length > 0) {
+        setLoadingSubcategories(true);
+        Promise.all(next.map((cid) => getSubcategoriesByCategory(cid)))
+          .then((results) => {
+            const merged = results.flat();
+            const unique = merged.filter(
+              (s, i, arr) => arr.findIndex((x) => x.id === s.id) === i
+            );
+            setSubcategories(unique);
+          })
+          .catch(() => setSubcategories([]))
+          .finally(() => setLoadingSubcategories(false));
+      }
+      return {
+        ...prev,
+        categoryIds: next,
+        categoryId: next[0] || "",
+        subcategoryId: "",
+        subcategoryIds: [],
       };
     });
   };
@@ -1297,6 +1330,12 @@ export default function AddUpdate({ updateId = false }) {
               return ids.filter(Boolean);
             })(),
             categoryId: getEntityId(product.categoryId),
+            categoryIds: (() => {
+              const ids = product.categoryIds?.length > 0
+                ? product.categoryIds.map(getEntityId)
+                : (product.categoryId ? [getEntityId(product.categoryId)] : []);
+              return ids.filter(Boolean);
+            })(),
             subcategoryId: getEntityId(product.subcategoryId),
             subcategoryIds: (() => {
               const ids = product.subcategoryIds?.length > 0
@@ -1326,11 +1365,50 @@ export default function AddUpdate({ updateId = false }) {
             shippingWorld: product.shippingWorld || "",
             discountCodes: product.discountCodes || [],
           });
-          if (product.manufacturerId) {
+          if (product.manufacturerIds?.length > 0) {
+            const mfIds = (() => {
+              const ids = product.manufacturerIds?.length > 0
+                ? product.manufacturerIds.map(getEntityId)
+                : (product.manufacturerId ? [getEntityId(product.manufacturerId)] : []);
+              return ids.filter(Boolean);
+            })();
+            Promise.all(mfIds.map((mid) => getCategoriesByManufacturer(mid)))
+              .then((results) => {
+                const grouped = mfIds.map((mid, i) => ({
+                  manufacturerId: mid,
+                  manufacturerName:
+                    (typeof product.manufacturerIds[i] === "object"
+                      ? product.manufacturerIds[i]?.name
+                      : null) || mid,
+                  items: results[i] || [],
+                })).filter((g) => g.items.length > 0);
+                setCategoriesByMfr(grouped);
+                const merged = results.flat();
+                const unique = merged.filter(
+                  (cat, i, arr) => arr.findIndex((c) => c.id === cat.id) === i
+                );
+                setCategories(unique);
+              })
+              .catch(() => { setCategories([]); setCategoriesByMfr([]); });
+          } else if (product.manufacturerId) {
             fetchCategoriesByManufacturer(getEntityId(product.manufacturerId));
           }
-          if (product.categoryId) {
-            fetchSubcategoriesByCategory(getEntityId(product.categoryId));
+          const catIds = (() => {
+            const ids = product.categoryIds?.length > 0
+              ? product.categoryIds.map(getEntityId)
+              : (product.categoryId ? [getEntityId(product.categoryId)] : []);
+            return ids.filter(Boolean);
+          })();
+          if (catIds.length > 0) {
+            Promise.all(catIds.map((cid) => getSubcategoriesByCategory(cid)))
+              .then((results) => {
+                const merged = results.flat();
+                const unique = merged.filter(
+                  (s, i, arr) => arr.findIndex((x) => x.id === s.id) === i
+                );
+                setSubcategories(unique);
+              })
+              .catch(() => setSubcategories([]));
           }
           // Load existing images into previews
           const existingImages = product.images?.length > 0
@@ -1440,7 +1518,8 @@ export default function AddUpdate({ updateId = false }) {
         discountGBP: gbpDiscount || form.discountGBP,
         manufacturerId: form.manufacturerIds.length > 0 ? form.manufacturerIds[0] : getEntityId(form.manufacturerId),
         manufacturerIds: form.manufacturerIds,
-        categoryId: getEntityId(form.categoryId),
+        categoryId: form.categoryIds[0] || getEntityId(form.categoryId),
+        categoryIds: form.categoryIds,
         subcategoryId: form.subcategoryIds[0] || getEntityId(form.subcategoryId),
         subcategoryIds: form.subcategoryIds,
         image: primaryImage,
@@ -1510,6 +1589,7 @@ export default function AddUpdate({ updateId = false }) {
             manufacturerId: "",
             manufacturerIds: [],
             categoryId: "",
+            categoryIds: [],
             subcategoryId: "",
             subcategoryIds: [],
             description: "",
@@ -1844,60 +1924,70 @@ export default function AddUpdate({ updateId = false }) {
             </div>
             {form.manufacturerIds.length > 0 && (
               <p className="text-xs text-gray-500 mt-1">
-                {form.manufacturerIds.length} selected — categories load for first selected
+                {form.manufacturerIds.length} selected
               </p>
             )}
           </div>
           <div>
-            <Label>Category</Label>
-            <select
-              name="categoryId"
-              value={form.categoryId}
-              onChange={handleChange}
-              disabled={!form.manufacturerId || loadingCategories}
-              className="w-full border p-2 rounded disabled:opacity-50"
+            <Label>Category (select one or more)</Label>
+            <div
+              className="w-full border rounded p-2 max-h-40 overflow-y-auto bg-white"
+              style={form.manufacturerIds.length === 0 ? { opacity: 0.5, pointerEvents: "none" } : {}}
             >
-              <option value="">Select category</option>
-              {categoriesByMfr.length > 1
-                ? categoriesByMfr.map((group) => (
-                    <optgroup key={group.manufacturerId} label={`— ${group.manufacturerName} —`}>
-                      {group.items.map((cat) => (
-                        <option key={cat.id} value={cat.id}>
-                          {cat.name}
-                        </option>
-                      ))}
-                    </optgroup>
-                  ))
-                : categories.map((cat) => (
-                    <option key={cat.id} value={cat.id}>
-                      {cat.name}
-                    </option>
-                  ))}
-            </select>
-            {loadingCategories && (
-              <p className="text-sm text-gray-500 mt-1">
-                Loading categories...
+              {loadingCategories ? (
+                <p className="text-sm text-gray-500">Loading categories...</p>
+              ) : categories.length === 0 ? (
+                <p className="text-sm text-gray-400">
+                  {form.manufacturerIds.length === 0 ? "Select a manufacturer first" : "No categories available"}
+                </p>
+              ) : categoriesByMfr.length > 1 ? (
+                categoriesByMfr.map((group) => (
+                  <div key={group.manufacturerId}>
+                    <p className="text-xs font-bold text-gray-500 uppercase mt-1 mb-0.5 px-1">{group.manufacturerName}</p>
+                    {group.items.map((cat) => (
+                      <label key={cat.id} className="flex items-center gap-2 py-0.5 cursor-pointer hover:bg-gray-50 pl-2">
+                        <input
+                          type="checkbox"
+                          checked={form.categoryIds.includes(cat.id)}
+                          onChange={() => handleCategoryToggle(cat.id)}
+                          className="accent-blue-600"
+                        />
+                        <span className="text-sm">{cat.name}</span>
+                      </label>
+                    ))}
+                  </div>
+                ))
+              ) : (
+                categories.map((cat) => (
+                  <label key={cat.id} className="flex items-center gap-2 py-0.5 cursor-pointer hover:bg-gray-50">
+                    <input
+                      type="checkbox"
+                      checked={form.categoryIds.includes(cat.id)}
+                      onChange={() => handleCategoryToggle(cat.id)}
+                      className="accent-blue-600"
+                    />
+                    <span className="text-sm">{cat.name}</span>
+                  </label>
+                ))
+              )}
+            </div>
+            {form.categoryIds.length > 0 && (
+              <p className="text-xs text-gray-500 mt-1">
+                {form.categoryIds.length} selected
               </p>
             )}
-            {form.manufacturerId &&
-              categories.length === 0 &&
-              !loadingCategories && (
-                <p className="text-sm text-gray-500 mt-1">
-                  No categories available for this manufacturer
-                </p>
-              )}
           </div>
           <div>
             <Label>Subcategory (select one or more)</Label>
             <div
               className="w-full border rounded p-2 max-h-40 overflow-y-auto bg-white"
-              style={!form.categoryId ? { opacity: 0.5, pointerEvents: "none" } : {}}
+              style={form.categoryIds.length === 0 ? { opacity: 0.5, pointerEvents: "none" } : {}}
             >
               {loadingSubcategories ? (
                 <p className="text-sm text-gray-500">Loading subcategories...</p>
               ) : subcategories.length === 0 ? (
                 <p className="text-sm text-gray-400">
-                  {form.categoryId ? "No subcategories available" : "Select a category first"}
+                  {form.categoryIds.length === 0 ? "Select a category first" : "No subcategories available"}
                 </p>
               ) : (
                 subcategories.map((subcat) => (
