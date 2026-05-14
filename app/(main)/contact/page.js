@@ -25,6 +25,8 @@ export async function generateMetadata() {
 export default async function ContactPage() {
   const lang = await getRequestLanguage();
   const uiLang = getUiLanguage(lang);
+  const host = await getRequestHost();
+  const domain = getDomainFromHost(host);
 
   // Internationalization mappings
   const textMap = {

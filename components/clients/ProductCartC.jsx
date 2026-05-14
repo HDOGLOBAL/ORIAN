@@ -253,6 +253,7 @@ import { RiCheckboxCircleLine } from "react-icons/ri";
 import { FaWhatsapp } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import placeholder from "@/public/client/banner/placeholder.png";
 import AddCard from "../shop/AddCard";
@@ -634,18 +635,34 @@ const handleChatOpen = () => {
                 <span>
                   {product?.manufacturerIds?.length > 0
                     ? product.manufacturerIds
-                        .map((m) => (typeof m === "object" ? m.name : null))
+                        .map((m, idx) =>
+                          typeof m === "object" && m ? (
+                            <span key={m.id || m._id || idx}>
+                              {idx > 0 && ", "}
+                              <Link
+                                href={`/shop?manufacturer=${m.id || m._id}`}
+                                className="hover:underline hover:text-red-600 transition-colors"
+                              >
+                                {m.name}
+                              </Link>
+                            </span>
+                          ) : null
+                        )
                         .filter(Boolean)
-                        .join(", ")
-                    : typeof product?.manufacturerId === "object"
-                    ? product.manufacturerId?.name
-                    : null}
+                    : typeof product?.manufacturerId === "object" && product?.manufacturerId ? (
+                        <Link
+                          href={`/shop?manufacturer=${product.manufacturerId.id || product.manufacturerId._id}`}
+                          className="hover:underline hover:text-red-600 transition-colors"
+                        >
+                          {product.manufacturerId?.name}
+                        </Link>
+                      ) : null}
                 </span>
               </p>
             )}
 
             {/* Price */}
-            <p className="font-bold text-2xl mb-4" suppressHydrationWarning>
+            <p className="font-bold text-2xl mt-4 mb-4" suppressHydrationWarning>
               {formatPrice(convertPrice(product?.price?.eur, currency, rates), currency)}
             </p>
 

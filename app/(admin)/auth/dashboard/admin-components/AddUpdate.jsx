@@ -1039,6 +1039,7 @@ export default function AddUpdate({ updateId = false }) {
     manufacturerIds: [],
     categoryId: "",
     subcategoryId: "",
+    subcategoryIds: [],
     description: "",
     descriptionPt: "",
     descriptionFr: "",
@@ -1063,6 +1064,7 @@ export default function AddUpdate({ updateId = false }) {
   const [imagePreviews, setImagePreviews] = useState([]);
   const [manufacturers, setManufacturers] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [categoriesByMfr, setCategoriesByMfr] = useState([]); // [{manufacturerId, manufacturerName, items}]
   const [subcategories, setSubcategories] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showCouponForm, setShowCouponForm] = useState(false);
@@ -1108,16 +1110,23 @@ export default function AddUpdate({ updateId = false }) {
       // Fetch and merge categories from ALL selected manufacturers
       setSubcategories([]);
       setCategories([]);
+      setCategoriesByMfr([]);
       if (next.length > 0) {
         Promise.all(next.map((mid) => getCategoriesByManufacturer(mid)))
           .then((results) => {
+            const grouped = next.map((mid, i) => ({
+              manufacturerId: mid,
+              manufacturerName: manufacturers.find((m) => m.id === mid)?.name || mid,
+              items: results[i] || [],
+            })).filter((g) => g.items.length > 0);
+            setCategoriesByMfr(grouped);
             const merged = results.flat();
             const unique = merged.filter(
               (cat, idx, arr) => arr.findIndex((c) => c.id === cat.id) === idx
             );
             setCategories(unique);
           })
-          .catch(() => setCategories([]));
+          .catch(() => { setCategories([]); setCategoriesByMfr([]); });
       }
       return {
         ...prev,
@@ -1125,6 +1134,20 @@ export default function AddUpdate({ updateId = false }) {
         manufacturerId: primary,
         categoryId: "",
         subcategoryId: "",
+      };
+    });
+  };
+
+  const handleSubcategoryToggle = (id) => {
+    setForm((prev) => {
+      const already = prev.subcategoryIds.includes(id);
+      const next = already
+        ? prev.subcategoryIds.filter((sid) => sid !== id)
+        : [...prev.subcategoryIds, id];
+      return {
+        ...prev,
+        subcategoryIds: next,
+        subcategoryId: next[0] || "",
       };
     });
   };
@@ -1149,6 +1172,7 @@ export default function AddUpdate({ updateId = false }) {
         ...prev,
         categoryId: value,
         subcategoryId: "",
+        subcategoryIds: [],
       }));
       if (value) {
         fetchSubcategoriesByCategory(value);
@@ -1274,6 +1298,12 @@ export default function AddUpdate({ updateId = false }) {
             })(),
             categoryId: getEntityId(product.categoryId),
             subcategoryId: getEntityId(product.subcategoryId),
+            subcategoryIds: (() => {
+              const ids = product.subcategoryIds?.length > 0
+                ? product.subcategoryIds.map(getEntityId)
+                : (product.subcategoryId ? [getEntityId(product.subcategoryId)] : []);
+              return ids.filter(Boolean);
+            })(),
             description: product.description || "",
             descriptionPt: product.descriptionPt || "",
             descriptionFr: product.descriptionFr || "",
@@ -1411,7 +1441,8 @@ export default function AddUpdate({ updateId = false }) {
         manufacturerId: form.manufacturerIds.length > 0 ? form.manufacturerIds[0] : getEntityId(form.manufacturerId),
         manufacturerIds: form.manufacturerIds,
         categoryId: getEntityId(form.categoryId),
-        subcategoryId: getEntityId(form.subcategoryId),
+        subcategoryId: form.subcategoryIds[0] || getEntityId(form.subcategoryId),
+        subcategoryIds: form.subcategoryIds,
         image: primaryImage,
         images: uploadedUrls,
         price: {
@@ -1480,6 +1511,7 @@ export default function AddUpdate({ updateId = false }) {
             manufacturerIds: [],
             categoryId: "",
             subcategoryId: "",
+            subcategoryIds: [],
             description: "",
             descriptionPt: "",
             descriptionFr: "",
@@ -1504,6 +1536,7 @@ export default function AddUpdate({ updateId = false }) {
           setForm((prev) => ({ ...prev, image: "", images: [] }));
           setImagePreviews([]);
           setSubcategories([]);
+          setCategoriesByMfr([]);
         }
       } else {
         const parts = [res?.message, ...(Array.isArray(res?.errors) ? res.errors : [])].filter(
@@ -1825,11 +1858,21 @@ export default function AddUpdate({ updateId = false }) {
               className="w-full border p-2 rounded disabled:opacity-50"
             >
               <option value="">Select category</option>
-              {categories.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.name}
-                </option>
-              ))}
+              {categoriesByMfr.length > 1
+                ? categoriesByMfr.map((group) => (
+                    <optgroup key={group.manufacturerId} label={`— ${group.manufacturerName} —`}>
+                      {group.items.map((cat) => (
+                        <option key={cat.id} value={cat.id}>
+                          {cat.name}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ))
+                : categories.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.name}
+                    </option>
+                  ))}
             </select>
             {loadingCategories && (
               <p className="text-sm text-gray-500 mt-1">
@@ -1845,33 +1888,39 @@ export default function AddUpdate({ updateId = false }) {
               )}
           </div>
           <div>
-            <Label>Subcategory</Label>
-            <select
-              name="subcategoryId"
-              value={form.subcategoryId}
-              onChange={handleChange}
-              disabled={!form.categoryId || loadingSubcategories}
-              className="w-full border p-2 rounded disabled:opacity-50"
+            <Label>Subcategory (select one or more)</Label>
+            <div
+              className="w-full border rounded p-2 max-h-40 overflow-y-auto bg-white"
+              style={!form.categoryId ? { opacity: 0.5, pointerEvents: "none" } : {}}
             >
-              <option value="">Select subcategory</option>
-              {subcategories.map((subcat) => (
-                <option key={subcat.id} value={subcat.id}>
-                  {subcat.name}
-                </option>
-              ))}
-            </select>
-            {loadingSubcategories && (
-              <p className="text-sm text-gray-500 mt-1">
-                Loading subcategories...
+              {loadingSubcategories ? (
+                <p className="text-sm text-gray-500">Loading subcategories...</p>
+              ) : subcategories.length === 0 ? (
+                <p className="text-sm text-gray-400">
+                  {form.categoryId ? "No subcategories available" : "Select a category first"}
+                </p>
+              ) : (
+                subcategories.map((subcat) => (
+                  <label
+                    key={subcat.id}
+                    className="flex items-center gap-2 py-0.5 cursor-pointer hover:bg-gray-50"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={form.subcategoryIds.includes(subcat.id)}
+                      onChange={() => handleSubcategoryToggle(subcat.id)}
+                      className="accent-blue-600"
+                    />
+                    <span className="text-sm">{subcat.name}</span>
+                  </label>
+                ))
+              )}
+            </div>
+            {form.subcategoryIds.length > 0 && (
+              <p className="text-xs text-gray-500 mt-1">
+                {form.subcategoryIds.length} selected
               </p>
             )}
-            {form.categoryId &&
-              subcategories.length === 0 &&
-              !loadingSubcategories && (
-                <p className="text-sm text-gray-500 mt-1">
-                  No subcategories available for this category
-                </p>
-              )}
           </div>
           <div>
             <Label required>Visibility</Label>

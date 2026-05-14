@@ -141,6 +141,11 @@ const productSchema = new mongoose.Schema(
       ref: "subcategories",
       required: false,
     },
+    subcategoryIds: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "subcategories",
+      default: [],
+    },
     description: {
       required: false,
       type: String,
