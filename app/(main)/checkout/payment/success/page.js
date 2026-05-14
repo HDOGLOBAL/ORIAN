@@ -36,23 +36,50 @@ const STATUS_CONTENT_MAP = {
   },
 };
 
-export default async function SuccessPage({ searchParams  }) {
+export default async function SuccessPage({ searchParams }) {
+  const params = await searchParams;
+  const { session_id: sessionId, payment_intent: paymentIntentId } = params;
 
-    const params = await searchParams;
-     const { payment_intent: paymentIntentId } = params;
-  // const { payment_intent: paymentIntentId } = searchParams;
   const stripe = await StripeFun();
   const cookieStore = await cookies();
   const trackingId = cookieStore.get("trackingId")?.value;
-  if (!paymentIntentId) redirect("/");
-  const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-  if (!paymentIntent) redirect("/");
 
-  const { status } = paymentIntent;
+  let status, displayId, amount, currencyCode;
 
-  if (status === "succeeded") {
-    await markOrderAsPaid(trackingId, paymentIntentId);
-    await clearGuestCart(trackingId);
+  if (sessionId) {
+    // Stripe Checkout Session flow
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    if (!session) redirect("/");
+
+    displayId = session.payment_intent || sessionId;
+    amount = session.amount_total;
+    currencyCode = session.currency;
+
+    if (session.payment_status === "paid") {
+      status = "succeeded";
+      await markOrderAsPaid(trackingId, session.payment_intent);
+      await clearGuestCart(trackingId);
+    } else if (session.payment_status === "unpaid") {
+      status = "requires_payment_method";
+    } else {
+      status = "processing";
+    }
+  } else if (paymentIntentId) {
+    // Legacy PaymentIntent flow (backward compat)
+    const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+    if (!paymentIntent) redirect("/");
+
+    status = paymentIntent.status;
+    displayId = paymentIntentId;
+    amount = paymentIntent.amount;
+    currencyCode = paymentIntent.currency;
+
+    if (status === "succeeded") {
+      await markOrderAsPaid(trackingId, paymentIntentId);
+      await clearGuestCart(trackingId);
+    }
+  } else {
+    redirect("/");
   }
 
   const statusContent =
@@ -66,7 +93,7 @@ export default async function SuccessPage({ searchParams  }) {
             className="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4"
             style={{ backgroundColor: statusContent.iconColor }}
           >
-            <div className=" text-white">{statusContent.icon}</div>
+            <div className="text-white">{statusContent.icon}</div>
           </div>
           <h2 className={`text-2xl font-bold ${statusContent.textColor} mb-2`}>
             {statusContent.text}
@@ -92,8 +119,8 @@ export default async function SuccessPage({ searchParams  }) {
                     <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-500">
                       ID
                     </td>
-                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 font-mono">
-                      {paymentIntentId}
+                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 font-mono truncate max-w-[200px]">
+                      {displayId}
                     </td>
                   </tr>
                   <tr>
@@ -109,9 +136,9 @@ export default async function SuccessPage({ searchParams  }) {
                       Amount
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900">
-                      {(paymentIntent.amount / 100).toLocaleString("en-US", {
+                      {(amount / 100).toLocaleString("en-US", {
                         style: "currency",
-                        currency: paymentIntent.currency,
+                        currency: currencyCode?.toUpperCase() || "EUR",
                       })}
                     </td>
                   </tr>
@@ -121,25 +148,19 @@ export default async function SuccessPage({ searchParams  }) {
           </div>
 
           <div className="flex flex-col space-y-4">
-            <a
-              href={`https://dashboard.stripe.com/payments/${paymentIntentId}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 transition-colors"
-            >
-              View in Stripe Dashboard
-              <svg
-                className="ml-2 -mr-1 w-4 h-4"
-                fill="currentColor"
-                viewBox="0 0 20 20"
+            {displayId && displayId.startsWith("pi_") && (
+              <a
+                href={`https://dashboard.stripe.com/payments/${displayId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 transition-colors"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </a>
+                View in Stripe Dashboard
+                <svg className="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </a>
+            )}
 
             <Link
               href="/"
@@ -153,3 +174,4 @@ export default async function SuccessPage({ searchParams  }) {
     </div>
   );
 }
+

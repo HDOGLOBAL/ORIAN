@@ -1749,6 +1749,19 @@ export const getOrderTotalsByTrackingId = async (trackingId) => {
   }
 };
 
+export const getOrderByTrackingId = async (trackingId) => {
+  try {
+    await dbConnect();
+    const order = await OrderModel.findOne({ trackingId, paid: false })
+      .select("email firstName lastName vatValid vatNumber totals")
+      .lean();
+    return order || null;
+  } catch (error) {
+    console.error("Error fetching order:", error);
+    return null;
+  }
+};
+
 export async function getTopSellingProducts() {
   try {
     await dbConnect();
