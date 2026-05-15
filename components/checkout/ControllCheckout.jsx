@@ -239,6 +239,14 @@ export default function CheckoutPage({
     },
 
     // Messages
+    vatValidPt: {
+      en: "✓ VAT number recorded - VAT still applies (Portuguese customers are always charged VAT)",
+      pt: "✓ Número VAT registado - IVA ainda se aplica (clientes portugueses pagam sempre IVA)",
+      fr: "✓ Numéro TVA enregistré - TVA toujours applicable (les clients portugais paient toujours la TVA)",
+      es: "✓ Número IVA registrado - IVA aún aplica (los clientes portugueses siempre pagan IVA)",
+      he: "✓ מספר מע\"מ נרשם - מע\"מ עדיין חל (לקוחות פורטוגל תמיד משלמים מע\"מ)",
+      de: "✓ USt-IdNr. erfasst - MwSt. gilt weiterhin (portugiesische Kunden zahlen immer MwSt.)",
+    },
     vatValid: {
       en: "✓ Valid EU VAT Number - Tax Free",
       pt: "✓ Número VAT da UE Válido - Isento de Impostos",
@@ -495,8 +503,12 @@ export default function CheckoutPage({
   // Calculate subtotal after discount
   const subtotalAfterDiscount = Math.max(0, subtotal - discountAmount);
 
+  // Portugal always pays VAT — no reverse-charge exemption for PT VAT numbers
+  const isPtVat = vat.slice(0, 2).toUpperCase() === "PT";
+  const isVatExempt = vatResult?.valid && !isPtVat;
+
   // Calculate tax and totals
-  const taxRate = vatResult?.valid ? 0 : 0.23;
+  const taxRate = isVatExempt ? 0 : 0.23;
   const taxAmount = subtotalAfterDiscount * taxRate;
   const grandTotal = subtotalAfterDiscount + shipping + taxAmount;
 
@@ -602,7 +614,7 @@ export default function CheckoutPage({
     try {
     const payload = {
       ...formData,
-      vatValid: vatResult?.valid || false,
+      vatValid: isVatExempt,
       vatNumber: vat,
       appliedCoupon: appliedCoupon ? appliedCoupon.code : null,
       cartItems: products.map((product) => ({
@@ -859,12 +871,12 @@ export default function CheckoutPage({
                   <div
                     className={`p-3 rounded-lg text-center ${
                       vatResult.valid
-                        ? "bg-green-100 text-green-800"
+                        ? isPtVat ? "bg-yellow-100 text-yellow-800" : "bg-green-100 text-green-800"
                         : "bg-red-100 text-red-800"
                     }`}
                   >
                     {vatResult.valid
-                      ? getText("vatValid")
+                      ? isPtVat ? getText("vatValidPt") : getText("vatValid")
                       : vatResult.error || getText("vatInvalid")}
                   </div>
                 )}
@@ -1012,7 +1024,7 @@ export default function CheckoutPage({
                   </div>
                   <div className="flex justify-between">
                     <span>
-                      {getText("tax")} ({vatResult?.valid ? "0%" : "23%"})
+                      {getText("tax")} ({isVatExempt ? "0%" : "23%"})
                     </span>
                     <span>{format(taxAmount)}</span>
                   </div>
