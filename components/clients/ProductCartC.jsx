@@ -248,9 +248,9 @@
 
 
 "use client";
-import { MdKeyboardArrowRight, MdChat } from "react-icons/md";
-import { RiCheckboxCircleLine } from "react-icons/ri";
+import { MdKeyboardArrowRight } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa";
+import { RiCheckboxCircleLine } from "react-icons/ri";
 import { SiGmail } from "react-icons/si";
 import Image from "next/image";
 import Link from "next/link";
@@ -784,14 +784,16 @@ const handleChatOpen = () => {
                 {getText("shopNow")}
               </button>
             </div>
-            {/* Contact Our Customer Service */}
-            <Link
-              href="/contact"
-              className="w-full mt-4 bg-[#c41e3a] text-white py-3 font-bold text-[16px] rounded-full hover:bg-[#a01829] transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+            {/* Contact on WhatsApp */}
+            <a
+              href="https://wa.me/351935210099"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full mt-4 bg-[#25D366] text-white py-3 font-bold text-[16px] rounded-full hover:bg-[#1da851] transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
             >
-              <MdChat className="text-white text-xl" />
+              <FaWhatsapp className="text-white text-2xl" />
               Contact Our Customer Service
-            </Link>
+            </a>
           </div>
         </div>
       </div>

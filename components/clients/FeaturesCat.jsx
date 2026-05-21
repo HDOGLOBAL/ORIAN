@@ -133,6 +133,18 @@ const STATIC_CATEGORIES = [
     ],
     names: { en: "Vegetable Cutter Parts", pt: "Peças para Cortadores", fr: "Pièces Coupe-légumes", es: "Repuestos Cortaverduras", de: "Gemüseschneider-Teile" },
   },
+  {
+    id: "kitchen-tap",
+    slug: "kitchen-tap",
+    icon: "/client/categories/kitchen-tap/1.jpg",
+    images: [
+      "/client/categories/kitchen-tap/1.jpg",
+      "/client/categories/kitchen-tap/2.jpg",
+      "/client/categories/kitchen-tap/3.jpg",
+      "/client/categories/kitchen-tap/4.jpg",
+    ],
+    names: { en: "Commercial Kitchen Taps", pt: "Torneiras para Cozinha", fr: "Robinets Cuisine Pro", es: "Grifos Cocina Profesional", de: "Gastro-Küchenarmaturen" },
+  },
 ];
 
 function CategoryCircle({ category, color, onOpen }) {
