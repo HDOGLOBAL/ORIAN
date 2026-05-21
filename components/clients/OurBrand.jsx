@@ -102,9 +102,9 @@ export default function OurBrand() {
                     <p className="text-xs font-medium text-gray-800 line-clamp-2 leading-snug">
                       {product.title}
                     </p>
-                    {product.price && (
+                    {product.price?.eur && (
                       <p className="text-xs font-bold text-[#c41e3a] mt-1">
-                        {product.price}
+                        €{Number(product.price.eur).toFixed(2)}
                       </p>
                     )}
                   </div>
