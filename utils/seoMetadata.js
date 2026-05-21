@@ -1,11 +1,11 @@
 import { headers } from "next/headers";
 
 const DEFAULT_LANG = "en";
-const LOGO = "https://hdotrade.pt/client/logo.png";
+const LOGO = "https://www.hdotrade.pt/client/logo.png";
 
 // All domains mapped to their language codes and base URLs
 const DOMAIN_MAP = [
-  { domain: "https://hdotrade.pt",     lang: "pt",    hreflang: "pt"    },
+  { domain: "https://www.hdotrade.pt",  lang: "pt",    hreflang: "pt"    },
   { domain: "https://hdotrade.com",    lang: "en",    hreflang: "en-US" },
   { domain: "https://hdotrade.uk",     lang: "en",    hreflang: "en-GB" },
   { domain: "https://hdotrade.de",     lang: "de",    hreflang: "de"    },
@@ -17,7 +17,7 @@ const DOMAIN_MAP = [
 
 // Build full hreflang alternates for any page path
 function buildHreflangAlternates(path = "") {
-  const languages = { "x-default": `https://hdotrade.pt${path}` };
+  const languages = { "x-default": `https://www.hdotrade.pt${path}` };
   for (const { domain, hreflang } of DOMAIN_MAP) {
     languages[hreflang] = `${domain}${path}`;
   }
@@ -32,7 +32,7 @@ export function getDomainFromHost(hostname = "") {
   if (host.includes(".de"))     return "https://hdotrade.de";
   if (host.includes(".fr"))     return "https://hdotrade.fr";
   if (host.includes(".es"))     return "https://hdotrade.es";
-  if (host.includes(".pt"))     return "https://hdotrade.pt";
+  if (host.includes(".pt"))     return "https://www.hdotrade.pt";
   if (host.includes(".eu"))     return "https://hdotrade.eu";
   if (host.includes(".com"))    return "https://hdotrade.com";
   return "https://hdotrade.pt";
@@ -171,7 +171,7 @@ export async function getRequestHost() {
 
 // Fixed: canonical now points to the real page URL on the current domain,
 // and includes full hreflang alternates for all domains
-export function getSeoMetadata(pageKey, lang = DEFAULT_LANG, currentDomain = "https://hdotrade.pt") {
+export function getSeoMetadata(pageKey, lang = DEFAULT_LANG, currentDomain = "https://www.hdotrade.pt") {
   const pageMetadata = seoMetadata[pageKey];
   if (!pageMetadata) return null;
 

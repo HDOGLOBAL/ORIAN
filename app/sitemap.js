@@ -2,7 +2,7 @@ import { getAllProducts, getCategories } from "@/database/queries";
 
 // All domains with their hreflang language codes
 const domainLangMap = [
-  { domain: "https://hdotrade.pt",     lang: "pt"    },
+  { domain: "https://www.hdotrade.pt",  lang: "pt"    },
   { domain: "https://hdotrade.com",    lang: "en-US" },
   { domain: "https://hdotrade.uk",     lang: "en-GB" },
   { domain: "https://hdotrade.de",     lang: "de"    },
@@ -30,7 +30,7 @@ const staticCategorySlugs = [
 ];
 
 function buildAlternates(path) {
-  const languages = { "x-default": `https://hdotrade.pt${path}` };
+  const languages = { "x-default": `https://www.hdotrade.pt${path}` };
   for (const { domain, lang } of domainLangMap) {
     languages[lang] = `${domain}${path}`;
   }
@@ -52,7 +52,7 @@ export default async function sitemap() {
   // Static pages — always included, no DB required
   for (const { path, priority, freq } of staticPages) {
     entries.push({
-      url: `https://hdotrade.pt${path}`,
+      url: `https://www.hdotrade.pt${path}`,
       lastModified: now,
       changeFrequency: freq,
       priority,
@@ -64,7 +64,7 @@ export default async function sitemap() {
   for (const slug of staticCategorySlugs) {
     const path = `/category/${slug}`;
     entries.push({
-      url: `https://hdotrade.pt${path}`,
+      url: `https://www.hdotrade.pt${path}`,
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.8,
@@ -81,7 +81,7 @@ export default async function sitemap() {
         if (!slug || staticCategorySlugs.includes(slug)) continue;
         const path = `/category/${encodeURIComponent(slug)}`;
         entries.push({
-          url: `https://hdotrade.pt${path}`,
+          url: `https://www.hdotrade.pt${path}`,
           lastModified: cat.updatedAt || now,
           changeFrequency: "weekly",
           priority: 0.8,
@@ -100,7 +100,7 @@ export default async function sitemap() {
         const id = product.id || product._id.toString();
         const path = `/shop/${id}`;
         entries.push({
-          url: `https://hdotrade.pt${path}`,
+          url: `https://www.hdotrade.pt${path}`,
           lastModified: product.updatedAt || now,
           changeFrequency: "weekly",
           priority: 0.9,
