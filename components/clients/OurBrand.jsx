@@ -46,7 +46,7 @@ export default function OurBrand() {
             {t.faqTitle}
           </h2>
           <div className="space-y-2">
-            {faqs.slice(0, 3).map((faq, idx) => (
+            {faqs.map((faq, idx) => (
               <div
                 key={idx}
                 className="border border-gray-100 rounded-xl overflow-hidden shadow-sm"
