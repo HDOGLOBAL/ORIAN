@@ -111,7 +111,7 @@ export const metadata = {
     },
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || "",
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || "cdr-NyAQwn1Ro7e3RBk3sJkJHmg6G12CB8ksAa6WBMM",
     yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || "",
     other: {
       "msvalidate.01": process.env.NEXT_PUBLIC_BING_VERIFICATION || "",
