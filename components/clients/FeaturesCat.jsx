@@ -80,11 +80,11 @@ import { useEffect, useState } from "react";
 import { getFeaturedCategories } from "@/database/queries";
 import { getUiLanguage } from "@/utils/uiLanguage";
 
-export default function FeaturedCategories() {
+export default function FeaturedCategories({ initialCategories = null }) {
   const lang = useDomain();
   const uiLang = getUiLanguage(lang);
-  const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [categories, setCategories] = useState(initialCategories || []);
+  const [isLoading, setIsLoading] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
   const colors = [
@@ -111,6 +111,7 @@ export default function FeaturedCategories() {
   };
 
   useEffect(() => {
+    if (initialCategories !== null) return;
     fetchCategories();
   }, [refreshKey]);
 

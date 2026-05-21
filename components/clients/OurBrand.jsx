@@ -88,8 +88,8 @@ export default function OurBrand() {
                   <div className="relative aspect-square bg-gray-50">
                     <Image
                       src={
-                        product.thumbnail ||
-                        product.mainImage ||
+                        product.image ||
+                        product.images?.[0] ||
                         "/client/banner/placeholder.png"
                       }
                       alt={product.title || "Spare part"}

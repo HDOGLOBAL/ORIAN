@@ -15,6 +15,7 @@ import {
   getRequestHost,
   getDomainFromHost,
 } from "@/utils/seoMetadata";
+import { getFeaturedCategories } from "@/database/queries";
 
 export async function generateMetadata() {
   const lang = await getRequestLanguage();
@@ -26,6 +27,7 @@ export async function generateMetadata() {
 
 export default async function Home() {
   const lang = await getRequestLanguage();
+  const categories = await getFeaturedCategories().catch(() => []);
   return (
     <>
       <FAQSchema lang={lang} />
@@ -35,7 +37,7 @@ export default async function Home() {
         <FeatureIcons />
         <ButtonImg />
         <ImageBanners />
-        <FeaturedCategories />
+        <FeaturedCategories initialCategories={categories} />
         <Banner2 />
         <TrustBadges />
         <OurBrand />
