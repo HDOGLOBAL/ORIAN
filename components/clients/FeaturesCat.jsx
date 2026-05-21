@@ -80,10 +80,42 @@ import { useEffect, useState } from "react";
 import { getFeaturedCategories } from "@/database/queries";
 import { getUiLanguage } from "@/utils/uiLanguage";
 
+// Static fallback used when DB returns no featured categories
+const STATIC_CATEGORIES = [
+  {
+    id: "dishwasher",
+    slug: "dishwasher",
+    icon: "/client/categories/dishwasher.jpg",
+    names: { en: "Dishwasher Spare Parts", pt: "Peças para Máquinas de Lavar", fr: "Pièces Lave-vaisselle", es: "Repuestos Lavavajillas", de: "Geschirrspüler-Ersatzteile" },
+  },
+  {
+    id: "mixer",
+    slug: "mixer",
+    icon: "/client/categories/mixer.jpg",
+    names: { en: "Hand Mixer Accessories", pt: "Acessórios para Misturadoras", fr: "Accessoires Batteur", es: "Accesorios para Batidora", de: "Handmixer-Zubehör" },
+  },
+  {
+    id: "juicer",
+    slug: "juicer",
+    icon: "/client/categories/juicer.jpg",
+    names: { en: "Juicer Spare Parts", pt: "Peças para Espremidores", fr: "Pièces Presse-agrumes", es: "Repuestos Exprimidora", de: "Entsafter-Ersatzteile" },
+  },
+  {
+    id: "vegetable-cutter",
+    slug: "vegetable-cutter",
+    icon: "/client/categories/vegetable-cutter.jpg",
+    names: { en: "Vegetable Cutter Parts", pt: "Peças para Cortadores", fr: "Pièces Coupe-légumes", es: "Repuestos Cortaverduras", de: "Gemüseschneider-Teile" },
+  },
+];
+
 export default function FeaturedCategories({ initialCategories = null }) {
   const lang = useDomain();
   const uiLang = getUiLanguage(lang);
-  const [categories, setCategories] = useState(initialCategories || []);
+  const resolveCategories = (cats) => {
+    if (!cats || cats.length === 0) return STATIC_CATEGORIES.map(c => ({ ...c, name: c.names[uiLang] || c.names.en }));
+    return cats;
+  };
+  const [categories, setCategories] = useState(resolveCategories(initialCategories));
   const [isLoading, setIsLoading] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -100,11 +132,10 @@ export default function FeaturedCategories({ initialCategories = null }) {
     try {
       setIsLoading(true);
       const fetchedCategories = await getFeaturedCategories();
-      // Limit to 6 categories for display
-      setCategories(fetchedCategories.slice(0, 6));
+      setCategories(resolveCategories(fetchedCategories.slice(0, 6)));
     } catch (error) {
       console.error("Error fetching featured categories:", error);
-      setCategories([]);
+      setCategories(resolveCategories([]));
     } finally {
       setIsLoading(false);
     }
