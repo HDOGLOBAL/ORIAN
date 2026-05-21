@@ -85,28 +85,93 @@ const STATIC_CATEGORIES = [
   {
     id: "dishwasher",
     slug: "dishwasher",
-    icon: "/client/categories/dishwasher.jpg",
+    icon: "/client/categories/dishwasher/1.jpg",
+    images: [
+      "/client/categories/dishwasher/1.jpg",
+      "/client/categories/dishwasher/2.jpg",
+      "/client/categories/dishwasher/3.jpg",
+      "/client/categories/dishwasher/4.jpg",
+      "/client/categories/dishwasher/5.jpg",
+    ],
     names: { en: "Dishwasher Spare Parts", pt: "Peças para Máquinas de Lavar", fr: "Pièces Lave-vaisselle", es: "Repuestos Lavavajillas", de: "Geschirrspüler-Ersatzteile" },
   },
   {
     id: "mixer",
     slug: "mixer",
-    icon: "/client/categories/mixer.jpg",
+    icon: "/client/categories/mixer/1.jpg",
+    images: [
+      "/client/categories/mixer/1.jpg",
+      "/client/categories/mixer/2.jpg",
+      "/client/categories/mixer/3.jpg",
+      "/client/categories/mixer/4.jpg",
+    ],
     names: { en: "Hand Mixer Accessories", pt: "Acessórios para Misturadoras", fr: "Accessoires Batteur", es: "Accesorios para Batidora", de: "Handmixer-Zubehör" },
   },
   {
     id: "juicer",
     slug: "juicer",
-    icon: "/client/categories/juicer.jpg",
+    icon: "/client/categories/juicer/1.jpg",
+    images: [
+      "/client/categories/juicer/1.jpg",
+      "/client/categories/juicer/2.jpg",
+      "/client/categories/juicer/3.jpg",
+      "/client/categories/juicer/4.jpg",
+      "/client/categories/juicer/5.jpg",
+    ],
     names: { en: "Juicer Spare Parts", pt: "Peças para Espremidores", fr: "Pièces Presse-agrumes", es: "Repuestos Exprimidora", de: "Entsafter-Ersatzteile" },
   },
   {
     id: "vegetable-cutter",
     slug: "vegetable-cutter",
-    icon: "/client/categories/vegetable-cutter.jpg",
+    icon: "/client/categories/vegetable-cutter/1.jpg",
+    images: [
+      "/client/categories/vegetable-cutter/1.jpg",
+      "/client/categories/vegetable-cutter/2.jpg",
+      "/client/categories/vegetable-cutter/3.jpg",
+      "/client/categories/vegetable-cutter/4.jpg",
+      "/client/categories/vegetable-cutter/5.jpg",
+    ],
     names: { en: "Vegetable Cutter Parts", pt: "Peças para Cortadores", fr: "Pièces Coupe-légumes", es: "Repuestos Cortaverduras", de: "Gemüseschneider-Teile" },
   },
 ];
+
+function CategoryCircle({ category, color, onOpen }) {
+  const imgs = category.images?.length ? category.images : category.icon ? [category.icon] : [];
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    if (imgs.length <= 1) return;
+    const t = setInterval(() => setIdx((i) => (i + 1) % imgs.length), 2500);
+    return () => clearInterval(t);
+  }, [imgs.length]);
+
+  return (
+    <div
+      className="flex flex-col items-center text-center w-full cursor-pointer group"
+      onClick={() => imgs.length > 0 && onOpen(imgs, idx)}
+    >
+      <div
+        className={`w-40 h-40 sm:w-32 sm:h-32 lg:w-[184px] lg:h-[184px] rounded-full ${color} flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-110 shadow-md group-hover:shadow-lg relative`}
+      >
+        {imgs[idx] ? (
+          <Image
+            src={imgs[idx]}
+            alt={category.name}
+            className="object-contain w-full h-full rounded-full transition-opacity duration-500"
+            width={184}
+            height={184}
+            unoptimized
+          />
+        ) : (
+          <div className="text-gray-400 text-center text-xs px-2">{category.name}</div>
+        )}
+      </div>
+      <p className="mt-2 text-sm md:text-base line-clamp-2 group-hover:text-[#0eadef] transition-colors duration-300">
+        {category.name}
+      </p>
+    </div>
+  );
+}
 
 export default function FeaturedCategories({ initialCategories = null }) {
   const lang = useDomain();
@@ -118,6 +183,7 @@ export default function FeaturedCategories({ initialCategories = null }) {
   const [categories, setCategories] = useState(resolveCategories(initialCategories));
   const [isLoading, setIsLoading] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [lightbox, setLightbox] = useState(null); // { images: [], index: number }
 
   const colors = [
     "bg-pink-100",
@@ -220,42 +286,14 @@ export default function FeaturedCategories({ initialCategories = null }) {
       <p className="text-center text-gray-500 text-sm mb-8">{sectionSubtitle}</p>
       <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 md:gap-6 justify-items-center">
         {categories.map((category, index) => (
-          <Link
+          <CategoryCircle
             key={category.id}
-            href={`/shop?category=${category.id}`}
-            className="flex flex-col items-center text-center w-full group cursor-pointer"
-          >
-            <div
-              className={`w-40 h-40 sm:w-32 sm:h-32 lg:w-[184px] lg:h-[184px] rounded-full ${
-                colors[index % colors.length]
-              } flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-110 shadow-md group-hover:shadow-lg`}
-            >
-              {category.icon ? (
-                <Image
-                  src={category.icon}
-                  alt={category.name}
-                  className="object-contain w-full h-full rounded-full"
-                  width={184}
-                  height={184}
-                  unoptimized={true}
-                  priority={false}
-                />
-              ) : (
-                <div className="text-gray-400 text-center text-xs px-2">
-                  {category.name}
-                </div>
-              )}
-            </div>
-            <p className="mt-2 text-sm md:text-base line-clamp-2 group-hover:text-[#0eadef] transition-colors duration-300">
-              {category.name}
-            </p>
-            {category.productCount > 0 && (
-              <span className="text-xs text-gray-500 mt-0.5">
-                {category.productCount} {category.productCount === 1 ? "product" : "products"}
-              </span>
-            )}
-          </Link>
+            category={category}
+            color={colors[index % colors.length]}
+            onOpen={(imgs, startIdx) => setLightbox({ images: imgs, index: startIdx })}
+          />
         ))}
+
         {/* View All Categories tile */}
         <Link
           href="/shop"
@@ -269,6 +307,66 @@ export default function FeaturedCategories({ initialCategories = null }) {
           </p>
         </Link>
       </div>
+
+      {/* Lightbox modal */}
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center"
+          onClick={() => setLightbox(null)}
+        >
+          <div
+            className="relative max-w-2xl w-full mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="absolute -top-10 right-0 text-white text-3xl leading-none hover:text-gray-300"
+              onClick={() => setLightbox(null)}
+            >
+              ×
+            </button>
+            <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
+              <Image
+                src={lightbox.images[lightbox.index]}
+                alt="Product photo"
+                fill
+                className="object-contain"
+                unoptimized
+              />
+            </div>
+            {lightbox.images.length > 1 && (
+              <div className="flex justify-center gap-3 mt-4">
+                {lightbox.images.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setLightbox((lb) => ({ ...lb, index: i }))}
+                    className={`w-14 h-14 rounded overflow-hidden border-2 transition-all ${
+                      i === lightbox.index ? "border-white" : "border-transparent opacity-60 hover:opacity-100"
+                    }`}
+                  >
+                    <Image src={img} alt="" width={56} height={56} className="object-cover w-full h-full" unoptimized />
+                  </button>
+                ))}
+              </div>
+            )}
+            {lightbox.images.length > 1 && (
+              <>
+                <button
+                  className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 text-white text-4xl hover:text-gray-300 hidden sm:block"
+                  onClick={() => setLightbox((lb) => ({ ...lb, index: (lb.index - 1 + lb.images.length) % lb.images.length }))}
+                >
+                  ‹
+                </button>
+                <button
+                  className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 text-white text-4xl hover:text-gray-300 hidden sm:block"
+                  onClick={() => setLightbox((lb) => ({ ...lb, index: (lb.index + 1) % lb.images.length }))}
+                >
+                  ›
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
