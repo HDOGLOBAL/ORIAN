@@ -7,7 +7,7 @@ const LOGO = "https://hdotrade.pt/client/logo.png";
 const DOMAIN_MAP = [
   { domain: "https://hdotrade.pt",     lang: "pt",    hreflang: "pt"    },
   { domain: "https://hdotrade.com",    lang: "en",    hreflang: "en-US" },
-  { domain: "https://hdotrade.co.uk",  lang: "en",    hreflang: "en-GB" },
+  { domain: "https://hdotrade.uk",     lang: "en",    hreflang: "en-GB" },
   { domain: "https://hdotrade.de",     lang: "de",    hreflang: "de"    },
   { domain: "https://hdotrade.es",     lang: "es",    hreflang: "es"    },
   { domain: "https://hdotrade.fr",     lang: "fr",    hreflang: "fr"    },
@@ -41,20 +41,20 @@ export function getDomainFromHost(hostname = "") {
 const seoMetadata = {
   home: {
     title: {
-      en: "HDO Trade | Tested Spare Parts Worldwide",
-      pt: "HDO Trade | Peças Sobresselentes Testadas",
-      fr: "HDO Trade | Pièces Détachées Testées",
-      es: "HDO Trade | Repuestos Testados",
-      he: "HDO Trade | חלקי חילוף מבוקרים",
-      de: "HDO Trade | Geprüfte Ersatzteile Weltweit",
+      en: "Industrial Kitchen Equipment & Spare Parts | HDO Trade",
+      pt: "Equipamentos e Peças de Cozinha Industrial | HDO Trade",
+      fr: "Équipements & Pièces de Cuisine Industrielle | HDO Trade",
+      es: "Equipos y Repuestos de Cocina Industrial | HDO Trade",
+      he: "ציוד ואביזרי מטבח תעשייתי | HDO Trade",
+      de: "Gewerbeküchen Ersatzteile & Ausrüstung | HDO Trade",
     },
     description: {
-      en: "HDO Trade offers tested, high-quality spare parts for commercial kitchen equipment. Fast global shipping. Trusted by professionals.",
-      pt: "HDO Trade oferece peças sobresselentes testadas e de alta qualidade para equipamento de cozinha comercial. Envio rápido mundial.",
-      fr: "HDO Trade propose des pièces détachées testées et de haute qualité pour équipements de cuisine professionnelle. Livraison mondiale rapide.",
-      es: "HDO Trade ofrece repuestos testados de alta calidad para equipos de cocina comercial. Envío global rápido.",
-      he: "HDO Trade מציעה חלקי חילוף מבוקרים ואיכותיים לציוד מטבח מסחרי. משלוח מהיר לכל העולם.",
-      de: "HDO Trade bietet geprüfte Hochqualitäts-Ersatzteile für Gewerbeküchen. Schneller weltweiter Versand.",
+      en: "Shop tested spare parts for commercial kitchen equipment — dishwashers, mixers, juicers & more. Santos, Electrolux, Sirman, Dynamic and 50+ brands. Fast worldwide shipping.",
+      pt: "Peças sobresselentes testadas para equipamento de cozinha industrial — lava-louças, batedeiras, espremedores e mais. Santos, Electrolux, Sirman, Dynamic e +50 marcas. Envio rápido mundial.",
+      fr: "Pièces détachées testées pour équipements de cuisine professionnelle — lave-vaisselle, mixeurs, presse-agrumes et plus. Santos, Electrolux, Sirman, Dynamic et +50 marques. Livraison mondiale rapide.",
+      es: "Repuestos testados para equipos de cocina comercial — lavavajillas, batidoras, exprimidores y más. Santos, Electrolux, Sirman, Dynamic y +50 marcas. Envío mundial rápido.",
+      he: "חלקי חילוף מבוקרים לציוד מטבח מסחרי — מדיח כלים, מיקסר, מסחטה ועוד. Santos, Electrolux, Sirman, Dynamic ו-50+ מותגים. משלוח מהיר לכל העולם.",
+      de: "Geprüfte Ersatzteile für Gewerbeküchen — Spülmaschinen, Mixer, Entsafter und mehr. Santos, Electrolux, Sirman, Dynamic und 50+ Marken. Schneller weltweiter Versand.",
     },
     path: "",
   },
@@ -188,7 +188,7 @@ export function getSeoMetadata(pageKey, lang = DEFAULT_LANG, currentDomain = "ht
       description,
       type: "website",
       siteName: "HDO Trade",
-      images: [{ url: LOGO, width: 1200, height: 630, alt: "HDO Trade" }],
+      images: [{ url: LOGO, alt: "HDO Trade" }],
     },
     twitter: {
       card: "summary_large_image",
@@ -240,7 +240,7 @@ export function getLocalizedProductSeo(product, lang = DEFAULT_LANG, currentDoma
       siteName: "HDO Trade",
       images: image
         ? [{ url: image, width: 800, height: 800, alt: title }]
-        : [{ url: LOGO, width: 1200, height: 630, alt: "HDO Trade" }],
+        : [{ url: LOGO, alt: "HDO Trade" }],
     },
     twitter: {
       card: "summary_large_image",

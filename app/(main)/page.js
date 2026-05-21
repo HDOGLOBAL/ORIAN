@@ -6,6 +6,9 @@ import FilterC from "@/components/clients/FilterC";
 import ImageBanners from "@/components/clients/ImageBanner";
 import OurBrand from "@/components/clients/OurBrand";
 import Banner from "@/components/home/Banner";
+import FeatureIcons from "@/components/home/FeatureIcons";
+import TrustBadges from "@/components/home/TrustBadges";
+import FAQSchema from "@/components/seo/FAQSchema";
 import {
   getRequestLanguage,
   getSeoMetadata,
@@ -22,16 +25,22 @@ export async function generateMetadata() {
 }
 
 export default async function Home() {
+  const lang = await getRequestLanguage();
   return (
-    <div className="w-full max-w-[1440px] mx-auto bg-[#ffffff] px-4">
-      <FilterC />
-      <Banner />
-      <ImageBanners />
-      <ButtonImg />
-      <FeaturedCategories />
-      <Banner2 />
-      <OurBrand />
-      <ChatButton />
-    </div>
+    <>
+      <FAQSchema lang={lang} />
+      <div className="w-full max-w-[1440px] mx-auto bg-[#ffffff] px-4">
+        <FilterC />
+        <Banner />
+        <FeatureIcons />
+        <ButtonImg />
+        <ImageBanners />
+        <FeaturedCategories />
+        <Banner2 />
+        <TrustBadges />
+        <OurBrand />
+        <ChatButton />
+      </div>
+    </>
   );
 }

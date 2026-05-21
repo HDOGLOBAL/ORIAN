@@ -1,7 +1,7 @@
 // FAQPage JSON-LD — gives expandable FAQ rich snippets directly in Google search results
 // These appear as dropdown accordions under your listing — takes up much more space = more clicks
 
-const FAQS = {
+export const FAQS = {
   en: [
     { q: "Do you ship spare parts worldwide?",
       a: "Yes, HDO Trade ships tested spare parts to customers worldwide with fast delivery and full tracking." },

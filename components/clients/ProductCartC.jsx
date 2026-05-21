@@ -571,7 +571,7 @@ const handleChatOpen = () => {
   return (
     <div className="max-w-[1280px] mx-auto px-3 pb-[50px]">
       {/* Breadcrumb */}
-      <div className="my-16 flex items-center gap-1">
+      <div className="my-8 flex items-center gap-1">
         <p className="text-[16px]">{getText("home")}</p>
         <MdKeyboardArrowRight className="text-xl" />
         <p className="text-[16px] text-gray-600">
@@ -602,7 +602,7 @@ const handleChatOpen = () => {
       </div>
 
       {/* Content */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         {/* Image Gallery */}
         <div className="border border-gray-600 p-4 rounded-2xl">
           <DetailGallery
@@ -784,40 +784,20 @@ const handleChatOpen = () => {
                 {getText("shopNow")}
               </button>
             </div>
-            {/* WhatsApp Button */}
-            <button
-              onClick={handleWhatsAppContact}
-              className="w-full bg-[#25D366] md:mt-16 text-white py-3 font-bold text-[16px] rounded-full cursor-pointer hover:bg-[#1fb855] transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-md hover:shadow-lg mt-3"
-            >
-              <FaWhatsapp className="text-white text-xl" />
-              Ask us Price on WhatsApp
-            </button>
-
-            {/* Email Button */}
-            <button
-              onClick={handleEmailContact}
-              className="w-full bg-white text-gray-800 mt-3 py-3 font-bold text-[16px] rounded-full cursor-pointer hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-md hover:shadow-lg border-2 border-gray-300"
-            >
-              <SiGmail className="text-[#EA4335] text-xl" />
-              Ask us Price on Email
-            </button>
-
-            {/* Chat Button */}
-            <button
-              onClick={handleChatOpen}
-              className="w-full bg-[#c41e3a] text-white mt-3 py-3 font-bold text-[16px] rounded-full cursor-pointer hover:bg-[#a01829] transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
-              disabled={!isSupportOnline}
-              style={{ opacity: !isSupportOnline ? 0.5 : 1, pointerEvents: !isSupportOnline ? 'none' : 'auto' }}
+            {/* Contact Our Customer Service */}
+            <Link
+              href="/contact"
+              className="w-full mt-4 bg-[#c41e3a] text-white py-3 font-bold text-[16px] rounded-full hover:bg-[#a01829] transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
             >
               <MdChat className="text-white text-xl" />
-              Ask us Price on Chat
-            </button>
+              Contact Our Customer Service
+            </Link>
           </div>
         </div>
       </div>
 
       {/* Product Info */}
-      <div className="mt-20 ">
+      <div className="mt-10">
         <div>
           <div className="flex items-center justify-center">
             <button

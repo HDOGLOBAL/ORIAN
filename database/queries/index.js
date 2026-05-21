@@ -214,6 +214,35 @@ export async function getFeaturedCategories() {
       .sort({ name: 1 })
       .lean();
 
+    const ids = categories.map((c) => c._id);
+
+    // Count products per category — handles both categoryId and categoryIds[]
+    const rawCounts = await productModel.aggregate([
+      {
+        $project: {
+          cats: {
+            $setUnion: [
+              { $ifNull: ["$categoryIds", []] },
+              {
+                $cond: {
+                  if: { $ifNull: ["$categoryId", false] },
+                  then: ["$categoryId"],
+                  else: [],
+                },
+              },
+            ],
+          },
+        },
+      },
+      { $unwind: "$cats" },
+      { $match: { cats: { $in: ids } } },
+      { $group: { _id: "$cats", count: { $sum: 1 } } },
+    ]);
+
+    const countMap = Object.fromEntries(
+      rawCounts.map(({ _id, count }) => [_id.toString(), count])
+    );
+
     // Convert MongoDB objects to plain JavaScript objects
     return categories.map((item) => ({
       id: item._id.toString(),
@@ -223,6 +252,7 @@ export async function getFeaturedCategories() {
       description: item.description,
       isFeatured: item.isFeatured,
       createdAt: item.createdAt,
+      productCount: countMap[item._id.toString()] || 0,
     }));
   } catch (error) {
     throw new Error("Failed to fetch featured categories: " + error.message);

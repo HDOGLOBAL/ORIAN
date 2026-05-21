@@ -74,6 +74,7 @@
 'use client'
 import Image from "next/image";
 import Link from "next/link";
+import { BsGrid3X3Gap } from "react-icons/bs";
 import { useDomain } from "@/providers/useDomain";
 import { useEffect, useState } from "react";
 import { getFeaturedCategories } from "@/database/queries";
@@ -123,44 +124,45 @@ export default function FeaturedCategories() {
   }, []);
 
   const titleMap = {
-    pt: "Categorias em Destaque",
-    fr: "Catégories Vedettes",
-    es: "Categorías Destacadas",
-    he: "קטגוריות נבחרות",
-    de: "Ausgewählte Kategorien",
+    en: "Shop by Category",
+    pt: "Comprar por Categoria",
+    fr: "Acheter par Catégorie",
+    es: "Comprar por Categoría",
+    he: "קנה לפי קטגוריה",
+    de: "Nach Kategorie kaufen",
   };
 
-  const sectionTitle = titleMap[uiLang] || "Featured Categories";
+  const subtitleMap = {
+    en: "Browse our wide range of spare parts for industrial kitchen equipment",
+    pt: "Explore a nossa vasta gama de peças para equipamentos de cozinha industrial",
+    fr: "Parcourez notre large gamme de pièces pour équipements de cuisine industrielle",
+    es: "Explore nuestra amplia gama de repuestos para equipos de cocina industrial",
+    he: "עיינו במגוון הרחב של חלקי החילוף שלנו לציוד מטבח תעשייתי",
+    de: "Entdecken Sie unser breites Sortiment an Ersatzteilen für Industrieküchen",
+  };
+
+  const viewAllMap = {
+    en: "View All Categories",
+    pt: "Ver Todas as Categorias",
+    fr: "Voir Toutes les Catégories",
+    es: "Ver Todas las Categorías",
+    he: "ראה את כל הקטגוריות",
+    de: "Alle Kategorien anzeigen",
+  };
+
+  const sectionTitle = titleMap[uiLang] || "Shop by Category";
+  const sectionSubtitle = subtitleMap[uiLang] || subtitleMap.en;
+  const viewAllLabel = viewAllMap[uiLang] || viewAllMap.en;
 
   if (isLoading) {
     return (
-      <section className="max-w-[1276px] w-full mx-auto py-12 px-4">
-        <div className="flex justify-center items-center gap-3 mb-8">
-          <h2 className="text-center font-bold text-[#1A1D21] text-[28px] sm:text-[32px] md:text-[48px]">
-            {sectionTitle}
-          </h2>
-          <button
-            onClick={() => setRefreshKey((prev) => prev + 1)}
-            className="p-2 hover:bg-gray-100 rounded-full transition"
-            title="Refresh categories"
-          >
-            <svg
-              className="w-6 h-6 text-gray-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-              />
-            </svg>
-          </button>
-        </div>
+      <section className="max-w-[1276px] w-full mx-auto py-10 px-4">
+        <h2 className="text-center font-bold text-[#1A1D21] text-[28px] sm:text-[32px] md:text-[40px] mb-2">
+          {sectionTitle}
+        </h2>
+        <p className="text-center text-gray-500 text-sm mb-8">{sectionSubtitle}</p>
         <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#c41e3a]"></div>
         </div>
       </section>
     );
@@ -168,63 +170,23 @@ export default function FeaturedCategories() {
 
   if (categories.length === 0) {
     return (
-      <section className="max-w-[1276px] w-full mx-auto py-12 px-4">
-        <div className="flex justify-center items-center gap-3 mb-8">
-          <h2 className="text-center font-bold text-[#1A1D21] text-[28px] sm:text-[32px] md:text-[48px]">
-            {sectionTitle}
-          </h2>
-          <button
-            onClick={() => setRefreshKey((prev) => prev + 1)}
-            className="p-2 hover:bg-gray-100 rounded-full transition"
-            title="Refresh categories"
-          >
-            <svg
-              className="w-6 h-6 text-gray-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-              />
-            </svg>
-          </button>
-        </div>
+      <section className="max-w-[1276px] w-full mx-auto py-10 px-4">
+        <h2 className="text-center font-bold text-[#1A1D21] text-[28px] sm:text-[32px] md:text-[40px] mb-2">
+          {sectionTitle}
+        </h2>
+        <p className="text-center text-gray-500 text-sm mb-8">{sectionSubtitle}</p>
         <div className="text-center text-gray-500">No categories available</div>
       </section>
     );
   }
 
   return (
-    <section className="max-w-[1276px] w-full mx-auto py-12 px-4">
-      <div className="flex justify-center items-center gap-3 mb-8">
-        <h2 className="text-center font-bold text-[#1A1D21] text-[28px] sm:text-[32px] md:text-[48px]">
-          {sectionTitle}
-        </h2>
-        <button
-          onClick={() => setRefreshKey((prev) => prev + 1)}
-          className="p-2 hover:bg-gray-100 rounded-full transition"
-          title="Refresh categories"
-        >
-          <svg
-            className="w-6 h-6 text-gray-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-            />
-          </svg>
-        </button>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 md:gap-8 justify-items-center">
+    <section className="max-w-[1276px] w-full mx-auto py-10 px-4">
+      <h2 className="text-center font-bold text-[#1A1D21] text-[28px] sm:text-[32px] md:text-[40px] mb-2">
+        {sectionTitle}
+      </h2>
+      <p className="text-center text-gray-500 text-sm mb-8">{sectionSubtitle}</p>
+      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 md:gap-6 justify-items-center">
         {categories.map((category, index) => (
           <Link
             key={category.id}
@@ -255,8 +217,25 @@ export default function FeaturedCategories() {
             <p className="mt-2 text-sm md:text-base line-clamp-2 group-hover:text-[#0eadef] transition-colors duration-300">
               {category.name}
             </p>
+            {category.productCount > 0 && (
+              <span className="text-xs text-gray-500 mt-0.5">
+                {category.productCount} {category.productCount === 1 ? "product" : "products"}
+              </span>
+            )}
           </Link>
         ))}
+        {/* View All Categories tile */}
+        <Link
+          href="/shop"
+          className="flex flex-col items-center text-center w-full group cursor-pointer"
+        >
+          <div className="w-40 h-40 sm:w-32 sm:h-32 lg:w-[184px] lg:h-[184px] rounded-full bg-[#c41e3a] flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md">
+            <BsGrid3X3Gap className="text-white text-4xl" />
+          </div>
+          <p className="mt-2 text-sm md:text-base text-[#c41e3a] font-semibold line-clamp-2">
+            {viewAllLabel}
+          </p>
+        </Link>
       </div>
     </section>
   );

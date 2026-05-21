@@ -4,6 +4,10 @@ import { getCartWithProducts } from "@/database/queries";
 import { getCurrency } from "@/utils/getCookieServer";
 import { getExchangeRates } from "@/utils/getExchangeRates";
 
+export const metadata = {
+  robots: { index: false, follow: false },
+};
+
 export default async function CartPage() {
   const cookieStore = await cookies();
   const trackingId = cookieStore.get("trackingId")?.value;

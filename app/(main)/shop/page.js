@@ -9,6 +9,7 @@ import {
   getRequestHost,
   getDomainFromHost,
 } from "@/utils/seoMetadata";
+import { getProducts } from "@/database/queries";
 
 import { Suspense } from "react";
 
@@ -37,25 +38,61 @@ export default async function page(props) {
   const decodedPage = decordedFilterCat(page || 1);
   const decodedSubcategory = decordedFilterCat(subcategory);
 
-  return (
-    <div className="w-full max-w-[1440px] mx-auto bg-[#ffffff] relative">
-      <div className="absolute top-4 right-4 z-30">
-        <CountrySelectorModal />
-      </div>
+  // ItemList JSON-LD — only on the unfiltered shop landing (no active filters)
+  let itemListSchema = null;
+  const isBaseShop = !search && !manufacturer && !category && !subcategory && (!page || page === "1");
+  if (isBaseShop) {
+    const host = await getRequestHost();
+    const domain = getDomainFromHost(host);
+    try {
+      const { products: schemaProducts } = await getProducts({ limit: 20 });
+      if (Array.isArray(schemaProducts) && schemaProducts.length > 0) {
+        itemListSchema = {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "HDO Trade — Spare Parts Shop",
+          url: `${domain}/shop`,
+          numberOfItems: schemaProducts.length,
+          itemListElement: schemaProducts.map((p, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            url: `${domain}/shop/${p.id || p._id}`,
+            name: p.name,
+          })),
+        };
+      }
+    } catch {
+      // schema is non-critical; silently skip on error
+    }
+  }
 
-      <div className="container pt-4 pb-16 items-start">
-        <FilterC />
-        <Suspense fallback={<Loading />}>
-          <ProductQuery
-            search={search}
-            manufacturerId={decodedManufacturer}
-            categoryId={decodedCategory}
-            subcategoryId={decodedSubcategory}
-            page={decodedPage}
-          />
-        </Suspense>
+  return (
+    <>
+      {itemListSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+        />
+      )}
+      <div className="w-full max-w-[1440px] mx-auto bg-[#ffffff] relative">
+        <div className="absolute top-4 right-4 z-30">
+          <CountrySelectorModal />
+        </div>
+
+        <div className="container pt-4 pb-16 items-start">
+          <FilterC />
+          <Suspense fallback={<Loading />}>
+            <ProductQuery
+              search={search}
+              manufacturerId={decodedManufacturer}
+              categoryId={decodedCategory}
+              subcategoryId={decodedSubcategory}
+              page={decodedPage}
+            />
+          </Suspense>
+        </div>
+        <ChatButton/>
       </div>
-      <ChatButton/>
-    </div>
+    </>
   );
 }

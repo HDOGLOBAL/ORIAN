@@ -6,6 +6,10 @@ import {
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+export const metadata = {
+  robots: { index: false, follow: false },
+};
+
 export default async function PaymentPage() {
   const cookieStore = await cookies();
   const trackingId = cookieStore.get("trackingId")?.value;
