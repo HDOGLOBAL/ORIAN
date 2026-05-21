@@ -248,7 +248,7 @@
 
 
 "use client";
-import { MdKeyboardArrowRight } from "react-icons/md";
+import { MdKeyboardArrowRight, MdChat } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa";
 import { RiCheckboxCircleLine } from "react-icons/ri";
 import { SiGmail } from "react-icons/si";
@@ -784,16 +784,34 @@ const handleChatOpen = () => {
                 {getText("shopNow")}
               </button>
             </div>
-            {/* Contact on WhatsApp */}
-            <a
-              href="https://wa.me/351935210099"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full mt-4 bg-[#25D366] text-white py-3 font-bold text-[16px] rounded-full hover:bg-[#1da851] transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+            {/* WhatsApp Button */}
+            <button
+              onClick={handleWhatsAppContact}
+              className="w-full bg-[#25D366] mt-3 text-white py-3 font-bold text-[16px] rounded-full cursor-pointer hover:bg-[#1fb855] transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
             >
-              <FaWhatsapp className="text-white text-2xl" />
-              Contact Our Customer Service
-            </a>
+              <FaWhatsapp className="text-white text-xl" />
+              Ask us Price on WhatsApp
+            </button>
+
+            {/* Email Button */}
+            <button
+              onClick={handleEmailContact}
+              className="w-full bg-white text-gray-800 mt-3 py-3 font-bold text-[16px] rounded-full cursor-pointer hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-md hover:shadow-lg border-2 border-gray-300"
+            >
+              <SiGmail className="text-[#EA4335] text-xl" />
+              Ask us Price on Email
+            </button>
+
+            {/* Chat Button */}
+            <button
+              onClick={handleChatOpen}
+              className="w-full bg-[#c41e3a] text-white mt-3 py-3 font-bold text-[16px] rounded-full cursor-pointer hover:bg-[#a01829] transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+              disabled={!isSupportOnline}
+              style={{ opacity: !isSupportOnline ? 0.5 : 1, pointerEvents: !isSupportOnline ? 'none' : 'auto' }}
+            >
+              <MdChat className="text-white text-xl" />
+              Ask us Price on Chat
+            </button>
           </div>
         </div>
       </div>
