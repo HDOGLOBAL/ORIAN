@@ -603,17 +603,60 @@ const handleChatOpen = () => {
 
       {/* Content */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-        {/* Image Gallery */}
-        <div className="border border-gray-600 p-4 rounded-2xl">
-          <DetailGallery
-            images={
-              product?.images?.length > 0
-                ? product.images
-                : product?.image
-                ? [product.image]
-                : []
-            }
-          />
+        {/* Left: Image + Description */}
+        <div className="flex flex-col gap-6">
+          {/* Image Gallery */}
+          <div className="border border-gray-600 p-4 rounded-2xl">
+            <DetailGallery
+              images={
+                product?.images?.length > 0
+                  ? product.images
+                  : product?.image
+                  ? [product.image]
+                  : []
+              }
+            />
+          </div>
+
+          {/* Product Description */}
+          <div>
+            <div className="flex items-center justify-center">
+              <button
+                onClick={() => setActiveTab("details")}
+                className={`p-4 rounded-l-full font-bold md:text-2xl ${
+                  activeTab === "details"
+                    ? "bg-red-600 text-white"
+                    : "border border-red-600"
+                }`}
+              >
+                {getText("productDetails")}
+              </button>
+              <button
+                onClick={() => setActiveTab("additional")}
+                className={`p-3.5 rounded-r-full md:text-2xl font-bold ${
+                  activeTab === "additional"
+                    ? "bg-red-600 text-white"
+                    : "border border-red-600"
+                }`}
+              >
+                {getText("additionalInfo")}
+              </button>
+            </div>
+            <div
+              className={`mt-6 text-gray-600 ${isHebrewProduct ? "text-right" : ""}`}
+              dir={isHebrewProduct ? "rtl" : "ltr"}
+            >
+              {isClient ? (
+                activeTab === "details" ? (
+                  <div dangerouslySetInnerHTML={{ __html: productDescription }} />
+                ) : (
+                  renderAdditionalInfo()
+                )
+              ) : (
+                <div className="min-h-[200px] bg-gray-100 animate-pulse rounded"></div>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Card */}
@@ -816,50 +859,7 @@ const handleChatOpen = () => {
         </div>
       </div>
 
-      {/* Product Info */}
-      <div className="mt-10">
-        <div>
-          <div className="flex items-center justify-center">
-            <button
-              onClick={() => setActiveTab("details")}
-              className={`p-4 rounded-l-full font-bold md:text-2xl ${
-                activeTab === "details"
-                  ? "bg-red-600 text-white"
-                  : "border border-red-600"
-              }`}
-            >
-              {getText("productDetails")}
-            </button>
-            <button
-              onClick={() => setActiveTab("additional")}
-              className={`p-3.5 rounded-r-full md:text-2xl font-bold ${
-                activeTab === "additional"
-                  ? "bg-red-600 text-white"
-                  : "border border-red-600"
-              }`}
-            >
-              {getText("additionalInfo")}
-            </button>
-          </div>
 
-          <div
-            className={`md:w-full mt-10 text-gray-600 ${isHebrewProduct ? "text-right" : ""}`}
-            dir={isHebrewProduct ? "rtl" : "ltr"}
-          >
-            {isClient ? (
-              activeTab === "details" ? (
-                <div dangerouslySetInnerHTML={{ __html: productDescription }} />
-              ) : (
-                renderAdditionalInfo()
-              )
-            ) : (
-              <div className="min-h-[200px] bg-gray-100 animate-pulse rounded"></div>
-            )}
-          </div>
-        </div>
-
-
-      </div>
 
       {/* Chat Component */}
       {showChat && <ChatButton initialOpen={true} />}
