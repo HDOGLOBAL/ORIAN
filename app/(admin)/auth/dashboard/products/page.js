@@ -386,15 +386,32 @@
 "use client";
 import { deleteProductById, getPaginatedProducts } from "@/database/queries";
 import Image from "next/image";
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback, useMemo, Suspense } from "react";
 import placeholder from "@/public/client/banner/placeholder.png";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { trimWords } from "@/utils/trimWords";
 import { formatDate } from "@/utils/localDate";
 import ReactPaginate from "react-paginate";
+import { useSearchParams } from "next/navigation";
 
 export default function AllProducts() {
+  return (
+    <Suspense fallback={
+      <div className="relative md:ml-64 bg-blueGray-100 mt-[40px]">
+        <div className="bg-white p-6 rounded shadow">
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          </div>
+        </div>
+      </div>
+    }>
+      <AllProductsInner />
+    </Suspense>
+  );
+}
+
+function AllProductsInner() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
