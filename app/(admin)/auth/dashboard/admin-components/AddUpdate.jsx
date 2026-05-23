@@ -1092,7 +1092,7 @@ export default function AddUpdate({ updateId = false }) {
     value: "",
     isActive: true,
   });
-  const MAX_IMAGE_SIZE_MB = 1;
+  const MAX_IMAGE_SIZE_MB = 5;
   const IMGBB_API_KEY = process.env.NEXT_PUBLIC_imageBB_key;
 
   const getEntityId = (value) => {

@@ -602,7 +602,7 @@ const handleChatOpen = () => {
       </div>
 
       {/* Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-[800px_minmax(300px,1fr)] gap-8 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         {/* Image Gallery */}
         <div className="border border-gray-600 p-4 rounded-2xl">
           <DetailGallery
@@ -843,7 +843,7 @@ const handleChatOpen = () => {
           </div>
 
           <div
-            className={`lg:w-[800px] mt-10 text-gray-600 ${isHebrewProduct ? "text-right" : ""}`}
+            className={`md:w-full mt-10 text-gray-600 ${isHebrewProduct ? "text-right" : ""}`}
             dir={isHebrewProduct ? "rtl" : "ltr"}
           >
             {isClient ? (
