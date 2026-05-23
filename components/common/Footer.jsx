@@ -199,7 +199,7 @@ export default function Footer() {
             </p>
             <div className="flex space-x-4 mt-2">
               <a
-                href="https://facebook.com/hdotrade"
+                href="https://www.facebook.com/share/p/1GvucUc6kr/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"

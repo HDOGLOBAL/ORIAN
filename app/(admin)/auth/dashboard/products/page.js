@@ -406,6 +406,9 @@ export default function AllProducts() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [searchTimeout, setSearchTimeout] = useState(null);
+  // Category filter from URL
+  const searchParams = useSearchParams();
+  const categoryId = searchParams.get("categoryId") || "";
 
   // Memoized calculations
   const pageCount = useMemo(
@@ -453,6 +456,7 @@ export default function AllProducts() {
         offset,
         limit,
         searchQuery: query,
+        categoryId,
         includeInactive: true,
       });
       console.log(
@@ -470,7 +474,7 @@ export default function AllProducts() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [categoryId]);
 
   // Debounced search function
   useEffect(() => {
@@ -559,9 +563,16 @@ export default function AllProducts() {
   return (
     <div className="relative md:ml-64 bg-blueGray-100 mt-[40px]">
       <div className="bg-white p-6 rounded shadow">
-        <h2 className="text-2xl font-light text-[#0eadef] mb-6">
-          All Products
-        </h2>
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-light text-[#0eadef]">
+            {categoryId ? "Category Products" : "All Products"}
+          </h2>
+          {categoryId && (
+            <Link href="/auth/dashboard/categories" className="text-sm text-blue-600 hover:underline">
+              ← Back to Categories
+            </Link>
+          )}
+        </div>
 
         {/* Search Bar */}
         <div className="mb-6 relative">

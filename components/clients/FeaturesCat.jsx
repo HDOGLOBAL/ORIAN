@@ -203,7 +203,15 @@ export default function FeaturedCategories({ initialCategories = null }) {
   const uiLang = getUiLanguage(lang);
   const resolveCategories = (cats) => {
     if (!cats || cats.length === 0) return STATIC_CATEGORIES.map(c => ({ ...c, name: c.names[uiLang] || c.names.en }));
-    return cats;
+    // Merge DB categories with static image arrays by slug
+    return cats.map((cat) => {
+      const staticMatch = STATIC_CATEGORIES.find((s) => s.slug === cat.slug);
+      return {
+        ...cat,
+        images: cat.images?.length ? cat.images : staticMatch?.images || (cat.icon ? [cat.icon] : []),
+        icon: cat.icon || staticMatch?.icon || "",
+      };
+    });
   };
   const [categories, setCategories] = useState(resolveCategories(initialCategories));
   const [isLoading, setIsLoading] = useState(false);

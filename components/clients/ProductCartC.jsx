@@ -790,7 +790,7 @@ const handleChatOpen = () => {
               className="w-full bg-[#25D366] mt-3 text-white py-3 font-bold text-[16px] rounded-full cursor-pointer hover:bg-[#1fb855] transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
             >
               <FaWhatsapp className="text-white text-xl" />
-              Ask us Price on WhatsApp
+              Contact our customer service by WhatsApp
             </button>
 
             {/* Email Button */}
@@ -799,7 +799,7 @@ const handleChatOpen = () => {
               className="w-full bg-white text-gray-800 mt-3 py-3 font-bold text-[16px] rounded-full cursor-pointer hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-md hover:shadow-lg border-2 border-gray-300"
             >
               <SiGmail className="text-[#EA4335] text-xl" />
-              Ask us Price on Email
+              Contact our customer service by Email
             </button>
 
             {/* Chat Button */}
@@ -810,7 +810,7 @@ const handleChatOpen = () => {
               style={{ opacity: !isSupportOnline ? 0.5 : 1, pointerEvents: !isSupportOnline ? 'none' : 'auto' }}
             >
               <MdChat className="text-white text-xl" />
-              Ask us Price on Chat
+              Contact our customer service by Chat
             </button>
           </div>
         </div>

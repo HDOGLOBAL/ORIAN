@@ -3,7 +3,7 @@
 import { deleteCategoryById, getCategories, getManufacturers } from "@/database/queries";
 
 import { useEffect, useState } from "react";
-
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,6 +16,7 @@ export default function AllCategories() {
   const [error, setError] = useState(null);
   const [editingCategory, setEditingCategory] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
+  const router = useRouter();
 
   const getManufacturerName = (manufacturerId) => {
     if (!manufacturerId) return "N/A";
@@ -148,6 +149,7 @@ export default function AllCategories() {
                 <th className="px-4 py-3 border">ID</th>
                 <th className="px-4 py-3 border">Manufacturer</th>
                 <th className="px-4 py-3 border">Name</th>
+                <th className="px-4 py-3 border text-center">Products</th>
                 <th className="px-4 py-3 border text-center">Featured</th>
                 <th className="px-4 py-3 border text-center">Actions</th>
               </tr>
@@ -197,6 +199,15 @@ export default function AllCategories() {
 
                     <td className="px-4 py-2 border font-medium">
                       {category.name}
+                    </td>
+
+                    <td className="px-4 py-2 border text-center">
+                      <Link
+                        href={`/auth/dashboard/products?categoryId=${category.id}`}
+                        className="inline-block bg-blue-100 text-blue-800 font-bold text-sm px-3 py-1 rounded-full hover:bg-blue-600 hover:text-white transition"
+                      >
+                        {category.productCount ?? 0}
+                      </Link>
                     </td>
 
                     <td className="px-4 py-2 border text-center">

@@ -188,8 +188,28 @@ export async function getCategories() {
 
   try {
     const categories = await categoryModel.find().sort({ name: 1 }).lean();
+    const ids = categories.map((c) => c._id);
 
-    // Convert MongoDB objects to plain JavaScript objects
+    const rawCounts = await productModel.aggregate([
+      {
+        $project: {
+          cats: {
+            $setUnion: [
+              { $ifNull: ["$categoryIds", []] },
+              { $cond: { if: { $ifNull: ["$categoryId", false] }, then: ["$categoryId"], else: [] } },
+            ],
+          },
+        },
+      },
+      { $unwind: "$cats" },
+      { $match: { cats: { $in: ids } } },
+      { $group: { _id: "$cats", count: { $sum: 1 } } },
+    ]);
+
+    const countMap = Object.fromEntries(
+      rawCounts.map(({ _id, count }) => [_id.toString(), count])
+    );
+
     return categories.map((item) => ({
       id: item._id.toString(),
       name: item.name,
@@ -199,6 +219,7 @@ export async function getCategories() {
       isFeatured: item.isFeatured || false,
       manufacturerId: item.manufacturerId ? item.manufacturerId.toString() : null,
       createdAt: item.createdAt,
+      productCount: countMap[item._id.toString()] || 0,
     }));
   } catch (error) {
     throw new Error("Failed to fetch categories: " + error.message);
@@ -2354,6 +2375,7 @@ export async function getPaginatedProducts({
   offset = 0,
   limit = 10,
   searchQuery = "",
+  categoryId = "",
   lean = true,
   sort = { createdAt: -1 },
   /** Admin dashboard: list private (isActive: false) products too */
@@ -2397,6 +2419,17 @@ export async function getPaginatedProducts({
       } else {
         searchConditions = { isActive: true, $or: searchConditionsArray };
       }
+    }
+    // Filter by categoryId if provided
+    if (categoryId && /^[0-9a-fA-F]{24}$/.test(categoryId)) {
+      const catObjId = new mongoose.Types.ObjectId(categoryId);
+      searchConditions = {
+        ...searchConditions,
+        $or: [
+          { categoryId: catObjId },
+          { categoryIds: catObjId },
+        ],
+      };
     }
 
     // 3. Create the base query with explicit population
