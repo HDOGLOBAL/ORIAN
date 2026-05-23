@@ -238,14 +238,12 @@ export default function Footer() {
               {getText("findProduct")}
             </h4>
             <ul className="space-y-1 text-[14px]">
-              <li className="text-white">Dishwasher spare parts</li>
-              <li className="text-white">Vegetable cutter spare parts</li>
-              <li className="text-white">Juicer spare parts</li>
-              <li className="text-white">Hand mixer spare parts</li>
-              <li className="text-white">
-                Food processor/ bowl cutters spare parts
-              </li>
-      
+              <li><Link href="/shop?category=dishwasher" className="text-white hover:underline hover:text-gray-200">Dishwasher spare parts</Link></li>
+              <li><Link href="/shop?category=vegetable-cutter" className="text-white hover:underline hover:text-gray-200">Vegetable cutter spare parts</Link></li>
+              <li><Link href="/shop?category=juicer" className="text-white hover:underline hover:text-gray-200">Juicer spare parts</Link></li>
+              <li><Link href="/shop?category=mixer" className="text-white hover:underline hover:text-gray-200">Hand mixer spare parts</Link></li>
+              <li><Link href="/shop?category=kitchen-tap" className="text-white hover:underline hover:text-gray-200">Commercial kitchen taps</Link></li>
+              <li><Link href="/shop" className="text-white hover:underline hover:text-gray-200">HDO replacement parts</Link></li>
             </ul>
           </div>
           {/* Help Links */}

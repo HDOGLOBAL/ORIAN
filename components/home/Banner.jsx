@@ -87,6 +87,7 @@ import Link from "next/link";
 import "swiper/css";
 import "swiper/css/pagination";
 import hero1 from "@/public/client/hero2.jpg";
+import hero2 from "@/public/client/section1.png";
 import { useDomain } from "@/providers/useDomain";
 import { getUiLanguage } from "@/utils/uiLanguage";
 
@@ -210,16 +211,16 @@ export default function Banner() {
           <div className="flex flex-col md:flex-row-reverse w-full min-h-[300px] md:h-[380px] lg:h-[420px] bg-white">
             <div className={`flex-1 flex flex-col justify-center px-6 sm:px-10 lg:px-14 py-8 md:py-0 ${isRtl ? "items-end text-right" : "items-start text-left"}`}>
               <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold leading-tight text-gray-900 mb-1">
-                All The Spare Parts
+                All Types of
               </h2>
               <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold leading-tight text-[#c41e3a] mb-3">
-                &amp; Accessories
+                Commercial Kitchen Taps
               </h2>
               <p className="text-sm sm:text-base font-semibold text-gray-700 mb-2">
-                For Dynamic Mixer — Professional Grade
+                Professional Grade — Worldwide Shipping
               </p>
               <p className="text-xs sm:text-sm text-gray-500 max-w-md mb-6 leading-relaxed">
-                Complete range of Dynamic mixer components — blades, bowls, motors, seals and more. Tested quality, fast worldwide delivery.
+                Complete range of commercial kitchen faucets and tap components — mixer taps, pre-rinse taps, wall taps and more. Fast worldwide delivery.
               </p>
               <div className={`flex gap-3 flex-wrap ${isRtl ? "flex-row-reverse" : ""}`}>
                 <Link href="/shop" className="bg-[#c41e3a] hover:bg-[#a01829] text-white px-7 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 shadow hover:shadow-md">
@@ -232,8 +233,8 @@ export default function Banner() {
             </div>
             <div className="w-full md:w-[52%] relative min-h-[200px] md:min-h-0">
               <Image
-                src={hero1}
-                alt="Dynamic Mixer Spare Parts — HDO Trade"
+                src={hero2}
+                alt="Commercial Kitchen Taps — HDO Trade"
                 fill
                 unoptimized
                 className="object-cover"

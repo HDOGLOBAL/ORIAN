@@ -145,6 +145,19 @@ const STATIC_CATEGORIES = [
     ],
     names: { en: "Commercial Kitchen Taps", pt: "Torneiras para Cozinha", fr: "Robinets Cuisine Pro", es: "Grifos Cocina Profesional", de: "Gastro-Küchenarmaturen" },
   },
+  {
+    id: "replacement-parts",
+    slug: "replacement-parts",
+    icon: "/client/categories/replacement-parts/1.jpg",
+    images: [
+      "/client/categories/replacement-parts/1.jpg",
+      "/client/categories/replacement-parts/2.jpg",
+      "/client/categories/replacement-parts/3.jpg",
+      "/client/categories/replacement-parts/4.jpg",
+      "/client/categories/replacement-parts/5.jpg",
+    ],
+    names: { en: "HDO Replacement Parts", pt: "Peças de Substituição HDO", fr: "Pièces de Rechange HDO", es: "Repuestos HDO", de: "HDO-Ersatzteile" },
+  },
 ];
 
 function CategoryCircle({ category, color, onOpen }) {
