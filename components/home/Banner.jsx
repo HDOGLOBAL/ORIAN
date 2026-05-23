@@ -83,6 +83,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import Image from "next/image";
+import Link from "next/link";
 import "swiper/css";
 import banner1 from "@/public/client/section1.png";
 import banner2 from "@/public/client/hero2.jpg";
@@ -157,12 +158,12 @@ export default function Banner() {
                     {getSlideTitle(slide.titleKey)}
                   </h2>
                   <div className={`flex gap-4 ${isRtl ? "justify-end flex-row-reverse" : "justify-end"}`}>
-                    <button className="bg-white hover:bg-blue-700 hover:text-white text-blue-600 px-6 py-2 rounded-md transition">
+                    <Link href="/shop" className="bg-white hover:bg-blue-700 hover:text-white text-blue-600 px-6 py-2 rounded-md transition">
                       {getText("shopNow")}
-                    </button>
-                    <button className="bg-transparent text-white border border-white hover:bg-gray-100 hover:text-blue-700 px-6 py-2 rounded-md transition">
+                    </Link>
+                    <Link href="/shop" className="bg-transparent text-white border border-white hover:bg-gray-100 hover:text-blue-700 px-6 py-2 rounded-md transition">
                       {getText("viewMore")}
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
