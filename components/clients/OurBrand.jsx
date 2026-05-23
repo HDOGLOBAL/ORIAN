@@ -10,27 +10,27 @@ import { getUiLanguage } from "@/utils/uiLanguage";
 const SECTION_TEXT = {
   en: {
     faqTitle: "Frequently Asked Questions",
-    seoText: "Your one-stop destination for commercial kitchen spare parts and replacement parts. We supply tested parts for dishwashers, mixers, juicers, vegetable cutters, kitchen taps, and more — compatible with Santos, Electrolux, Sirman, Dynamic, Robot-Coupe, and other leading brands. Fast worldwide shipping from Portugal.",
+    seoText: "Your one-stop destination for commercial kitchen spare parts and replacement parts. We supply tested parts for dishwashers, mixers, juicers, vegetable cutters, kitchen taps, and more. Compatible with Santos, Electrolux, Sirman, Dynamic, Robot-Coupe, and other leading brands.",
   },
   pt: {
     faqTitle: "Perguntas Frequentes",
-    seoText: "O seu destino único para peças sobresselentes e de substituição para cozinhas industriais. Fornecemos peças testadas para máquinas de lavar loiça, misturadoras, espremidores, cortadores de legumes, torneiras e mais — compatíveis com Santos, Electrolux, Sirman, Dynamic, Robot-Coupe e outras marcas. Envio rápido a nível mundial a partir de Portugal.",
+    seoText: "O seu destino único para peças sobresselentes e de substituição para cozinhas industriais. Fornecemos peças testadas para máquinas de lavar louça, misturadoras, espremidores, cortadores de legumes, torneiras e mais. Compatíveis com Santos, Electrolux, Sirman, Dynamic, Robot-Coupe e outras marcas.",
   },
   fr: {
     faqTitle: "Questions Fréquentes",
-    seoText: "Votre destination unique pour les pièces détachées de cuisine professionnelle. Nous fournissons des pièces testées pour lave-vaisselles, mixeurs, presse-agrumes, coupe-légumes, robinets et plus — compatibles avec Santos, Electrolux, Sirman, Dynamic, Robot-Coupe. Livraison rapide dans le monde entier depuis le Portugal.",
+    seoText: "Votre destination unique pour les pièces détachées de cuisine professionnelle. Nous fournissons des pièces testées pour lave-vaisselles, mixeurs, presse-agrumes, coupe-légumes, robinets et plus. Compatibles avec Santos, Electrolux, Sirman, Dynamic, Robot-Coupe.",
   },
   es: {
     faqTitle: "Preguntas Frecuentes",
-    seoText: "Su destino único para repuestos de cocina industrial. Suministramos piezas probadas para lavavajillas, batidoras, exprimidores, cortadoras, grifos y más — compatibles con Santos, Electrolux, Sirman, Dynamic, Robot-Coupe. Envío rápido mundial desde Portugal.",
+    seoText: "Su destino único para repuestos de cocina industrial. Suministramos piezas probadas para lavavajillas, batidoras, exprimidores, cortadoras, grifos y más. Compatibles con Santos, Electrolux, Sirman, Dynamic, Robot-Coupe.",
   },
   he: {
     faqTitle: "שאלות נפוצות",
-    seoText: "היעד שלכם לחלקי חילוף למטבח מסחרי. אנחנו מספקים חלקים מבוקרים למדיחי כלים, מיקסרים, סוחטים, קוצצי ירקות, ברזי מטבח ועוד — תואמים לסנטוס, אלקטרולוקס, סירמן, דיינמיק, רובוט-קופ ומותגים נוספים. משלוח מהיר לכל העולם מפורטוגל.",
+    seoText: "היעד שלכם לחלקי חילוף למטבח מסחרי. אנחנו מספקים חלקים מבוקרים למדיחי כלים, מיקסרים, סוחטים, קוצצי ירקות, ברזי מטבח ועוד. תואמים לסנטוס, אלקטרולוקס, סירמן, דיינמיק, רובוט-קוף ומותגים נוספים.",
   },
   de: {
     faqTitle: "Häufig gestellte Fragen",
-    seoText: "Ihre erste Anlaufstelle für Ersatz- und Verschleißteile für Großküchen. Wir liefern geprüfte Teile für Spülmaschinen, Mixer, Entsafter, Gemüseschneider, Küchenarmaturen und mehr — kompatibel mit Santos, Electrolux, Sirman, Dynamic, Robot-Coupe. Schneller weltweiter Versand aus Portugal.",
+    seoText: "Ihre erste Anlaufstelle für Ersatz- und Verschleißteile für Großküchen. Wir liefern geprüfte Teile für Spülmaschinen, Mixer, Entsafter, Gemüseschneider, Küchenarmaturen und mehr. Kompatibel mit Santos, Electrolux, Sirman, Dynamic, Robot-Coupe.",
   },
 };
 
