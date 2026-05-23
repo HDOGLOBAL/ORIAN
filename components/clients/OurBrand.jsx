@@ -1,20 +1,19 @@
 'use client'
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { FaPlus, FaMinus } from "react-icons/fa";
-import { getProducts } from "@/database/queries";
+import aboutImg from "@/public/client/about.png";
 import { FAQS } from "@/components/seo/FAQSchema";
 import { useDomain } from "@/providers/useDomain";
 import { getUiLanguage } from "@/utils/uiLanguage";
 
 const SECTION_TEXT = {
-  en: { faqTitle: "Frequently Asked Questions", topTitle: "Our Top Selling Parts" },
-  pt: { faqTitle: "Perguntas Frequentes", topTitle: "As Nossas Peças Mais Vendidas" },
-  fr: { faqTitle: "Questions Fréquentes", topTitle: "Nos Pièces les Plus Vendues" },
-  es: { faqTitle: "Preguntas Frecuentes", topTitle: "Nuestros Repuestos Más Vendidos" },
-  he: { faqTitle: "שאלות נפוצות", topTitle: "החלקים הנמכרים ביותר שלנו" },
-  de: { faqTitle: "Häufig gestellte Fragen", topTitle: "Unsere meistverkauften Teile" },
+  en: { faqTitle: "Frequently Asked Questions" },
+  pt: { faqTitle: "Perguntas Frequentes" },
+  fr: { faqTitle: "Questions Fréquentes" },
+  es: { faqTitle: "Preguntas Frecuentes" },
+  he: { faqTitle: "שאלות נפוצות" },
+  de: { faqTitle: "Häufig gestellte Fragen" },
 };
 
 export default function OurBrand() {
@@ -24,15 +23,6 @@ export default function OurBrand() {
   const isRtl = uiLang === "he";
   const faqs = FAQS[uiLang] || FAQS.en;
   const [openIdx, setOpenIdx] = useState(null);
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    getProducts({ limit: 4 })
-      .then((res) => {
-        if (res?.products) setProducts(res.products.slice(0, 4));
-      })
-      .catch(() => {});
-  }, []);
 
   return (
     <section
@@ -72,61 +62,14 @@ export default function OurBrand() {
           </div>
         </div>
 
-        {/* RIGHT: Top Selling Parts */}
-        <div>
-          <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
-            {t.topTitle}
-          </h2>
-          {products.length > 0 ? (
-            <div className="grid grid-cols-2 gap-3">
-              {products.map((product) => (
-                <Link
-                  key={product._id}
-                  href={`/product/${product._id}`}
-                  className="border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition-shadow group"
-                >
-                  <div className="relative aspect-square bg-gray-50">
-                    <Image
-                      src={
-                        product.image ||
-                        product.images?.[0] ||
-                        "/client/banner/placeholder.png"
-                      }
-                      alt={product.title || "Spare part"}
-                      fill
-                      className="object-contain p-2 group-hover:scale-105 transition-transform duration-200"
-                      unoptimized
-                    />
-                  </div>
-                  <div className="p-2 border-t border-gray-50">
-                    <p className="text-xs font-medium text-gray-800 line-clamp-2 leading-snug">
-                      {product.title}
-                    </p>
-                    {product.price?.eur && (
-                      <p className="text-xs font-bold text-[#c41e3a] mt-1">
-                        €{Number(product.price.eur).toFixed(2)}
-                      </p>
-                    )}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 gap-3">
-              {[...Array(4)].map((_, i) => (
-                <div
-                  key={i}
-                  className="border border-gray-100 rounded-xl overflow-hidden animate-pulse"
-                >
-                  <div className="aspect-square bg-gray-100" />
-                  <div className="p-2 border-t border-gray-50 space-y-1">
-                    <div className="h-2.5 bg-gray-100 rounded w-3/4" />
-                    <div className="h-2.5 bg-gray-100 rounded w-1/2" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+        {/* RIGHT: HDO Trademark Image */}
+        <div className="flex items-center justify-center">
+          <Image
+            src={aboutImg}
+            alt="HDO Global Trade — Equal Quality at Better Price"
+            className="w-full h-auto rounded-xl shadow-md"
+            unoptimized
+          />
         </div>
       </div>
     </section>

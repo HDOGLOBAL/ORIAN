@@ -4,12 +4,11 @@ import ButtonImg from "@/components/clients/ButtonImg";
 import FeaturedCategories from "@/components/clients/FeaturesCat";
 import FilterC from "@/components/clients/FilterC";
 import ImageBanners from "@/components/clients/ImageBanner";
+import OurBrand from "@/components/clients/OurBrand";
 import Banner from "@/components/home/Banner";
 import FeatureIcons from "@/components/home/FeatureIcons";
 import TrustBadges from "@/components/home/TrustBadges";
 import FAQSchema from "@/components/seo/FAQSchema";
-import Image from "next/image";
-import aboutImg from "@/public/client/about.png";
 import {
   getRequestLanguage,
   getSeoMetadata,
@@ -41,14 +40,7 @@ export default async function Home() {
         <FeaturedCategories initialCategories={categories} />
         <Banner2 />
         <TrustBadges />
-        <div className="w-full max-w-[900px] mx-auto my-8 px-4">
-          <Image
-            src={aboutImg}
-            alt="HDO Global Trade — Equal Quality at Better Price"
-            className="w-full h-auto rounded-xl shadow-md"
-            unoptimized
-          />
-        </div>
+        <OurBrand />
         <ChatButton />
       </div>
     </>
