@@ -508,7 +508,9 @@ export default function CheckoutPage({
   const isVatExempt = vatResult?.valid && !isPtVat;
 
   // Calculate tax and totals
-  const taxRate = isVatExempt ? 0 : 0.23;
+  // Only Portuguese customers pay 23% VAT; all other countries are 0% (export / reverse charge)
+  const isPortugueseCustomer = formData.state === "Portugal";
+  const taxRate = (isPortugueseCustomer && !isVatExempt) ? 0.23 : 0;
   const taxAmount = subtotalAfterDiscount * taxRate;
   const grandTotal = subtotalAfterDiscount + shipping + taxAmount;
 
@@ -934,7 +936,8 @@ export default function CheckoutPage({
                   </div>
                 </div>
                 <p className="font-medium">
-                  €{(product.price?.eur || 0).toFixed(2)}
+                  {currency === "euro" ? "€" : currency === "pound" ? "£" : "$"}
+                  {convertPrice(product.price?.eur, currency, rates).toFixed(2)}
                 </p>
               </div>
             ))}
@@ -1022,12 +1025,14 @@ export default function CheckoutPage({
                     <span>{getText("shipping")}</span>
                     <span>{format(shipping)}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>
-                      {getText("tax")} ({isVatExempt ? "0%" : "23%"})
-                    </span>
-                    <span>{format(taxAmount)}</span>
-                  </div>
+                  {taxAmount > 0 && (
+                    <div className="flex justify-between">
+                      <span>
+                        {getText("tax")} (23% IVA)
+                      </span>
+                      <span>{format(taxAmount)}</span>
+                    </div>
+                  )}
                   <hr className="my-2" />
                   <div className="flex justify-between font-semibold text-lg">
                     <span>{getText("grandTotal")}</span>
