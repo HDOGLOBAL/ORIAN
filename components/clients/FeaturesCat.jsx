@@ -176,15 +176,15 @@ function CategoryCircle({ category, color, onOpen }) {
       onClick={() => imgs.length > 0 && onOpen(imgs, idx)}
     >
       <div
-        className={`w-40 h-40 sm:w-32 sm:h-32 lg:w-[184px] lg:h-[184px] rounded-full ${color} flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-110 shadow-md group-hover:shadow-lg relative`}
+        className={`w-44 h-44 sm:w-44 sm:h-44 lg:w-[220px] lg:h-[220px] rounded-full bg-white border border-gray-200 flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-110 shadow-md group-hover:shadow-lg relative`}
       >
         {imgs[idx] ? (
           <Image
             src={imgs[idx]}
             alt={category.name}
             className="object-contain w-full h-full rounded-full transition-opacity duration-500"
-            width={184}
-            height={184}
+            width={220}
+            height={220}
             unoptimized
           />
         ) : (
@@ -332,7 +332,7 @@ export default function FeaturedCategories({ initialCategories = null }) {
           href="/shop"
           className="flex flex-col items-center text-center w-full group cursor-pointer"
         >
-          <div className="w-40 h-40 sm:w-32 sm:h-32 lg:w-[184px] lg:h-[184px] rounded-full bg-[#c41e3a] flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md">
+          <div className="w-44 h-44 sm:w-44 sm:h-44 lg:w-[220px] lg:h-[220px] rounded-full bg-[#c41e3a] flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md">
             <BsGrid3X3Gap className="text-white text-4xl" />
           </div>
           <p className="mt-2 text-sm md:text-base text-[#c41e3a] font-semibold line-clamp-2">
