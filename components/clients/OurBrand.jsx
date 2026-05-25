@@ -10,7 +10,24 @@ import { getUiLanguage } from "@/utils/uiLanguage";
 const SECTION_TEXT = {
   en: {
     faqTitle: "Frequently Asked Questions",
-    seoText: "Your one-stop destination for commercial kitchen spare parts and replacement parts. We supply tested parts for dishwashers, mixers, juicers, vegetable cutters, kitchen taps, and more. Compatible with Santos, Electrolux, Sirman, Dynamic, Robot-Coupe, and other leading brands.",
+    seoTitle: "Global Supplier of Premium Industrial Kitchen Spare Parts",
+    seoText: `At HDO Global Trade, we are your one-stop shop for high-quality commercial kitchen spare parts, accessories, and small appliances.
+
+We specialize in supplying essential components for a wide range of professional kitchen equipment. Our extensive inventory ensures you can find the right part for any machine, including:
+
+Prep Equipment: juicers, Blenders, immersion blenders (hand mixers), planetary mixers, vegetable cutters, slicers.
+
+Cooking & Bakery: Commercial ovens, planetary mixers, and cooking equipment.
+
+Cleaning & Cooling: Professional dishwashers and refrigeration units.
+
+Whether you operate a restaurant, hotel, bakery, catering service, or any other food service business, HDO Global Trade provides reliable solutions tailored to your needs. We are committed to supporting your kitchen with:
+
+Fast International Shipping: Delivering parts wherever you are.
+Competitive Pricing: Quality components that fit your budget.
+Expert Support: Ongoing maintenance assistance to keep your kitchen running smoothly.
+
+Need a specific part? Contact HDO Global Trade today and get your kitchen equipment back in operation quickly and efficiently.`,
   },
   pt: {
     faqTitle: "Perguntas Frequentes",
@@ -88,7 +105,10 @@ export default function OurBrand() {
             className="w-full h-auto rounded-xl shadow-md"
             unoptimized
           />
-          <p className="text-gray-600 text-sm leading-relaxed">
+          {t.seoTitle && (
+            <h3 className="font-bold text-gray-900 text-base mb-2">{t.seoTitle}</h3>
+          )}
+          <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">
             {t.seoText}
           </p>
         </div>

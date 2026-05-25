@@ -5,9 +5,9 @@ import { getUiLanguage } from "@/utils/uiLanguage";
 
 const FEATURES_MAP = {
   en: [
-    { title: "Worldwide Shipping", desc: "Fast delivery to over 100 countries" },
-    { title: "High Quality Products", desc: "Durable and reliable parts for long-lasting performance" },
-    { title: "Trusted Brands", desc: "We work with leading manufacturers" },
+    { title: "Worldwide Shipping", desc: "Fast delivery all over the world" },
+    { title: "High Quality Products", desc: "Original and High quality replacement parts" },
+    { title: "Trusted Brands", desc: "We work with leading manufacturers all over the world" },
     { title: "Customer Support", desc: "Our team is here to help you find the right part" },
   ],
   pt: [
