@@ -195,9 +195,9 @@ export default function ProductCard({
           <Image
             src={product?.image || placeholder}
             alt={productName || "Product image"}
-            width={400}
-            height={400}
-            className="object-contain transition-transform duration-300 hover:scale-105 w-full h-full"
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-contain transition-transform duration-300 hover:scale-105"
           />
         </div>
         <div className="flex-grow flex flex-col justify-between pt-4">

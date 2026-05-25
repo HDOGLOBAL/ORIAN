@@ -11,10 +11,10 @@ const RelatedProduct = async ({ category }) => {
   return (
     <div className="bg-[#f4f3ef]">
       <div className="max-w-[1280px] mx-auto px-3">
-        <div className="p-4 md:p-8 lg:p-20">
+        <div className="py-6 md:py-8">
           <RelatedTitle />
 
-          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6 mt-16 mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 mb-6">
             {newRelatedProduct.map((product) => (
               <ProductCard
                 key={product?.id}
