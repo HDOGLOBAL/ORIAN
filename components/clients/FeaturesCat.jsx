@@ -182,9 +182,9 @@ function CategoryCircle({ category, color, onOpen }) {
           <Image
             src={imgs[idx]}
             alt={category.name}
-            className="object-contain w-full h-full rounded-full transition-opacity duration-500"
-            width={220}
-            height={220}
+            fill
+            sizes="220px"
+            className="object-contain p-2 transition-opacity duration-500"
             unoptimized
           />
         ) : (
