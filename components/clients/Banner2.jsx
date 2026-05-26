@@ -1,6 +1,9 @@
 "use client";
 import Link from "next/link";
-import { FaSearch, FaHeadset, FaCheck } from "react-icons/fa";
+import Image from "next/image";
+import { FaSearch, FaWhatsapp, FaEnvelope, FaCheck } from "react-icons/fa";
+import { MdChat } from "react-icons/md";
+import logo from "@/public/client/logo.png";
 import { useDomain } from "@/providers/useDomain";
 import { getUiLanguage } from "@/utils/uiLanguage";
 
@@ -54,13 +57,19 @@ export default function Banner2() {
           <h3 className="text-lg font-bold text-gray-900 mb-2">{t.col1.title}</h3>
           <p className="text-gray-500 text-sm mb-4 leading-relaxed flex-1">{t.col1.desc}</p>
           <div className="flex justify-center my-4">
-            <div className="w-24 h-24 bg-red-50 rounded-full flex items-center justify-center border border-red-100">
-              <FaSearch className="text-4xl text-[#c41e3a]" />
+            <div className="w-28 h-28 bg-gray-50 rounded-2xl border border-gray-200 flex items-center justify-center shadow-inner relative overflow-hidden">
+              <div className="absolute inset-0 opacity-5 bg-gradient-to-br from-gray-400 to-gray-600" />
+              <div className="relative flex flex-col items-center justify-center gap-1">
+                <div className="w-14 h-14 rounded-full border-4 border-[#c41e3a] flex items-center justify-center bg-white shadow-md">
+                  <FaSearch className="text-2xl text-[#c41e3a]" />
+                </div>
+                <div className="w-3 h-3 bg-[#c41e3a] rounded-full -mt-1 ml-8 shadow" style={{ transform: "rotate(45deg) translate(6px,6px)" }} />
+              </div>
             </div>
           </div>
           <Link
             href="/shop"
-            className="mt-4 bg-[#c41e3a] text-white text-center py-2.5 px-6 rounded-full font-semibold text-sm hover:bg-[#a01829] transition-colors"
+            className="mt-4 border-2 border-[#c41e3a] text-[#c41e3a] text-center py-2.5 px-6 rounded-full font-semibold text-sm hover:bg-red-50 transition-colors"
           >
             {t.col1.btn}
           </Link>
@@ -78,28 +87,47 @@ export default function Banner2() {
             ))}
           </ul>
           <div className="mt-4 flex items-center justify-center flex-1">
-            <div className="w-20 h-20 bg-[#c41e3a] rounded-xl flex flex-col items-center justify-center shadow-md">
-              <span className="text-white font-extrabold text-xl leading-none">HDO</span>
-              <span className="text-white font-bold text-xs mt-0.5 tracking-wide">Trade</span>
-            </div>
+            <Image
+              src={logo}
+              alt="HDO Global Trade Logo"
+              width={110}
+              height={90}
+              className="object-contain"
+            />
           </div>
         </div>
 
         {/* Col 3: Need Help */}
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 flex flex-col">
           <h3 className="text-lg font-bold text-gray-900 mb-2">{t.col3.title}</h3>
-          <p className="text-gray-500 text-sm mb-4 leading-relaxed flex-1">{t.col3.desc}</p>
-          <div className="flex justify-center my-4">
-            <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center border border-gray-100">
-              <FaHeadset className="text-4xl text-gray-700" />
-            </div>
+          <p className="text-gray-500 text-sm mb-4 leading-relaxed">{t.col3.desc}</p>
+          <div className="flex flex-col gap-2 mt-auto">
+            <a
+              href="https://wa.me/351935210099"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 bg-[#25D366] text-white py-2.5 px-4 rounded-full font-semibold text-sm hover:bg-[#1fb855] transition-colors"
+            >
+              <FaWhatsapp className="text-lg" />
+              WhatsApp
+            </a>
+            <a
+              href="https://mail.google.com/mail/?view=cm&to=sales@hdotrade.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 border-2 border-gray-300 text-gray-700 py-2.5 px-4 rounded-full font-semibold text-sm hover:bg-gray-50 transition-colors"
+            >
+              <FaEnvelope className="text-lg" />
+              Email
+            </a>
+            <Link
+              href="/contact"
+              className="flex items-center justify-center gap-2 bg-[#c41e3a] text-white py-2.5 px-4 rounded-full font-semibold text-sm hover:bg-[#a01829] transition-colors"
+            >
+              <MdChat className="text-lg" />
+              {t.col3.btn}
+            </Link>
           </div>
-          <Link
-            href="/contact"
-            className="mt-4 bg-[#c41e3a] text-white text-center py-2.5 px-6 rounded-full font-semibold text-sm hover:bg-[#a01829] transition-colors"
-          >
-            {t.col3.btn}
-          </Link>
         </div>
       </div>
     </section>
