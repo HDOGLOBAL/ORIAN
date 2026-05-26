@@ -620,10 +620,10 @@ const handleChatOpen = () => {
 
           {/* Product Description */}
           <div>
-            <div className="flex items-center justify-center">
+            <div className="flex items-stretch w-full">
               <button
                 onClick={() => setActiveTab("details")}
-                className={`p-4 rounded-l-full font-bold md:text-2xl ${
+                className={`flex-1 py-3.5 px-4 rounded-l-full font-bold md:text-xl text-center ${
                   activeTab === "details"
                     ? "bg-red-600 text-white"
                     : "border border-red-600"
@@ -633,7 +633,7 @@ const handleChatOpen = () => {
               </button>
               <button
                 onClick={() => setActiveTab("additional")}
-                className={`p-3.5 rounded-r-full md:text-2xl font-bold ${
+                className={`flex-1 py-3.5 px-4 rounded-r-full md:text-xl font-bold text-center ${
                   activeTab === "additional"
                     ? "bg-red-600 text-white"
                     : "border border-red-600"
