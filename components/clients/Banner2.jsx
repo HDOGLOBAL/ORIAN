@@ -70,9 +70,18 @@ export default function Banner2() {
         </div>
 
         {/* Col 2: Why Choose HDO Trade */}
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 flex flex-col items-center">
-          <h3 className="text-lg font-bold text-gray-900 mb-3 text-center">{t.col2.title}</h3>
-          <ul className="space-y-2.5 w-full mb-4">
+        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 flex flex-col">
+          <div className="flex items-start justify-between gap-3 mb-3">
+            <h3 className="text-lg font-bold text-gray-900">{t.col2.title}</h3>
+            <Image
+              src={logo}
+              alt="HDO Global Trade Logo"
+              width={80}
+              height={66}
+              className="object-contain flex-shrink-0"
+            />
+          </div>
+          <ul className="space-y-2.5 w-full">
             {t.col2.items.map((item) => (
               <li key={item} className="flex items-center gap-2 text-gray-600 text-sm">
                 <FaCheck className="text-[#c41e3a] flex-shrink-0" />
@@ -80,15 +89,6 @@ export default function Banner2() {
               </li>
             ))}
           </ul>
-          <div className="mt-3 flex items-center justify-center">
-            <Image
-              src={logo}
-              alt="HDO Global Trade Logo"
-              width={200}
-              height={165}
-              className="object-contain"
-            />
-          </div>
         </div>
 
         {/* Col 3: Need Help */}
