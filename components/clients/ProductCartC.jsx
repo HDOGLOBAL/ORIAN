@@ -373,6 +373,30 @@ const ProductPage = ({ product, currency, lang: langProp, rates = { usd: 1.08, g
       he: "משהו השתבש.",
       de: "Etwas ist schiefgelaufen.",
     },
+    whatsappBtn: {
+      pt: "Contacte o serviço ao cliente por WhatsApp",
+      fr: "Contactez le service client par WhatsApp",
+      es: "Contacte al servicio al cliente por WhatsApp",
+      en: "Contact our customer service by WhatsApp",
+      he: "פנו לשירות הלקוחות שלנו בוואטסאפ",
+      de: "Kundenservice per WhatsApp kontaktieren",
+    },
+    emailBtn: {
+      pt: "Contacte o serviço ao cliente por E-mail",
+      fr: "Contactez le service client par E-mail",
+      es: "Contacte al servicio al cliente por E-mail",
+      en: "Contact our customer service by Email",
+      he: "פנו לשירות הלקוחות שלנו במייל",
+      de: "Kundenservice per E-Mail kontaktieren",
+    },
+    chatBtn: {
+      pt: "Contacte o serviço ao cliente por Chat",
+      fr: "Contactez le service client par Chat",
+      es: "Contacte al servicio al cliente por Chat",
+      en: "Contact our customer service by Chat",
+      he: "פנו לשירות הלקוחות שלנו בצ'אט",
+      de: "Kundenservice per Chat kontaktieren",
+    },
   };
 
   const nameMap = {
@@ -660,7 +684,7 @@ const handleChatOpen = () => {
         </div>
 
         {/* Card */}
-        <div className="border p-5 border-red-600 bg-[#FFF6F6] rounded-2xl h-full">
+        <div className="border p-5 border-red-600 bg-[#FFF6F6] rounded-2xl h-full w-full">
           <div className="pt-[18px] px-7">
             <h1
               className={`font-medium text-4xl ${isHebrewProduct ? "text-right" : ""}`}
@@ -833,7 +857,7 @@ const handleChatOpen = () => {
               className="w-full bg-[#25D366] mt-3 text-white py-3 font-bold text-[16px] rounded-full cursor-pointer hover:bg-[#1fb855] transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
             >
               <FaWhatsapp className="text-white text-xl" />
-              Contact our customer service by WhatsApp
+              {getText("whatsappBtn")}
             </button>
 
             {/* Email Button */}
@@ -842,7 +866,7 @@ const handleChatOpen = () => {
               className="w-full bg-white text-gray-800 mt-3 py-3 font-bold text-[16px] rounded-full cursor-pointer hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-md hover:shadow-lg border-2 border-gray-300"
             >
               <SiGmail className="text-[#EA4335] text-xl" />
-              Contact our customer service by Email
+              {getText("emailBtn")}
             </button>
 
             {/* Chat Button */}
@@ -853,7 +877,7 @@ const handleChatOpen = () => {
               style={{ opacity: !isSupportOnline ? 0.5 : 1, pointerEvents: !isSupportOnline ? 'none' : 'auto' }}
             >
               <MdChat className="text-white text-xl" />
-              Contact our customer service by Chat
+              {getText("chatBtn")}
             </button>
           </div>
         </div>

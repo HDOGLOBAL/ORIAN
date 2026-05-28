@@ -180,17 +180,15 @@ function CategoryCircle({ category, color, onOpen }) {
       >
         {imgs[idx] ? (
           <div className="absolute inset-0 transition-transform duration-300 group-hover:scale-110">
-            <div className="absolute inset-3">
-              <div className="relative w-full h-full">
-                <Image
-                  src={imgs[idx]}
-                  alt={category.name}
-                  fill
-                  sizes="220px"
-                  className="object-contain transition-opacity duration-500"
-                  unoptimized
-                />
-              </div>
+            <div className="relative w-full h-full">
+              <Image
+                src={imgs[idx]}
+                alt={category.name}
+                fill
+                sizes="220px"
+                className="object-cover transition-opacity duration-500"
+                unoptimized
+              />
             </div>
           </div>
         ) : (

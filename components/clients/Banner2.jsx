@@ -57,14 +57,8 @@ export default function Banner2() {
           <h3 className="text-lg font-bold text-gray-900 mb-2">{t.col1.title}</h3>
           <p className="text-gray-500 text-sm mb-4 leading-relaxed flex-1">{t.col1.desc}</p>
           <div className="flex justify-center my-4">
-            <div className="w-28 h-28 bg-gray-50 rounded-2xl border border-gray-200 flex items-center justify-center shadow-inner relative overflow-hidden">
-              <div className="absolute inset-0 opacity-5 bg-gradient-to-br from-gray-400 to-gray-600" />
-              <div className="relative flex flex-col items-center justify-center gap-1">
-                <div className="w-14 h-14 rounded-full border-4 border-[#c41e3a] flex items-center justify-center bg-white shadow-md">
-                  <FaSearch className="text-2xl text-[#c41e3a]" />
-                </div>
-                <div className="w-3 h-3 bg-[#c41e3a] rounded-full -mt-1 ml-8 shadow" style={{ transform: "rotate(45deg) translate(6px,6px)" }} />
-              </div>
+            <div className="w-16 h-16 rounded-full border-4 border-[#c41e3a] flex items-center justify-center bg-white shadow-md">
+              <FaSearch className="text-2xl text-[#c41e3a]" />
             </div>
           </div>
           <Link
@@ -87,15 +81,13 @@ export default function Banner2() {
             ))}
           </ul>
           <div className="mt-4 flex items-center justify-center flex-1">
-            <div className="border-2 border-gray-200 rounded-2xl p-6 shadow-sm bg-gray-50 flex items-center justify-center">
-              <Image
-                src={logo}
-                alt="HDO Global Trade Logo"
-                width={200}
-                height={165}
-                className="object-contain"
-              />
-            </div>
+            <Image
+              src={logo}
+              alt="HDO Global Trade Logo"
+              width={200}
+              height={165}
+              className="object-contain"
+            />
           </div>
         </div>
 
