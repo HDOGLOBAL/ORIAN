@@ -604,7 +604,7 @@ const handleChatOpen = () => {
       {/* Content */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
         {/* Left: Image + Description */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 h-full">
           {/* Image Gallery */}
           <div className="border border-gray-600 p-4 rounded-2xl">
             <DetailGallery
@@ -660,7 +660,7 @@ const handleChatOpen = () => {
         </div>
 
         {/* Card */}
-        <div className="border p-5 border-red-600 bg-[#FFF6F6] rounded-2xl">
+        <div className="border p-5 border-red-600 bg-[#FFF6F6] rounded-2xl h-full">
           <div className="pt-[18px] px-7">
             <h1
               className={`font-medium text-4xl ${isHebrewProduct ? "text-right" : ""}`}

@@ -87,12 +87,12 @@ export default function Banner2() {
             ))}
           </ul>
           <div className="mt-4 flex items-center justify-center flex-1">
-            <div className="border-2 border-gray-200 rounded-2xl p-5 shadow-sm bg-gray-50 flex items-center justify-center">
+            <div className="border-2 border-gray-200 rounded-2xl p-6 shadow-sm bg-gray-50 flex items-center justify-center">
               <Image
                 src={logo}
                 alt="HDO Global Trade Logo"
-                width={150}
-                height={120}
+                width={200}
+                height={165}
                 className="object-contain"
               />
             </div>

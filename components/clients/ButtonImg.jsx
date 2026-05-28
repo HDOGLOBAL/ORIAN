@@ -11,9 +11,9 @@ const TEXT = {
   en: {
     heading1: "Your One-Stop Shop for",
     heading2: "Industrial Kitchen Spare Parts",
-    p1: "At HDO Trade, we specialize in providing high-quality spare parts and accessories for industrial kitchen equipment. Our extensive catalog includes parts for mixers, slicers, juicers, and more, compatible with leading brands such as Santos, Electrolux, Sirman, and Dynamic.",
-    p2: "We supply restaurants, hotels, bakeries, and food service businesses worldwide, offering reliable solutions, competitive pricing, and fast international shipping. Whether you need a replacement part or ongoing maintenance support, we ensure you receive the right product quickly and efficiently.",
-    note: "Looking for a specific part? Use our search tool or contact our team for assistance.",
+    p1: "HDO Global Trade specializes in expert sourcing for commercial kitchen machinery. We aren't just a supplier; we are your dedicated technical partner. Our experts leverage deep industry knowledge to identify the exact OEM or aftermarket spare parts you need, helping you minimize costly downtime and extend the life of your equipment.",
+    p2: "We believe that behind every successful kitchen is machinery that never misses a beat. That's why we combine a vast global supply network with a personal touch — when you reach out, you're speaking to professionals who understand your equipment. With fast international shipping and a commitment to technical precision, we ensure your kitchen stays operational, efficient, and profitable — no matter where you are in the world.",
+    note: "Don't let equipment downtime hurt your business. Contact our expert team via email, phone, or WhatsApp today, and let us find the exact part you need to get back to full operation.",
     badge1: "Contact our customer service by WhatsApp",
     badge2: "Contact our customer service by Email",
   },
