@@ -55,15 +55,15 @@ export default function Banner2() {
         {/* Col 1: How to Find */}
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 flex flex-col">
           <h3 className="text-lg font-bold text-gray-900 mb-2">{t.col1.title}</h3>
-          <p className="text-gray-500 text-sm mb-4 leading-relaxed flex-1">{t.col1.desc}</p>
-          <div className="flex justify-center my-4">
+          <p className="text-gray-500 text-sm mb-3 leading-relaxed">{t.col1.desc}</p>
+          <div className="flex justify-center my-2">
             <div className="w-16 h-16 rounded-full border-4 border-[#c41e3a] flex items-center justify-center bg-white shadow-md">
               <FaSearch className="text-2xl text-[#c41e3a]" />
             </div>
           </div>
           <Link
             href="/shop"
-            className="mt-4 border-2 border-[#c41e3a] text-[#c41e3a] text-center py-2.5 px-6 rounded-full font-semibold text-sm hover:bg-red-50 transition-colors"
+            className="mt-3 border-2 border-[#c41e3a] text-[#c41e3a] text-center py-2.5 px-6 rounded-full font-semibold text-sm hover:bg-red-50 transition-colors"
           >
             {t.col1.btn}
           </Link>
@@ -80,7 +80,7 @@ export default function Banner2() {
               </li>
             ))}
           </ul>
-          <div className="mt-4 flex items-center justify-center flex-1">
+          <div className="mt-3 flex items-center justify-center">
             <Image
               src={logo}
               alt="HDO Global Trade Logo"
@@ -95,7 +95,7 @@ export default function Banner2() {
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 flex flex-col">
           <h3 className="text-lg font-bold text-gray-900 mb-2">{t.col3.title}</h3>
           <p className="text-gray-500 text-sm mb-4 leading-relaxed">{t.col3.desc}</p>
-          <div className="flex flex-col gap-2 mt-auto">
+          <div className="flex flex-col gap-2 mt-3">
             <a
               href="https://wa.me/351935210099"
               target="_blank"
