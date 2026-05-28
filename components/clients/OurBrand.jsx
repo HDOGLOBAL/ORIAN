@@ -10,24 +10,12 @@ import { getUiLanguage } from "@/utils/uiLanguage";
 const SECTION_TEXT = {
   en: {
     faqTitle: "Frequently Asked Questions",
-    seoTitle: "Global Supplier of Premium Industrial Kitchen Spare Parts",
-    seoText: `At HDO Global Trade, we are your one-stop shop for high-quality commercial kitchen spare parts, accessories, and small appliances.
+    seoTitle: "Your One-Stop Shop for Industrial Kitchen Spare Parts",
+    seoText: `HDO Global Trade specializes in expert sourcing for commercial kitchen machinery. We aren't just a supplier; we are your dedicated technical partner. Our experts leverage deep industry knowledge to identify the exact OEM or aftermarket spare parts you need, helping you minimize costly downtime and extend the life of your equipment.
 
-We specialize in supplying essential components for a wide range of professional kitchen equipment. Our extensive inventory ensures you can find the right part for any machine, including:
+We believe that behind every successful kitchen is machinery that never misses a beat. That's why we combine a vast global supply network with a personal touch — when you reach out, you're speaking to professionals who understand your equipment. With fast international shipping and a commitment to technical precision, we ensure your kitchen stays operational, efficient, and profitable — no matter where you are in the world.
 
-Prep Equipment: juicers, Blenders, immersion blenders (hand mixers), planetary mixers, vegetable cutters, slicers.
-
-Cooking & Bakery: Commercial ovens, planetary mixers, and cooking equipment.
-
-Cleaning & Cooling: Professional dishwashers and refrigeration units.
-
-Whether you operate a restaurant, hotel, bakery, catering service, or any other food service business, HDO Global Trade provides reliable solutions tailored to your needs. We are committed to supporting your kitchen with:
-
-Fast International Shipping: Delivering parts wherever you are.
-Competitive Pricing: Quality components that fit your budget.
-Expert Support: Ongoing maintenance assistance to keep your kitchen running smoothly.
-
-Need a specific part? Contact HDO Global Trade today and get your kitchen equipment back in operation quickly and efficiently.`,
+Don't let equipment downtime hurt your business. Contact our expert team via email, phone, or WhatsApp today, and let us find the exact part you need to get back to full operation.`,
   },
   pt: {
     faqTitle: "Perguntas Frequentes",

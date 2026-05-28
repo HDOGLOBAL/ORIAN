@@ -179,14 +179,18 @@ function CategoryCircle({ category, color, onOpen }) {
         className={`w-44 h-44 sm:w-44 sm:h-44 lg:w-[220px] lg:h-[220px] rounded-full bg-white border border-gray-200 flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-110 shadow-md group-hover:shadow-lg relative`}
       >
         {imgs[idx] ? (
-          <Image
-            src={imgs[idx]}
-            alt={category.name}
-            fill
-            sizes="220px"
-            className="object-contain p-2 transition-opacity duration-500"
-            unoptimized
-          />
+          <div className="absolute inset-3">
+            <div className="relative w-full h-full">
+              <Image
+                src={imgs[idx]}
+                alt={category.name}
+                fill
+                sizes="220px"
+                className="object-contain transition-opacity duration-500"
+                unoptimized
+              />
+            </div>
+          </div>
         ) : (
           <div className="text-gray-400 text-center text-xs px-2">{category.name}</div>
         )}

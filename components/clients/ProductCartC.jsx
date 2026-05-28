@@ -602,7 +602,7 @@ const handleChatOpen = () => {
       </div>
 
       {/* Content */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
         {/* Left: Image + Description */}
         <div className="flex flex-col gap-6">
           {/* Image Gallery */}
