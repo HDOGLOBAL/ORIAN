@@ -684,8 +684,8 @@ const handleChatOpen = () => {
         </div>
 
         {/* Card */}
-        <div className="border p-5 border-red-600 bg-[#FFF6F6] rounded-2xl h-full w-full">
-          <div className="pt-[18px] px-7">
+        <div className="border p-3 border-red-600 bg-[#FFF6F6] rounded-2xl h-full w-full flex flex-col justify-between min-h-0 overflow-hidden">
+          <div className="pt-2 px-3 pb-0">
             <h1
               className={`font-medium text-4xl ${isHebrewProduct ? "text-right" : ""}`}
               dir={isHebrewProduct ? "rtl" : "ltr"}
@@ -694,7 +694,7 @@ const handleChatOpen = () => {
             </h1>
 
             {/* Stock Status */}
-            <p className="flex items-center gap-2 mt-4">
+            <p className="flex items-center gap-2 mt-2">
               {product?.quantity > 0 ? (
                 <>
                   <RiCheckboxCircleLine className="text-2xl text-green-600" />
@@ -711,7 +711,7 @@ const handleChatOpen = () => {
 
             {/* Manufacturer */}
             {(product?.manufacturerIds?.length > 0 || product?.manufacturerId) && (
-              <p className="flex items-center gap-2 mt-2 text-gray-700">
+              <p className="flex items-center gap-1 mt-1 text-gray-700 text-sm">
                 <span className="font-semibold">{getText("manufacturer")}:</span>
                 <span>
                   {product?.manufacturerIds?.length > 0
@@ -744,7 +744,7 @@ const handleChatOpen = () => {
 
             {/* Category */}
             {(product?.categoryIds?.length > 0 || product?.categoryId) && (
-              <p className="flex items-center gap-2 mt-2 text-gray-700">
+              <p className="flex items-center gap-1 mt-1 text-gray-700 text-sm">
                 <span className="font-semibold">CATEGORY:</span>
                 <span>
                   {product?.categoryIds?.length > 0
@@ -777,7 +777,7 @@ const handleChatOpen = () => {
 
             {/* Subcategory */}
             {(product?.subcategoryIds?.length > 0 || product?.subcategoryId) && (
-              <p className="flex items-center gap-2 mt-2 text-gray-700">
+              <p className="flex items-center gap-1 mt-1 text-gray-700 text-sm">
                 <span className="font-semibold">SUBCATEGORY:</span>
                 <span>
                   {product?.subcategoryIds?.length > 0
@@ -809,13 +809,13 @@ const handleChatOpen = () => {
             )}
 
             {/* Price */}
-            <p className="font-bold text-2xl mt-4 mb-4" suppressHydrationWarning>
+            <p className="font-bold text-2xl mt-2 mb-2" suppressHydrationWarning>
               {formatPrice(convertPrice(product?.price?.eur, currency, rates), currency)}
             </p>
 
             {/* Quantity */}
-            <p className="font-bold text-[16px] mb-4">{quantityText}</p>
-            <div className="flex items-center justify-center border border-gray-400 rounded-2xl px-2 py-2 w-[135px] space-x-4 mb-4">
+            <p className="font-bold text-[15px] mb-2">{quantityText}</p>
+            <div className="flex items-center justify-center border border-gray-400 rounded-2xl px-2 py-1 w-[120px] space-x-2 mb-2">
               <button
                 onClick={() => handleCountChange("decrement")}
                 className="text-2xl font-bold cursor-pointer text-gray-600"
@@ -835,8 +835,8 @@ const handleChatOpen = () => {
           </div>
 
           {/* Buttons */}
-          <div className="px-7">
-            <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="px-3 pb-2">
+            <div className="grid grid-cols-2 gap-2 mb-2">
               <AddCard
                 productId={product?.id}
                 quantity={count}
@@ -854,29 +854,27 @@ const handleChatOpen = () => {
             {/* WhatsApp Button */}
             <button
               onClick={handleWhatsAppContact}
-              className="w-full bg-[#25D366] mt-3 text-white py-3 font-bold text-[16px] rounded-full cursor-pointer hover:bg-[#1fb855] transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+              className="w-full bg-[#25D366] mt-2 text-white py-2 font-bold text-[15px] rounded-full cursor-pointer hover:bg-[#1fb855] transition-all flex items-center justify-center gap-2 shadow-sm"
             >
-              <FaWhatsapp className="text-white text-xl" />
+              <FaWhatsapp className="text-white text-lg" />
               {getText("whatsappBtn")}
             </button>
-
             {/* Email Button */}
             <button
               onClick={handleEmailContact}
-              className="w-full bg-white text-gray-800 mt-3 py-3 font-bold text-[16px] rounded-full cursor-pointer hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-md hover:shadow-lg border-2 border-gray-300"
+              className="w-full bg-white text-gray-800 mt-2 py-2 font-bold text-[15px] rounded-full cursor-pointer hover:bg-gray-100 transition-all flex items-center justify-center gap-2 shadow-sm border border-gray-300"
             >
-              <SiGmail className="text-[#EA4335] text-xl" />
+              <SiGmail className="text-[#EA4335] text-lg" />
               {getText("emailBtn")}
             </button>
-
             {/* Chat Button */}
             <button
               onClick={handleChatOpen}
-              className="w-full bg-[#c41e3a] text-white mt-3 py-3 font-bold text-[16px] rounded-full cursor-pointer hover:bg-[#a01829] transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+              className="w-full bg-[#c41e3a] text-white mt-2 py-2 font-bold text-[15px] rounded-full cursor-pointer hover:bg-[#a01829] transition-all flex items-center justify-center gap-2 shadow-sm"
               disabled={!isSupportOnline}
               style={{ opacity: !isSupportOnline ? 0.5 : 1, pointerEvents: !isSupportOnline ? 'none' : 'auto' }}
             >
-              <MdChat className="text-white text-xl" />
+              <MdChat className="text-white text-lg" />
               {getText("chatBtn")}
             </button>
           </div>
