@@ -176,20 +176,18 @@ function CategoryCircle({ category, color, onOpen }) {
       onClick={() => imgs.length > 0 && onOpen(imgs, idx)}
     >
       <div
-        className={`w-44 h-44 sm:w-44 sm:h-44 lg:w-[220px] lg:h-[220px] rounded-full bg-white border border-gray-200 overflow-hidden shadow-md group-hover:shadow-lg relative`}
+        className={`w-44 h-44 sm:w-44 sm:h-44 lg:w-[220px] lg:h-[220px] rounded-full bg-white border border-gray-200 overflow-hidden shadow-md group-hover:shadow-lg flex items-center justify-center`}
       >
         {imgs[idx] ? (
-          <div className="absolute inset-0 transition-transform duration-300 group-hover:scale-110">
-            <div className="relative w-full h-full p-7 sm:p-8">
-              <Image
-                src={imgs[idx]}
-                alt={category.name}
-                fill
-                sizes="220px"
-                className="object-contain transition-opacity duration-500"
-                unoptimized
-              />
-            </div>
+          <div className="relative w-[68%] h-[68%] transition-transform duration-300 group-hover:scale-105">
+            <Image
+              src={imgs[idx]}
+              alt={category.name}
+              fill
+              sizes="150px"
+              className="object-contain transition-opacity duration-500"
+              unoptimized
+            />
           </div>
         ) : (
           <div className="text-gray-400 text-center text-xs px-2">{category.name}</div>
