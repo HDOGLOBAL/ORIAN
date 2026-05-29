@@ -626,7 +626,7 @@ const handleChatOpen = () => {
       </div>
 
       {/* Content */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch h-full min-h-[480px]">
         {/* Left: Image + Description */}
         <div className="flex flex-col gap-6 h-full">
           {/* Image Gallery */}
@@ -684,8 +684,8 @@ const handleChatOpen = () => {
         </div>
 
         {/* Card */}
-        <div className="border p-3 border-red-600 bg-[#FFF6F6] rounded-2xl h-full w-full flex flex-col justify-between min-h-0 overflow-hidden">
-          <div className="pt-2 px-3 pb-0">
+        <div className="border p-3 border-red-600 bg-[#FFF6F6] rounded-2xl h-full w-full flex flex-col min-h-0 overflow-hidden">
+          <div className="pt-2 px-3 pb-0 flex-1 flex flex-col">
             <h1
               className={`font-medium text-4xl ${isHebrewProduct ? "text-right" : ""}`}
               dir={isHebrewProduct ? "rtl" : "ltr"}
@@ -835,7 +835,7 @@ const handleChatOpen = () => {
           </div>
 
           {/* Buttons */}
-          <div className="px-3 pb-2">
+          <div className="px-3 pb-2 mt-auto">
             <div className="grid grid-cols-2 gap-2 mb-2">
               <AddCard
                 productId={product?.id}
