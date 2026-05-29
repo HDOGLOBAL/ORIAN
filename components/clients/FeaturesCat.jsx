@@ -180,7 +180,7 @@ function CategoryCircle({ category, color, onOpen }) {
       >
         {imgs[idx] ? (
           <div className="absolute inset-0 transition-transform duration-300 group-hover:scale-110">
-            <div className="relative w-full h-full p-3">
+            <div className="relative w-full h-full p-7 sm:p-8">
               <Image
                 src={imgs[idx]}
                 alt={category.name}
