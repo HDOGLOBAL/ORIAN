@@ -642,7 +642,7 @@ const handleChatOpen = () => {
 
         {/* Right: Product Card */}
         <div className="border border-red-600 bg-[#FFF6F6] rounded-2xl flex flex-col overflow-hidden">
-          <div className="pt-4 px-4 sm:px-5 flex-1 flex flex-col">
+          <div className="pt-4 px-4 sm:px-5 flex flex-col">
             <h1
               className={`font-medium text-2xl sm:text-3xl lg:text-4xl leading-tight ${isHebrewProduct ? "text-right" : ""}`}
               dir={isHebrewProduct ? "rtl" : "ltr"}
@@ -792,43 +792,44 @@ const handleChatOpen = () => {
           </div>
 
           {/* Buttons */}
-          <div className="px-4 sm:px-5 pb-4 mt-auto">
-            <div className="grid grid-cols-2 gap-2 mb-2">
+          <div className="px-4 sm:px-5 pb-4 pt-4 flex-1 flex flex-col gap-3 min-h-0">
+            <div className="grid grid-cols-2 gap-3 flex-1 min-h-[52px]">
               <AddCard
                 productId={product?.id}
                 quantity={count}
                 quantities={product?.quantity}
                 singleProduct={true}
+                className="h-full w-full"
               />
               <button
                 onClick={handleShopNow}
                 disabled={isLoading}
-                className="bg-black rounded-full text-white font-bold text-sm sm:text-[16px] py-2.5 cursor-pointer hover:bg-gray-800 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                className="h-full w-full bg-black rounded-full text-white font-bold text-base sm:text-lg cursor-pointer hover:bg-gray-800 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {getText("shopNow")}
               </button>
             </div>
             <button
               onClick={handleWhatsAppContact}
-              className="w-full bg-[#25D366] mt-1.5 text-white py-2 font-bold text-sm sm:text-[15px] rounded-full cursor-pointer hover:bg-[#1fb855] transition-all flex items-center justify-center gap-2 shadow-sm"
+              className="w-full flex-1 min-h-[48px] bg-[#25D366] text-white px-3 font-bold text-sm sm:text-base rounded-full cursor-pointer hover:bg-[#1fb855] transition-all flex items-center justify-center gap-2 shadow-sm"
             >
-              <FaWhatsapp className="text-white text-lg" />
+              <FaWhatsapp className="text-white text-xl flex-shrink-0" />
               {getText("whatsappBtn")}
             </button>
             <button
               onClick={handleEmailContact}
-              className="w-full bg-white text-gray-800 mt-1.5 py-2 font-bold text-sm sm:text-[15px] rounded-full cursor-pointer hover:bg-gray-100 transition-all flex items-center justify-center gap-2 shadow-sm border border-gray-300"
+              className="w-full flex-1 min-h-[48px] bg-white text-gray-800 px-3 font-bold text-sm sm:text-base rounded-full cursor-pointer hover:bg-gray-100 transition-all flex items-center justify-center gap-2 shadow-sm border border-gray-300"
             >
-              <SiGmail className="text-[#EA4335] text-lg" />
+              <SiGmail className="text-[#EA4335] text-xl flex-shrink-0" />
               {getText("emailBtn")}
             </button>
             <button
               onClick={handleChatOpen}
-              className="w-full bg-[#c41e3a] text-white mt-1.5 py-2 font-bold text-sm sm:text-[15px] rounded-full cursor-pointer hover:bg-[#a01829] transition-all flex items-center justify-center gap-2 shadow-sm"
+              className="w-full flex-1 min-h-[48px] bg-[#c41e3a] text-white px-3 font-bold text-sm sm:text-base rounded-full cursor-pointer hover:bg-[#a01829] transition-all flex items-center justify-center gap-2 shadow-sm"
               disabled={!isSupportOnline}
               style={{ opacity: !isSupportOnline ? 0.5 : 1, pointerEvents: !isSupportOnline ? 'none' : 'auto' }}
             >
-              <MdChat className="text-white text-lg" />
+              <MdChat className="text-white text-xl flex-shrink-0" />
               {getText("chatBtn")}
             </button>
           </div>
