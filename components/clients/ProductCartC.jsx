@@ -625,69 +625,26 @@ const handleChatOpen = () => {
         </p>
       </div>
 
-      {/* Content */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch h-full min-h-[480px]">
-        {/* Left: Image + Description */}
-        <div className="flex flex-col gap-6 h-full">
-          {/* Image Gallery */}
-          <div className="border border-gray-600 p-4 rounded-2xl">
-            <DetailGallery
-              images={
-                product?.images?.length > 0
-                  ? product.images
-                  : product?.image
-                  ? [product.image]
-                  : []
-              }
-            />
-          </div>
-
-          {/* Product Description */}
-          <div>
-            <div className="flex items-stretch w-full">
-              <button
-                onClick={() => setActiveTab("details")}
-                className={`flex-1 py-3.5 px-4 rounded-l-full font-bold md:text-xl text-center ${
-                  activeTab === "details"
-                    ? "bg-red-600 text-white"
-                    : "border border-red-600"
-                }`}
-              >
-                {getText("productDetails")}
-              </button>
-              <button
-                onClick={() => setActiveTab("additional")}
-                className={`flex-1 py-3.5 px-4 rounded-r-full md:text-xl font-bold text-center ${
-                  activeTab === "additional"
-                    ? "bg-red-600 text-white"
-                    : "border border-red-600"
-                }`}
-              >
-                {getText("additionalInfo")}
-              </button>
-            </div>
-            <div
-              className={`mt-6 text-gray-600 ${isHebrewProduct ? "text-right" : ""}`}
-              dir={isHebrewProduct ? "rtl" : "ltr"}
-            >
-              {isClient ? (
-                activeTab === "details" ? (
-                  <div dangerouslySetInnerHTML={{ __html: productDescription }} />
-                ) : (
-                  renderAdditionalInfo()
-                )
-              ) : (
-                <div className="min-h-[200px] bg-gray-100 animate-pulse rounded"></div>
-              )}
-            </div>
-          </div>
+      {/* Content - Image Gallery & Product Card side by side */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+        {/* Left: Image Gallery */}
+        <div className="border border-gray-600 p-4 rounded-2xl flex flex-col">
+          <DetailGallery
+            images={
+              product?.images?.length > 0
+                ? product.images
+                : product?.image
+                ? [product.image]
+                : []
+            }
+          />
         </div>
 
-        {/* Card */}
-        <div className="border p-3 border-red-600 bg-[#FFF6F6] rounded-2xl h-full w-full flex flex-col min-h-0 overflow-hidden">
-          <div className="pt-2 px-3 pb-0 flex-1 flex flex-col">
+        {/* Right: Product Card */}
+        <div className="border border-red-600 bg-[#FFF6F6] rounded-2xl flex flex-col overflow-hidden">
+          <div className="pt-4 px-4 sm:px-5 flex-1 flex flex-col">
             <h1
-              className={`font-medium text-4xl ${isHebrewProduct ? "text-right" : ""}`}
+              className={`font-medium text-2xl sm:text-3xl lg:text-4xl leading-tight ${isHebrewProduct ? "text-right" : ""}`}
               dir={isHebrewProduct ? "rtl" : "ltr"}
             >
               {productName}
@@ -697,13 +654,13 @@ const handleChatOpen = () => {
             <p className="flex items-center gap-2 mt-2">
               {product?.quantity > 0 ? (
                 <>
-                  <RiCheckboxCircleLine className="text-2xl text-green-600" />
-                  <span className="font-bold text-2xl text-green-600">
+                  <RiCheckboxCircleLine className="text-xl text-green-600" />
+                  <span className="font-bold text-lg sm:text-xl text-green-600">
                     {inStock}
                   </span>
                 </>
               ) : (
-                <span className="font-bold text-2xl text-red-600">
+                <span className="font-bold text-lg sm:text-xl text-red-600">
                   {getText("outOfStock")}
                 </span>
               )}
@@ -809,12 +766,12 @@ const handleChatOpen = () => {
             )}
 
             {/* Price */}
-            <p className="font-bold text-2xl mt-2 mb-2" suppressHydrationWarning>
+            <p className="font-bold text-xl sm:text-2xl mt-2 mb-2" suppressHydrationWarning>
               {formatPrice(convertPrice(product?.price?.eur, currency, rates), currency)}
             </p>
 
             {/* Quantity */}
-            <p className="font-bold text-[15px] mb-2">{quantityText}</p>
+            <p className="font-bold text-[15px] mb-1">{quantityText}</p>
             <div className="flex items-center justify-center border border-gray-400 rounded-2xl px-2 py-1 w-[120px] space-x-2 mb-2">
               <button
                 onClick={() => handleCountChange("decrement")}
@@ -835,7 +792,7 @@ const handleChatOpen = () => {
           </div>
 
           {/* Buttons */}
-          <div className="px-3 pb-2 mt-auto">
+          <div className="px-4 sm:px-5 pb-4 mt-auto">
             <div className="grid grid-cols-2 gap-2 mb-2">
               <AddCard
                 productId={product?.id}
@@ -846,31 +803,28 @@ const handleChatOpen = () => {
               <button
                 onClick={handleShopNow}
                 disabled={isLoading}
-                className="bg-black rounded-full text-white font-bold text-[16px] cursor-pointer hover:bg-gray-800 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-black rounded-full text-white font-bold text-sm sm:text-[16px] py-2.5 cursor-pointer hover:bg-gray-800 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {getText("shopNow")}
               </button>
             </div>
-            {/* WhatsApp Button */}
             <button
               onClick={handleWhatsAppContact}
-              className="w-full bg-[#25D366] mt-2 text-white py-2 font-bold text-[15px] rounded-full cursor-pointer hover:bg-[#1fb855] transition-all flex items-center justify-center gap-2 shadow-sm"
+              className="w-full bg-[#25D366] mt-1.5 text-white py-2 font-bold text-sm sm:text-[15px] rounded-full cursor-pointer hover:bg-[#1fb855] transition-all flex items-center justify-center gap-2 shadow-sm"
             >
               <FaWhatsapp className="text-white text-lg" />
               {getText("whatsappBtn")}
             </button>
-            {/* Email Button */}
             <button
               onClick={handleEmailContact}
-              className="w-full bg-white text-gray-800 mt-2 py-2 font-bold text-[15px] rounded-full cursor-pointer hover:bg-gray-100 transition-all flex items-center justify-center gap-2 shadow-sm border border-gray-300"
+              className="w-full bg-white text-gray-800 mt-1.5 py-2 font-bold text-sm sm:text-[15px] rounded-full cursor-pointer hover:bg-gray-100 transition-all flex items-center justify-center gap-2 shadow-sm border border-gray-300"
             >
               <SiGmail className="text-[#EA4335] text-lg" />
               {getText("emailBtn")}
             </button>
-            {/* Chat Button */}
             <button
               onClick={handleChatOpen}
-              className="w-full bg-[#c41e3a] text-white mt-2 py-2 font-bold text-[15px] rounded-full cursor-pointer hover:bg-[#a01829] transition-all flex items-center justify-center gap-2 shadow-sm"
+              className="w-full bg-[#c41e3a] text-white mt-1.5 py-2 font-bold text-sm sm:text-[15px] rounded-full cursor-pointer hover:bg-[#a01829] transition-all flex items-center justify-center gap-2 shadow-sm"
               disabled={!isSupportOnline}
               style={{ opacity: !isSupportOnline ? 0.5 : 1, pointerEvents: !isSupportOnline ? 'none' : 'auto' }}
             >
@@ -881,7 +835,45 @@ const handleChatOpen = () => {
         </div>
       </div>
 
-
+      {/* Product Description - Below the grid */}
+      <div className="mt-8">
+        <div className="flex items-stretch w-full max-w-xl">
+          <button
+            onClick={() => setActiveTab("details")}
+            className={`flex-1 py-3 px-4 rounded-l-full font-bold text-base md:text-xl text-center ${
+              activeTab === "details"
+                ? "bg-red-600 text-white"
+                : "border border-red-600"
+            }`}
+          >
+            {getText("productDetails")}
+          </button>
+          <button
+            onClick={() => setActiveTab("additional")}
+            className={`flex-1 py-3 px-4 rounded-r-full text-base md:text-xl font-bold text-center ${
+              activeTab === "additional"
+                ? "bg-red-600 text-white"
+                : "border border-red-600"
+            }`}
+          >
+            {getText("additionalInfo")}
+          </button>
+        </div>
+        <div
+          className={`mt-6 text-gray-600 ${isHebrewProduct ? "text-right" : ""}`}
+          dir={isHebrewProduct ? "rtl" : "ltr"}
+        >
+          {isClient ? (
+            activeTab === "details" ? (
+              <div dangerouslySetInnerHTML={{ __html: productDescription }} />
+            ) : (
+              renderAdditionalInfo()
+            )
+          ) : (
+            <div className="min-h-[200px] bg-gray-100 animate-pulse rounded"></div>
+          )}
+        </div>
+      </div>
 
       {/* Chat Component */}
       {showChat && <ChatButton initialOpen={true} />}
