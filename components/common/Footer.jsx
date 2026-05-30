@@ -169,6 +169,54 @@ export default function Footer() {
       he: "טוען מוצרים...",
       de: "Produkte werden geladen...",
     },
+    catDishwasher: {
+      pt: "Peças para máquinas de lavar louça",
+      fr: "Pièces détachées lave-vaisselle",
+      es: "Repuestos para lavavajillas",
+      en: "Dishwasher spare parts",
+      he: "חלקי חילוף למדיחי כלים",
+      de: "Spülmaschinen-Ersatzteile",
+    },
+    catVegCutter: {
+      pt: "Peças para cortadores de legumes",
+      fr: "Pièces coupe-légumes",
+      es: "Repuestos para cortaverduras",
+      en: "Vegetable cutter spare parts",
+      he: "חלקי חילוף לקוצצי ירקות",
+      de: "Gemüseschneider-Ersatzteile",
+    },
+    catJuicer: {
+      pt: "Peças para espremidores",
+      fr: "Pièces presse-agrumes",
+      es: "Repuestos para exprimidores",
+      en: "Juicer spare parts",
+      he: "חלקי חילוף למסחטות",
+      de: "Entsafter-Ersatzteile",
+    },
+    catMixer: {
+      pt: "Peças para misturadoras",
+      fr: "Pièces batteur / mixeur",
+      es: "Repuestos para batidoras",
+      en: "Hand mixer spare parts",
+      he: "חלקי חילוף למיקסרים",
+      de: "Handmixer-Ersatzteile",
+    },
+    catKitchenTap: {
+      pt: "Torneiras de cozinha comerciais",
+      fr: "Robinetterie cuisine professionnelle",
+      es: "Grifería de cocina profesional",
+      en: "Commercial kitchen taps",
+      he: "ברזי מטבח מסחריים",
+      de: "Gastro-Küchenarmaturen",
+    },
+    catReplacement: {
+      pt: "Peças de substituição HDO",
+      fr: "Pièces de rechange HDO",
+      es: "Repuestos HDO",
+      en: "HDO replacement parts",
+      he: "חלקי חילוף HDO",
+      de: "HDO-Ersatzteile",
+    },
   };
 
   // Helper function to get localized text
@@ -238,12 +286,12 @@ export default function Footer() {
               {getText("findProduct")}
             </h4>
             <ul className="space-y-1 text-[14px]">
-              <li><Link href="/shop?category=dishwasher" className="text-white hover:underline hover:text-gray-200">Dishwasher spare parts</Link></li>
-              <li><Link href="/shop?category=vegetable-cutter" className="text-white hover:underline hover:text-gray-200">Vegetable cutter spare parts</Link></li>
-              <li><Link href="/shop?category=juicer" className="text-white hover:underline hover:text-gray-200">Juicer spare parts</Link></li>
-              <li><Link href="/shop?category=mixer" className="text-white hover:underline hover:text-gray-200">Hand mixer spare parts</Link></li>
-              <li><Link href="/shop?category=kitchen-tap" className="text-white hover:underline hover:text-gray-200">Commercial kitchen taps</Link></li>
-              <li><Link href="/shop" className="text-white hover:underline hover:text-gray-200">HDO replacement parts</Link></li>
+              <li><Link href="/shop?category=dishwasher" className="text-white hover:underline hover:text-gray-200">{getText("catDishwasher")}</Link></li>
+              <li><Link href="/shop?category=vegetable-cutter" className="text-white hover:underline hover:text-gray-200">{getText("catVegCutter")}</Link></li>
+              <li><Link href="/shop?category=juicer" className="text-white hover:underline hover:text-gray-200">{getText("catJuicer")}</Link></li>
+              <li><Link href="/shop?category=mixer" className="text-white hover:underline hover:text-gray-200">{getText("catMixer")}</Link></li>
+              <li><Link href="/shop?category=kitchen-tap" className="text-white hover:underline hover:text-gray-200">{getText("catKitchenTap")}</Link></li>
+              <li><Link href="/shop" className="text-white hover:underline hover:text-gray-200">{getText("catReplacement")}</Link></li>
             </ul>
           </div>
           {/* Help Links */}

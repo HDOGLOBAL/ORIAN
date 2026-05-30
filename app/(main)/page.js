@@ -7,7 +7,6 @@ import ImageBanners from "@/components/clients/ImageBanner";
 import OurBrand from "@/components/clients/OurBrand";
 import Banner from "@/components/home/Banner";
 import FeatureIcons from "@/components/home/FeatureIcons";
-import TrustBadges from "@/components/home/TrustBadges";
 import FAQSchema from "@/components/seo/FAQSchema";
 import {
   getRequestLanguage,
@@ -39,7 +38,6 @@ export default async function Home() {
         <ImageBanners />
         <FeaturedCategories initialCategories={categories} />
         <Banner2 />
-        <TrustBadges />
         <OurBrand />
         <ChatButton />
       </div>
