@@ -35,10 +35,6 @@ export const FAQS = {
       a: "Absolutely. Every order shipped from HDO Global Trade includes a full tracking number sent to your registered email address. You can monitor your shipment's progress in real-time from dispatch to delivery. For EU orders, we use premium courier services that provide detailed tracking updates at every stage of the delivery process." },
     { q: "Do you ship to Austria, Germany, and other German-speaking countries?",
       a: "Yes, we ship throughout Europe including Austria (Österreich), Germany (Deutschland), Switzerland, and all EU member states. Deliveries to Austria and Germany typically arrive within 3–5 business days. All orders include full tracking, and EU business customers with a valid VAT number can benefit from the intra-community tax exemption." },
-    { q: "What is HDO Global Trade's warranty policy on spare parts?",
-      a: "All spare parts sold by HDO Global Trade come with a manufacturer's warranty or our own quality guarantee. If a part arrives defective or fails under normal use within the warranty period, we will replace it free of charge or provide a full refund. Contact our support team with your order number and details of the issue for prompt resolution." },
-    { q: "Can I order spare parts if I don't know the exact part number?",
-      a: "Yes! Many of our customers don't have the exact part number. Simply send us the brand, model number, and a photo of the part you need (or the machine's data plate) via WhatsApp (+351935210099) or email. Our technical team will identify the correct part and provide you with a quote within hours." },
   ],
   pt: [
     { q: "Enviam peças sobresselentes para todo o mundo?",
@@ -73,10 +69,6 @@ export const FAQS = {
       a: "Sim. Cada encomenda enviada pela HDO Global Trade inclui um número de rastreamento completo enviado para o seu email. Pode acompanhar o progresso do envio em tempo real desde o despacho até à entrega." },
     { q: "Enviam para a Áustria, Alemanha e outros países de língua alemã?",
       a: "Sim, enviamos para toda a Europa, incluindo Áustria, Alemanha, Suíça e todos os estados membros da UE. As entregas para a Áustria e Alemanha chegam normalmente em 3–5 dias úteis. Clientes empresariais da UE com NIF válido podem beneficiar de isenção de IVA intracomunitária." },
-    { q: "Qual é a política de garantia da HDO Global Trade?",
-      a: "Todas as peças vendidas pela HDO Global Trade incluem garantia do fabricante ou a nossa própria garantia de qualidade. Se uma peça chegar defeituosa ou falhar em condições normais de utilização dentro do período de garantia, substituímos gratuitamente ou reembolsamos na totalidade." },
-    { q: "Posso encomendar peças se não souber o número exato da peça?",
-      a: "Sim! Muitos dos nossos clientes não têm o número exato da peça. Basta enviar-nos a marca, número do modelo e uma foto da peça (ou da placa de dados da máquina) via WhatsApp (+351935210099) ou email. A nossa equipa técnica identifica a peça correta e envia-lhe um orçamento em poucas horas." },
   ],
   de: [
     { q: "Versenden Sie Ersatzteile weltweit?",
@@ -111,10 +103,6 @@ export const FAQS = {
       a: "Selbstverständlich. Jede Bestellung von HDO Global Trade enthält eine vollständige Sendungsverfolgungsnummer, die an Ihre registrierte E-Mail-Adresse gesendet wird. Sie können den Fortschritt Ihrer Sendung in Echtzeit vom Versand bis zur Zustellung verfolgen." },
     { q: "Liefern Sie nach Österreich, Deutschland und in andere deutschsprachige Länder?",
       a: "Ja, wir liefern europaweit, einschließlich Österreich, Deutschland, Schweiz und alle EU-Mitgliedstaaten. Lieferungen nach Österreich und Deutschland kommen in der Regel innerhalb von 3–5 Werktagen an. EU-Geschäftskunden mit gültiger USt-IdNr. können von der innergemeinschaftlichen Steuerbefreiung profitieren." },
-    { q: "Wie lautet die Garantiepolitik von HDO Global Trade?",
-      a: "Alle von HDO Global Trade verkauften Ersatzteile werden mit einer Herstellergarantie oder unserer eigenen Qualitätsgarantie geliefert. Sollte ein Teil defekt ankommen oder bei normaler Nutzung innerhalb der Garantiezeit versagen, ersetzen wir es kostenlos oder erstatten den vollen Kaufpreis." },
-    { q: "Kann ich Ersatzteile bestellen, ohne die genaue Teilenummer zu kennen?",
-      a: "Ja! Viele unserer Kunden kennen die genaue Teilenummer nicht. Senden Sie uns einfach die Marke, Modellnummer und ein Foto des benötigten Teils (oder des Typenschilds) per WhatsApp (+351935210099) oder E-Mail. Unser technisches Team identifiziert das richtige Teil und sendet Ihnen innerhalb weniger Stunden ein Angebot." },
   ],
   fr: [
     { q: "Expédiez-vous les pièces dans le monde entier?",
@@ -149,10 +137,6 @@ export const FAQS = {
       a: "Absolument. Chaque commande expédiée par HDO Global Trade inclut un numéro de suivi complet envoyé à votre adresse email. Vous pouvez suivre la progression de votre envoi en temps réel, de l'expédition à la livraison." },
     { q: "Livrez-vous en Autriche, en Allemagne et dans d'autres pays germanophones?",
       a: "Oui, nous livrons dans toute l'Europe, y compris l'Autriche, l'Allemagne, la Suisse et tous les États membres de l'UE. Les livraisons en Autriche et en Allemagne arrivent généralement sous 3 à 5 jours ouvrés. Les clients professionnels UE avec un numéro de TVA valide peuvent bénéficier de l'exonération intracommunautaire." },
-    { q: "Quelle est la politique de garantie de HDO Global Trade?",
-      a: "Toutes les pièces vendues par HDO Global Trade sont couvertes par la garantie du fabricant ou notre propre garantie qualité. Si une pièce arrive défectueuse ou tombe en panne en utilisation normale pendant la période de garantie, nous la remplaçons gratuitement ou remboursons intégralement." },
-    { q: "Puis-je commander des pièces sans connaître le numéro exact?",
-      a: "Oui! Beaucoup de nos clients n'ont pas le numéro exact de la pièce. Envoyez-nous simplement la marque, le numéro de modèle et une photo de la pièce (ou de la plaque signalétique) via WhatsApp (+351935210099) ou email. Notre équipe technique identifie la bonne pièce et vous envoie un devis en quelques heures." },
   ],
   es: [
     { q: "¿Envían repuestos a todo el mundo?",
@@ -187,10 +171,6 @@ export const FAQS = {
       a: "Por supuesto. Cada pedido enviado por HDO Global Trade incluye un número de seguimiento completo enviado a su email registrado. Puede monitorear el progreso de su envío en tiempo real desde el despacho hasta la entrega." },
     { q: "¿Envían a Austria, Alemania y otros países de habla alemana?",
       a: "Sí, enviamos a toda Europa, incluyendo Austria, Alemania, Suiza y todos los estados miembros de la UE. Las entregas a Austria y Alemania llegan normalmente en 3–5 días hábiles. Los clientes empresariales de la UE con número de IVA válido pueden beneficiarse de la exención intracomunitaria." },
-    { q: "¿Cuál es la política de garantía de HDO Global Trade?",
-      a: "Todos los repuestos vendidos por HDO Global Trade incluyen garantía del fabricante o nuestra propia garantía de calidad. Si una pieza llega defectuosa o falla en condiciones normales durante el período de garantía, la sustituimos gratuitamente o reembolsamos íntegramente." },
-    { q: "¿Puedo pedir repuestos sin conocer el número exacto de la pieza?",
-      a: "¡Sí! Muchos de nuestros clientes no tienen el número exacto de la pieza. Simplemente envíenos la marca, número de modelo y una foto de la pieza (o la placa de datos de la máquina) por WhatsApp (+351935210099) o email. Nuestro equipo técnico identifica la pieza correcta y le envía un presupuesto en pocas horas." },
   ],
   he: [
     { q: "האם אתם שולחים חלקי חילוף לכל העולם?",
@@ -225,10 +205,6 @@ export const FAQS = {
       a: "בהחלט. כל הזמנה שנשלחת מ-HDO Global Trade כוללת מספר מעקב מלא שנשלח לכתובת האימייל שלכם. ניתן לעקוב אחר התקדמות המשלוח בזמן אמת מרגע השליחה ועד למסירה." },
     { q: "האם אתם שולחים לאוסטריה, גרמניה ומדינות דוברות גרמנית?",
       a: "כן, אנחנו שולחים לכל רחבי אירופה כולל אוסטריה, גרמניה, שוויץ וכל מדינות האיחוד האירופי. משלוחים לאוסטריה ולגרמניה מגיעים בדרך כלל תוך 3–5 ימי עסקים. לקוחות עסקיים מהאיחוד האירופי עם מספר מע\"מ תקף יכולים ליהנות מפטור ממע\"מ תוך-קהילתי." },
-    { q: "מהי מדיניות האחריות של HDO Global Trade?",
-      a: "כל חלקי החילוף שנמכרים על ידי HDO Global Trade מגיעים עם אחריות יצרן או אחריות איכות משלנו. אם חלק מגיע פגום או נכשל בתנאי שימוש רגילים בתוך תקופת האחריות, נחליף אותו ללא עלות או נספק החזר מלא." },
-    { q: "אפשר להזמין חלקי חילוף בלי לדעת את מספר החלק המדויק?",
-      a: "כן! רבים מלקוחותינו לא יודעים את מספר החלק המדויק. פשוט שלחו לנו את המותג, מספר הדגם ותמונה של החלק (או של לוחית הנתונים של המכונה) דרך WhatsApp (+351935210099) או אימייל. הצוות הטכני שלנו יזהה את החלק הנכון וישלח לכם הצעת מחיר תוך שעות." },
   ],
 };
 
