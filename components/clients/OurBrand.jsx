@@ -20,27 +20,47 @@ Don't let equipment downtime hurt your business. Contact our expert team via ema
   pt: {
     faqTitle: "Perguntas Frequentes",
     seoTitle: "A Sua Loja Única para Peças de Cozinha Industrial",
-    seoText: "O seu destino único para peças sobresselentes e de substituição para cozinhas industriais. Fornecemos peças testadas para máquinas de lavar louça, misturadoras, espremidores, cortadores de legumes, torneiras e mais. Compatíveis com Santos, Electrolux, Sirman, Dynamic, Robot-Coupe e outras marcas.",
+    seoText: `A HDO Global Trade é especialista no fornecimento de peças para maquinaria de cozinha comercial. Não somos apenas um fornecedor — somos o seu parceiro técnico dedicado. Os nossos especialistas utilizam um profundo conhecimento do setor para identificar as peças sobresselentes OEM ou alternativas de que necessita, ajudando-o a minimizar paragens dispendiosas e a prolongar a vida útil do seu equipamento.
+
+Acreditamos que por trás de cada cozinha de sucesso está maquinaria que nunca falha. Por isso, combinamos uma vasta rede global de fornecimento com um toque pessoal — quando nos contacta, está a falar com profissionais que compreendem o seu equipamento. Com envio internacional rápido e um compromisso com a precisão técnica, garantimos que a sua cozinha se mantém operacional, eficiente e rentável — independentemente de onde esteja no mundo.
+
+Não deixe que as paragens do equipamento prejudiquem o seu negócio. Contacte a nossa equipa especializada por email, telefone ou WhatsApp e deixe-nos encontrar a peça exata de que precisa para voltar à plena operação.`,
   },
   fr: {
     faqTitle: "Questions Fréquentes",
     seoTitle: "Votre Boutique Unique pour Pièces de Cuisine Industrielle",
-    seoText: "Votre destination unique pour les pièces détachées de cuisine professionnelle. Nous fournissons des pièces testées pour lave-vaisselles, mixeurs, presse-agrumes, coupe-légumes, robinets et plus. Compatibles avec Santos, Electrolux, Sirman, Dynamic, Robot-Coupe.",
+    seoText: `HDO Global Trade est spécialisé dans l'approvisionnement expert en machines de cuisine commerciale. Nous ne sommes pas qu'un simple fournisseur — nous sommes votre partenaire technique dédié. Nos experts s'appuient sur une connaissance approfondie du secteur pour identifier les pièces détachées OEM ou alternatives exactes dont vous avez besoin, vous aidant à minimiser les temps d'arrêt coûteux et à prolonger la durée de vie de vos équipements.
+
+Nous croyons que derrière chaque cuisine performante se trouve une machinerie qui ne manque jamais un battement. C'est pourquoi nous combinons un vaste réseau d'approvisionnement mondial avec une touche personnelle — lorsque vous nous contactez, vous parlez à des professionnels qui comprennent vos équipements. Avec une livraison internationale rapide et un engagement envers la précision technique, nous garantissons que votre cuisine reste opérationnelle, efficace et rentable — où que vous soyez dans le monde.
+
+Ne laissez pas les pannes d'équipement nuire à votre activité. Contactez notre équipe d'experts par email, téléphone ou WhatsApp dès aujourd'hui et laissez-nous trouver la pièce exacte dont vous avez besoin pour reprendre la pleine activité.`,
   },
   es: {
     faqTitle: "Preguntas Frecuentes",
     seoTitle: "Tu Tienda Única para Repuestos de Cocina Industrial",
-    seoText: "Su destino único para repuestos de cocina industrial. Suministramos piezas probadas para lavavajillas, batidoras, exprimidores, cortadoras, grifos y más. Compatibles con Santos, Electrolux, Sirman, Dynamic, Robot-Coupe.",
+    seoText: `HDO Global Trade se especializa en el suministro experto de maquinaria de cocina comercial. No somos solo un proveedor — somos su socio técnico dedicado. Nuestros expertos aprovechan un profundo conocimiento del sector para identificar los repuestos OEM o alternativos exactos que necesita, ayudándole a minimizar costosos tiempos de inactividad y a prolongar la vida útil de su equipo.
+
+Creemos que detrás de cada cocina exitosa hay maquinaria que nunca falla. Por eso combinamos una amplia red global de suministro con un toque personal — cuando se pone en contacto con nosotros, habla con profesionales que entienden su equipo. Con envío internacional rápido y un compromiso con la precisión técnica, garantizamos que su cocina se mantenga operativa, eficiente y rentable — sin importar dónde se encuentre en el mundo.
+
+No deje que el tiempo de inactividad del equipo perjudique su negocio. Contacte a nuestro equipo de expertos por email, teléfono o WhatsApp hoy mismo y permítanos encontrar el repuesto exacto que necesita para volver a la plena operación.`,
   },
   he: {
     faqTitle: "שאלות נפוצות",
     seoTitle: "החנות המושלמת שלכם לחלקי חילוף למטבח תעשייתי",
-    seoText: "היעד שלכם לחלקי חילוף למטבח מסחרי. אנחנו מספקים חלקים מבוקרים למדיחי כלים, מיקסרים, סוחטים, קוצצי ירקות, ברזי מטבח ועוד. תואמים לסנטוס, אלקטרולוקס, סירמן, דיינמיק, רובוט-קוף ומותגים נוספים.",
+    seoText: `HDO Global Trade מתמחה באספקת חלקי חילוף למכונות מטבח מסחרי. אנחנו לא סתם ספק — אנחנו השותף הטכני המסור שלכם. המומחים שלנו משתמשים בידע מעמיק בתעשייה כדי לזהות את חלקי החילוף המקוריים (OEM) או התואמים המדויקים שאתם צריכים, ועוזרים לכם למזער השבתות יקרות ולהאריך את חיי הציוד שלכם.
+
+אנחנו מאמינים שמאחורי כל מטבח מצליח עומדת מכונה שלעולם לא נכשלת. לכן אנחנו משלבים רשת אספקה עולמית רחבה עם מגע אישי — כשאתם פונים אלינו, אתם מדברים עם אנשי מקצוע שמבינים את הציוד שלכם. עם משלוח בינלאומי מהיר ומחויבות לדיוק טכני, אנחנו מבטיחים שהמטבח שלכם יישאר פעיל, יעיל ורווחי — לא משנה היכן אתם בעולם.
+
+אל תתנו להשבתת ציוד לפגוע בעסק שלכם. צרו קשר עם צוות המומחים שלנו באימייל, בטלפון או בוואטסאפ עוד היום, ותנו לנו למצוא את החלק המדויק שאתם צריכים כדי לחזור לפעילות מלאה.`,
   },
   de: {
     faqTitle: "Häufig gestellte Fragen",
     seoTitle: "Ihr One-Stop-Shop für Industrieküchen-Ersatzteile",
-    seoText: "Ihre erste Anlaufstelle für Ersatz- und Verschleißteile für Großküchen. Wir liefern geprüfte Teile für Spülmaschinen, Mixer, Entsafter, Gemüseschneider, Küchenarmaturen und mehr. Kompatibel mit Santos, Electrolux, Sirman, Dynamic, Robot-Coupe.",
+    seoText: `HDO Global Trade ist spezialisiert auf die fachkundige Beschaffung von Ersatzteilen für gewerbliche Küchenmaschinen. Wir sind nicht nur ein Lieferant — wir sind Ihr engagierter technischer Partner. Unsere Experten nutzen tiefgreifendes Branchenwissen, um genau die OEM- oder kompatiblen Ersatzteile zu identifizieren, die Sie benötigen, und helfen Ihnen dabei, kostspielige Ausfallzeiten zu minimieren und die Lebensdauer Ihrer Geräte zu verlängern.
+
+Wir glauben, dass hinter jeder erfolgreichen Küche Maschinen stehen, die niemals ausfallen. Deshalb kombinieren wir ein umfassendes globales Liefernetzwerk mit persönlicher Betreuung — wenn Sie sich an uns wenden, sprechen Sie mit Fachleuten, die Ihre Geräte verstehen. Mit schnellem internationalem Versand und einem Engagement für technische Präzision stellen wir sicher, dass Ihre Küche betriebsbereit, effizient und profitabel bleibt — egal wo auf der Welt Sie sich befinden.
+
+Lassen Sie nicht zu, dass Geräteausfälle Ihrem Geschäft schaden. Kontaktieren Sie noch heute unser Expertenteam per E-Mail, Telefon oder WhatsApp und lassen Sie uns das genaue Ersatzteil finden, das Sie benötigen, um den vollen Betrieb wiederherzustellen.`,
   },
 };
 

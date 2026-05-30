@@ -5,7 +5,7 @@ import sirmanBanner from "@/public/client/imageBanner2.png";
 export default function ImageBanners() {
   return (
     <section className="w-full max-w-[1276px] mx-auto px-4 pb-4 space-y-4">
-      <div className="w-full overflow-hidden rounded-xl shadow-sm relative h-[140px] sm:h-[180px] md:h-[220px] lg:h-[260px]">
+      <div className="w-full overflow-hidden rounded-xl shadow-sm relative h-[180px] sm:h-[220px] md:h-[280px] lg:h-[340px]">
         <Image
           src={elBanner}
           alt="All parts for Electrolux Professional commercial kitchen equipment"
@@ -15,7 +15,7 @@ export default function ImageBanners() {
           priority
         />
       </div>
-      <div className="w-full overflow-hidden rounded-xl shadow-sm relative h-[140px] sm:h-[180px] md:h-[220px] lg:h-[260px]">
+      <div className="w-full overflow-hidden rounded-xl shadow-sm relative h-[180px] sm:h-[220px] md:h-[280px] lg:h-[340px]">
         <Image
           src={sirmanBanner}
           alt="All Sirman commercial kitchen equipment spare parts"
