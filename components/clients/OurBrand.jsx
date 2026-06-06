@@ -10,66 +10,164 @@ import { getUiLanguage } from "@/utils/uiLanguage";
 const SECTION_TEXT = {
   en: {
     faqTitle: "Frequently Asked Questions",
-    seoTitle: "Your One-Stop Shop for Industrial Kitchen Spare Parts",
-    seoText: `HDO Global Trade specializes in expert sourcing for commercial kitchen machinery. We aren't just a supplier; we are your dedicated technical partner. Our experts leverage deep industry knowledge to identify the exact OEM or aftermarket spare parts you need, helping you minimize costly downtime and extend the life of your equipment.
+    seoTitle: "Global Supplier of Premium Industrial Kitchen Spare Parts",
+    seoText: `At HDO Global Trade, we are your one stop shop for high quality commercial kitchen spare parts, accessories, and small appliances.
 
-We believe that behind every successful kitchen is machinery that never misses a beat. That's why we combine a vast global supply network with a personal touch — when you reach out, you're speaking to professionals who understand your equipment. With fast international shipping and a commitment to technical precision, we ensure your kitchen stays operational, efficient, and profitable — no matter where you are in the world.
+We specialize in supplying essential components for a wide range of professional kitchen equipment. Our extensive inventory ensures you can find the right part for any machine, including:
 
-Don't let equipment downtime hurt your business. Contact our expert team via email, phone, or WhatsApp today, and let us find the exact part you need to get back to full operation.`,
+Prep Equipment: juicers, blenders, immersion blenders (hand mixers), planetary mixers, vegetable cutters, slicers.
+
+Cooking & Bakery: commercial ovens, planetary mixers, and cooking equipment.
+
+Cleaning & Cooling: professional dishwashers and refrigeration units.
+
+Serving Professionals Worldwide — Whether you operate a restaurant, hotel, bakery, catering service, or any other food service business, HDO Global Trade provides reliable solutions tailored to your needs. We are committed to supporting your kitchen with:
+
+Fast International Shipping: delivering parts wherever you are.
+
+Competitive Pricing: quality components that fit your budget.
+
+Expert Support: ongoing maintenance assistance to keep your kitchen running smoothly.
+
+Need a specific part? Contact HDO Global Trade today and get your kitchen equipment back in operation quickly and efficiently.`,
   },
   pt: {
     faqTitle: "Perguntas Frequentes",
-    seoTitle: "A Sua Loja Única para Peças de Cozinha Industrial",
-    seoText: `A HDO Global Trade é especialista no fornecimento de peças para maquinaria de cozinha comercial. Não somos apenas um fornecedor — somos o seu parceiro técnico dedicado. Os nossos especialistas utilizam um profundo conhecimento do setor para identificar as peças sobresselentes OEM ou alternativas de que necessita, ajudando-o a minimizar paragens dispendiosas e a prolongar a vida útil do seu equipamento.
+    seoTitle: "Fornecedor Global de Peças Premium para Cozinhas Industriais",
+    seoText: `Na HDO Global Trade, somos a sua loja única para peças sobresselentes, acessórios e pequenos eletrodomésticos de alta qualidade para cozinhas comerciais.
 
-Acreditamos que por trás de cada cozinha de sucesso está maquinaria que nunca falha. Por isso, combinamos uma vasta rede global de fornecimento com um toque pessoal — quando nos contacta, está a falar com profissionais que compreendem o seu equipamento. Com envio internacional rápido e um compromisso com a precisão técnica, garantimos que a sua cozinha se mantém operacional, eficiente e rentável — independentemente de onde esteja no mundo.
+Especializamo-nos no fornecimento de componentes essenciais para uma vasta gama de equipamentos profissionais de cozinha. O nosso extenso inventário garante que encontra a peça certa para qualquer máquina, incluindo:
 
-Não deixe que as paragens do equipamento prejudiquem o seu negócio. Contacte a nossa equipa especializada por email, telefone ou WhatsApp e deixe-nos encontrar a peça exata de que precisa para voltar à plena operação.`,
+Equipamento de Preparação: espremidores, liquidificadores, batedoras de imersão (batedoras de mão), batedoras planetárias, cortadores de legumes, fatiadores.
+
+Cozedura e Pastelaria: fornos comerciais, batedoras planetárias e equipamento de cozinha.
+
+Limpeza e Refrigeração: máquinas de lavar loiça profissionais e unidades de refrigeração.
+
+Ao Serviço de Profissionais em Todo o Mundo — Quer opere um restaurante, hotel, padaria, serviço de catering ou qualquer outro negócio de serviços alimentares, a HDO Global Trade fornece soluções fiáveis adaptadas às suas necessidades. Estamos empenhados em apoiar a sua cozinha com:
+
+Envio Internacional Rápido: entrega de peças onde quer que esteja.
+
+Preços Competitivos: componentes de qualidade que cabem no seu orçamento.
+
+Suporte Especializado: assistência contínua de manutenção para manter a sua cozinha a funcionar sem problemas.
+
+Precisa de uma peça específica? Contacte a HDO Global Trade hoje e coloque o seu equipamento de cozinha novamente em funcionamento de forma rápida e eficiente.`,
   },
   fr: {
     faqTitle: "Questions Fréquentes",
-    seoTitle: "Votre Boutique Unique pour Pièces de Cuisine Industrielle",
-    seoText: `HDO Global Trade est spécialisé dans l'approvisionnement expert en machines de cuisine commerciale. Nous ne sommes pas qu'un simple fournisseur — nous sommes votre partenaire technique dédié. Nos experts s'appuient sur une connaissance approfondie du secteur pour identifier les pièces détachées OEM ou alternatives exactes dont vous avez besoin, vous aidant à minimiser les temps d'arrêt coûteux et à prolonger la durée de vie de vos équipements.
+    seoTitle: "Fournisseur Mondial de Pièces Premium pour Cuisines Industrielles",
+    seoText: `Chez HDO Global Trade, nous sommes votre guichet unique pour des pièces détachées, accessoires et petits appareils de haute qualité pour cuisines commerciales.
 
-Nous croyons que derrière chaque cuisine performante se trouve une machinerie qui ne manque jamais un battement. C'est pourquoi nous combinons un vaste réseau d'approvisionnement mondial avec une touche personnelle — lorsque vous nous contactez, vous parlez à des professionnels qui comprennent vos équipements. Avec une livraison internationale rapide et un engagement envers la précision technique, nous garantissons que votre cuisine reste opérationnelle, efficace et rentable — où que vous soyez dans le monde.
+Nous sommes spécialisés dans la fourniture de composants essentiels pour une large gamme d'équipements de cuisine professionnelle. Notre vaste inventaire vous garantit de trouver la bonne pièce pour chaque machine, notamment :
 
-Ne laissez pas les pannes d'équipement nuire à votre activité. Contactez notre équipe d'experts par email, téléphone ou WhatsApp dès aujourd'hui et laissez-nous trouver la pièce exacte dont vous avez besoin pour reprendre la pleine activité.`,
+Équipement de Préparation : presse-agrumes, mixeurs, mixeurs plongeants (batteurs à main), batteurs planétaires, coupe-légumes, trancheurs.
+
+Cuisson et Boulangerie : fours commerciaux, batteurs planétaires et équipements de cuisson.
+
+Nettoyage et Réfrigération : lave-vaisselle professionnels et unités de réfrigération.
+
+Au Service des Professionnels du Monde Entier — Que vous exploitiez un restaurant, un hôtel, une boulangerie, un service de restauration ou tout autre établissement de restauration, HDO Global Trade propose des solutions fiables adaptées à vos besoins. Nous nous engageons à soutenir votre cuisine avec :
+
+Livraison Internationale Rapide : livraison de pièces où que vous soyez.
+
+Prix Compétitifs : des composants de qualité adaptés à votre budget.
+
+Support Expert : une assistance maintenance continue pour que votre cuisine fonctionne sans accroc.
+
+Vous cherchez une pièce spécifique ? Contactez HDO Global Trade aujourd'hui et remettez votre équipement de cuisine en service rapidement et efficacement.`,
   },
   es: {
     faqTitle: "Preguntas Frecuentes",
-    seoTitle: "Tu Tienda Única para Repuestos de Cocina Industrial",
-    seoText: `HDO Global Trade se especializa en el suministro experto de maquinaria de cocina comercial. No somos solo un proveedor — somos su socio técnico dedicado. Nuestros expertos aprovechan un profundo conocimiento del sector para identificar los repuestos OEM o alternativos exactos que necesita, ayudándole a minimizar costosos tiempos de inactividad y a prolongar la vida útil de su equipo.
+    seoTitle: "Proveedor Global de Repuestos Premium para Cocinas Industriales",
+    seoText: `En HDO Global Trade, somos su tienda única para repuestos, accesorios y pequeños electrodomésticos de alta calidad para cocinas comerciales.
 
-Creemos que detrás de cada cocina exitosa hay maquinaria que nunca falla. Por eso combinamos una amplia red global de suministro con un toque personal — cuando se pone en contacto con nosotros, habla con profesionales que entienden su equipo. Con envío internacional rápido y un compromiso con la precisión técnica, garantizamos que su cocina se mantenga operativa, eficiente y rentable — sin importar dónde se encuentre en el mundo.
+Nos especializamos en el suministro de componentes esenciales para una amplia gama de equipos profesionales de cocina. Nuestro extenso inventario le garantiza encontrar la pieza adecuada para cualquier máquina, incluyendo:
 
-No deje que el tiempo de inactividad del equipo perjudique su negocio. Contacte a nuestro equipo de expertos por email, teléfono o WhatsApp hoy mismo y permítanos encontrar el repuesto exacto que necesita para volver a la plena operación.`,
+Equipo de Preparación: exprimidores, licuadoras, batidoras de inmersión (batidoras de mano), batidoras planetarias, cortadoras de verduras, cortafiambres.
+
+Cocción y Panadería: hornos comerciales, batidoras planetarias y equipos de cocción.
+
+Limpieza y Refrigeración: lavavajillas profesionales y unidades de refrigeración.
+
+Al Servicio de Profesionales en Todo el Mundo — Ya sea que opere un restaurante, hotel, panadería, servicio de catering o cualquier otro negocio de servicios alimentarios, HDO Global Trade ofrece soluciones fiables adaptadas a sus necesidades. Estamos comprometidos a apoyar su cocina con:
+
+Envío Internacional Rápido: entrega de piezas dondequiera que esté.
+
+Precios Competitivos: componentes de calidad que se ajustan a su presupuesto.
+
+Soporte Experto: asistencia continua de mantenimiento para que su cocina funcione sin problemas.
+
+¿Necesita una pieza específica? Contacte a HDO Global Trade hoy y ponga su equipo de cocina en funcionamiento de manera rápida y eficiente.`,
   },
   he: {
     faqTitle: "שאלות נפוצות",
-    seoTitle: "החנות המושלמת שלכם לחלקי חילוף למטבח תעשייתי",
-    seoText: `HDO Global Trade מתמחה באספקת חלקי חילוף למכונות מטבח מסחרי. אנחנו לא סתם ספק — אנחנו השותף הטכני המסור שלכם. המומחים שלנו משתמשים בידע מעמיק בתעשייה כדי לזהות את חלקי החילוף המקוריים (OEM) או התואמים המדויקים שאתם צריכים, ועוזרים לכם למזער השבתות יקרות ולהאריך את חיי הציוד שלכם.
+    seoTitle: "ספק עולמי של חלקי חילוף פרימיום למטבחים תעשייתיים",
+    seoText: `ב-HDO Global Trade, אנחנו החנות המושלמת שלכם לחלקי חילוף, אביזרים ומכשירים קטנים איכותיים למטבחים מסחריים.
 
-אנחנו מאמינים שמאחורי כל מטבח מצליח עומדת מכונה שלעולם לא נכשלת. לכן אנחנו משלבים רשת אספקה עולמית רחבה עם מגע אישי — כשאתם פונים אלינו, אתם מדברים עם אנשי מקצוע שמבינים את הציוד שלכם. עם משלוח בינלאומי מהיר ומחויבות לדיוק טכני, אנחנו מבטיחים שהמטבח שלכם יישאר פעיל, יעיל ורווחי — לא משנה היכן אתם בעולם.
+אנחנו מתמחים באספקת רכיבים חיוניים למגוון רחב של ציוד מטבח מקצועי. המלאי הנרחב שלנו מבטיח שתמצאו את החלק הנכון לכל מכונה, כולל:
 
-אל תתנו להשבתת ציוד לפגוע בעסק שלכם. צרו קשר עם צוות המומחים שלנו באימייל, בטלפון או בוואטסאפ עוד היום, ותנו לנו למצוא את החלק המדויק שאתם צריכים כדי לחזור לפעילות מלאה.`,
+ציוד הכנה: סוחטים, בלנדרים, בלנדרים ידניים (מקצפות יד), מיקסרים פלנטריים, חותכי ירקות, פורסים.
+
+בישול ואפייה: תנורים מסחריים, מיקסרים פלנטריים וציוד בישול.
+
+ניקיון וקירור: מדיחי כלים מקצועיים ויחידות קירור.
+
+בשירות אנשי מקצוע ברחבי העולם — בין אם אתם מפעילים מסעדה, מלון, מאפייה, שירות קייטרינג או כל עסק אחר בתחום שירותי המזון, HDO Global Trade מספקת פתרונות אמינים המותאמים לצרכים שלכם. אנחנו מחויבים לתמוך במטבח שלכם עם:
+
+משלוח בינלאומי מהיר: אספקת חלקים לכל מקום שבו אתם נמצאים.
+
+תמחור תחרותי: רכיבים איכותיים שמתאימים לתקציב שלכם.
+
+תמיכה מומחית: סיוע תחזוקה שוטף כדי שהמטבח שלכם יפעל בצורה חלקה.
+
+מחפשים חלק ספציפי? צרו קשר עם HDO Global Trade עוד היום והחזירו את ציוד המטבח שלכם לפעולה במהירות וביעילות.`,
   },
   de: {
     faqTitle: "Häufig gestellte Fragen",
-    seoTitle: "Ihr One-Stop-Shop für Industrieküchen-Ersatzteile",
-    seoText: `HDO Global Trade ist spezialisiert auf die fachkundige Beschaffung von Ersatzteilen für gewerbliche Küchenmaschinen. Wir sind nicht nur ein Lieferant — wir sind Ihr engagierter technischer Partner. Unsere Experten nutzen tiefgreifendes Branchenwissen, um genau die OEM- oder kompatiblen Ersatzteile zu identifizieren, die Sie benötigen, und helfen Ihnen dabei, kostspielige Ausfallzeiten zu minimieren und die Lebensdauer Ihrer Geräte zu verlängern.
+    seoTitle: "Globaler Lieferant von Premium-Ersatzteilen für Industrieküchen",
+    seoText: `Bei HDO Global Trade sind wir Ihr One-Stop-Shop für hochwertige Ersatzteile, Zubehör und Kleingeräte für gewerbliche Küchen.
 
-Wir glauben, dass hinter jeder erfolgreichen Küche Maschinen stehen, die niemals ausfallen. Deshalb kombinieren wir ein umfassendes globales Liefernetzwerk mit persönlicher Betreuung — wenn Sie sich an uns wenden, sprechen Sie mit Fachleuten, die Ihre Geräte verstehen. Mit schnellem internationalem Versand und einem Engagement für technische Präzision stellen wir sicher, dass Ihre Küche betriebsbereit, effizient und profitabel bleibt — egal wo auf der Welt Sie sich befinden.
+Wir sind spezialisiert auf die Lieferung wesentlicher Komponenten für eine breite Palette professioneller Küchengeräte. Unser umfangreiches Sortiment stellt sicher, dass Sie das richtige Teil für jede Maschine finden, darunter:
 
-Lassen Sie nicht zu, dass Geräteausfälle Ihrem Geschäft schaden. Kontaktieren Sie noch heute unser Expertenteam per E-Mail, Telefon oder WhatsApp und lassen Sie uns das genaue Ersatzteil finden, das Sie benötigen, um den vollen Betrieb wiederherzustellen.`,
+Vorbereitungsgeräte: Entsafter, Mixer, Stabmixer (Handmixer), Planetenmixer, Gemüseschneider, Aufschnittmaschinen.
+
+Kochen und Backen: gewerbliche Öfen, Planetenmixer und Kochgeräte.
+
+Reinigung und Kühlung: professionelle Spülmaschinen und Kühlaggregate.
+
+Im Dienst von Fachleuten Weltweit — Ob Sie ein Restaurant, Hotel, eine Bäckerei, einen Cateringservice oder ein anderes Gastronomieunternehmen betreiben, HDO Global Trade bietet zuverlässige Lösungen, die auf Ihre Bedürfnisse zugeschnitten sind. Wir sind bestrebt, Ihre Küche zu unterstützen mit:
+
+Schnellem Internationalem Versand: Lieferung von Teilen, wohin auch immer Sie sie benötigen.
+
+Wettbewerbsfähigen Preisen: Qualitätskomponenten, die in Ihr Budget passen.
+
+Fachkundigem Support: laufende Wartungsunterstützung, damit Ihre Küche reibungslos läuft.
+
+Suchen Sie ein bestimmtes Teil? Kontaktieren Sie HDO Global Trade noch heute und bringen Sie Ihre Küchengeräte schnell und effizient wieder in Betrieb.`,
   },
   it: {
     faqTitle: "Domande Frequenti",
-    seoTitle: "Il Vostro Punto di Riferimento per Ricambi per Cucine Industriali",
-    seoText: `HDO Global Trade è specializzata nell'approvvigionamento esperto di macchinari per cucine commerciali. Non siamo solo un fornitore — siamo il vostro partner tecnico dedicato. I nostri esperti sfruttano una profonda conoscenza del settore per identificare i ricambi OEM o aftermarket esatti di cui avete bisogno, aiutandovi a ridurre al minimo i costosi tempi di fermo e a prolungare la vita delle vostre attrezzature.
+    seoTitle: "Fornitore Globale di Ricambi Premium per Cucine Industriali",
+    seoText: `In HDO Global Trade, siamo il vostro punto di riferimento unico per ricambi, accessori e piccoli elettrodomestici di alta qualità per cucine commerciali.
 
-Crediamo che dietro ogni cucina di successo ci siano macchinari che non perdono mai un colpo. Ecco perché combiniamo una vasta rete di approvvigionamento globale con un tocco personale — quando ci contattate, parlate con professionisti che comprendono le vostre attrezzature. Con spedizioni internazionali rapide e un impegno per la precisione tecnica, garantiamo che la vostra cucina resti operativa, efficiente e redditizia — ovunque voi siate nel mondo.
+Siamo specializzati nella fornitura di componenti essenziali per un'ampia gamma di attrezzature professionali da cucina. Il nostro vasto inventario vi garantisce di trovare il ricambio giusto per qualsiasi macchina, tra cui:
 
-Non lasciate che i tempi di fermo delle attrezzature danneggino la vostra attività. Contattate il nostro team di esperti via email, telefono o WhatsApp oggi stesso e lasciateci trovare il ricambio esatto di cui avete bisogno per tornare alla piena operatività.`,
+Attrezzature di Preparazione: spremiagrumi, frullatori, frullatori a immersione (sbattitori manuali), impastatrici planetarie, taglialegumi, affettatrici.
+
+Cottura e Panificazione: forni commerciali, impastatrici planetarie e attrezzature per la cottura.
+
+Pulizia e Refrigerazione: lavastoviglie professionali e unità di refrigerazione.
+
+Al Servizio di Professionisti in Tutto il Mondo — Che gestiate un ristorante, un hotel, un panificio, un servizio di catering o qualsiasi altra attività di ristorazione, HDO Global Trade offre soluzioni affidabili su misura per le vostre esigenze. Ci impegniamo a supportare la vostra cucina con:
+
+Spedizioni Internazionali Rapide: consegna di ricambi ovunque vi troviate.
+
+Prezzi Competitivi: componenti di qualità adatti al vostro budget.
+
+Supporto Esperto: assistenza continua per la manutenzione, per mantenere la vostra cucina sempre efficiente.
+
+Cercate un ricambio specifico? Contattate HDO Global Trade oggi e rimettete in funzione le vostre attrezzature da cucina in modo rapido ed efficiente.`,
   },
 };
 
