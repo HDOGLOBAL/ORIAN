@@ -62,6 +62,15 @@ Wir glauben, dass hinter jeder erfolgreichen Küche Maschinen stehen, die niemal
 
 Lassen Sie nicht zu, dass Geräteausfälle Ihrem Geschäft schaden. Kontaktieren Sie noch heute unser Expertenteam per E-Mail, Telefon oder WhatsApp und lassen Sie uns das genaue Ersatzteil finden, das Sie benötigen, um den vollen Betrieb wiederherzustellen.`,
   },
+  it: {
+    faqTitle: "Domande Frequenti",
+    seoTitle: "Il Vostro Punto di Riferimento per Ricambi per Cucine Industriali",
+    seoText: `HDO Global Trade è specializzata nell'approvvigionamento esperto di macchinari per cucine commerciali. Non siamo solo un fornitore — siamo il vostro partner tecnico dedicato. I nostri esperti sfruttano una profonda conoscenza del settore per identificare i ricambi OEM o aftermarket esatti di cui avete bisogno, aiutandovi a ridurre al minimo i costosi tempi di fermo e a prolungare la vita delle vostre attrezzature.
+
+Crediamo che dietro ogni cucina di successo ci siano macchinari che non perdono mai un colpo. Ecco perché combiniamo una vasta rete di approvvigionamento globale con un tocco personale — quando ci contattate, parlate con professionisti che comprendono le vostre attrezzature. Con spedizioni internazionali rapide e un impegno per la precisione tecnica, garantiamo che la vostra cucina resti operativa, efficiente e redditizia — ovunque voi siate nel mondo.
+
+Non lasciate che i tempi di fermo delle attrezzature danneggino la vostra attività. Contattate il nostro team di esperti via email, telefono o WhatsApp oggi stesso e lasciateci trovare il ricambio esatto di cui avete bisogno per tornare alla piena operatività.`,
+  },
 };
 
 export default function OurBrand() {
