@@ -247,7 +247,7 @@ export default function Footer() {
             </p>
             <div className="flex space-x-4 mt-2">
               <a
-                href="https://www.facebook.com/share/p/1GvucUc6kr/"
+                href="https://www.facebook.com/share/1CzKXrc7ke/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
@@ -255,7 +255,7 @@ export default function Footer() {
                 <FbIcon />
               </a>
               <a
-                href="https://instagram.com/hdotrade"
+                href="https://www.instagram.com/hdo_global_trade?igsh=bDE2NzR6bGhxdndm"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
