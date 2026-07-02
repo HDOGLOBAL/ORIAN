@@ -804,7 +804,7 @@ const handleChatOpen = () => {
               <button
                 onClick={handleShopNow}
                 disabled={isLoading}
-                className="h-full w-full bg-black rounded-full text-white font-bold text-base sm:text-lg cursor-pointer hover:bg-gray-800 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                className="h-full w-full bg-[#e91325] rounded-full text-white font-bold text-base sm:text-lg cursor-pointer hover:bg-gray-800 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {getText("shopNow")}
               </button>
