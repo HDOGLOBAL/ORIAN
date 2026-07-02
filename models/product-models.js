@@ -71,6 +71,12 @@ const productSchema = new mongoose.Schema(
         required: false,
         min: [0, "Price cannot be negative"],
       },
+      // ✅ AUD price for Australia
+      aud: {
+        type: Number,
+        required: false,
+        min: [0, "Price cannot be negative"],
+      },
     },
     discountPrice: {
       usd: {
@@ -105,6 +111,18 @@ const productSchema = new mongoose.Schema(
             return !value || value < this.price.gbp;
           },
           message: "GBP discount price must be lower than regular price",
+        },
+      },
+      // ✅ AUD discount price for Australia
+      aud: {
+        type: Number,
+        required: false,
+        min: [0, "Discount price cannot be negative"],
+        validate: {
+          validator: function (value) {
+            return !value || value < this.price.aud;
+          },
+          message: "AUD discount price must be lower than regular price",
         },
       },
     },
@@ -266,6 +284,11 @@ const productSchema = new mongoose.Schema(
       required: false,
       default: 0,
     },
+    translationSource: {
+      type: Map,
+      of: String, // e.g., { "namePt": "auto", "nameFr": "human" }
+      default: {},
+    },
   },
   {
     timestamps: true,
@@ -305,6 +328,7 @@ productSchema.virtual("finalPrice").get(function () {
     usd: this.discountPrice?.usd || this.price.usd,
     eur: this.discountPrice?.eur || this.price.eur,
     gbp: this.discountPrice?.gbp || this.price.gbp, // ✅ GBP
+    aud: this.discountPrice?.aud || this.price.aud, // ✅ AUD
   };
 });
 
@@ -318,6 +342,9 @@ productSchema.pre("save", function (next) {
   }
   if (this.discountPrice?.gbp && this.price.gbp && this.discountPrice.gbp >= this.price.gbp) {
     throw new Error("GBP discount price must be lower than regular price");
+  }
+  if (this.discountPrice?.aud && this.price.aud && this.discountPrice.aud >= this.price.aud) {
+    throw new Error("AUD discount price must be lower than regular price");
   }
   next();
 });

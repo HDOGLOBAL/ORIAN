@@ -12,6 +12,8 @@ import {
 } from "@/utils/slugify";
 import { productModel } from "@/models/product-models";
 import { cartModel } from "@/models/cart-models";
+import { mailSender } from "../../utils/mailSender";
+import { autoTranslateMissing } from "../../utils/translator";
 import { auth } from "@/auth";
 import { OrderModel } from "@/models/order-models";
 import { dbConnect } from "@/service/mongo";
@@ -2119,8 +2121,9 @@ export async function createProduct(data) {
         message: "Discount price (EUR) must be lower than regular price",
       };
     }
-    // Create product
-    const newProduct = await productModel.create(productData);
+    // Save product to database
+    const translatedProductData = await autoTranslateMissing(productData, null);
+    const newProduct = await productModel.create(translatedProductData);
     return {
       success: true,
       status: 201,
@@ -2333,8 +2336,9 @@ export async function updateProduct(productId, data) {
       };
     }
 
-    // Update product
-    await productModel.findByIdAndUpdate(productId, productData, { new: true });
+    const translatedProductData = await autoTranslateMissing(productData, existingProduct);
+    const updatedProduct = await productModel
+      .findByIdAndUpdate(productId, translatedProductData, { new: true });
 
     return {
       success: true,

@@ -22,6 +22,7 @@ const nextConfig = {
       { protocol: "https", hostname: "hdotrade.es" },
       { protocol: "https", hostname: "hdotrade.fr" },
       { protocol: "https", hostname: "hdotrade.co.il" },
+      { protocol: "https", hostname: "hdotrade.com.au" },
     ],
   },
 

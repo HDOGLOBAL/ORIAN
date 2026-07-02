@@ -13,6 +13,7 @@ const DOMAIN_MAP = [
   { domain: "https://hdotrade.fr",     lang: "fr",    hreflang: "fr"    },
   { domain: "https://hdotrade.eu",     lang: "en",    hreflang: "en"    },
   { domain: "https://hdotrade.co.il",  lang: "he",    hreflang: "he"    },
+  { domain: "https://hdotrade.com.au", lang: "en",    hreflang: "en-AU" },
 ];
 
 // Build full hreflang alternates for any page path
@@ -34,6 +35,7 @@ export function getDomainFromHost(hostname = "") {
   if (host.includes(".es"))     return "https://hdotrade.es";
   if (host.includes(".pt"))     return "https://www.hdotrade.pt";
   if (host.includes(".eu"))     return "https://hdotrade.eu";
+  if (host.includes(".com.au")) return "https://hdotrade.com.au";
   if (host.includes(".com"))    return "https://hdotrade.com";
   return "https://hdotrade.pt";
 }
@@ -139,7 +141,7 @@ const seoMetadata = {
 // Domain → language map (fixed .co.uk detection bug)
 export function getLanguageFromHost(hostname = "") {
   const host = hostname.toLowerCase();
-  if (host.includes(".uk"))  return "en";
+  if (host.includes(".uk") || host.includes(".com.au")) return "en";
   if (host.includes(".co.il") || host.includes(".il")) return "he";
   if (host.includes(".de"))     return "de";
   if (host.includes(".fr"))     return "fr";

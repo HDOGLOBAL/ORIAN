@@ -247,6 +247,15 @@ const [currentDomain, setCurrentDomain] = useState("");
       domainMatch: ".uk", 
     },
     {
+      // AU → English + AUD
+      code: "au",
+      countryCode: "AU",
+      language: "English (AU) — $ AUD",
+      title: "AU",
+      link: "https://hdotrade.com.au/",
+      domainMatch: ".com.au", 
+    },
+    {
       // COM → English + USD only
       code: "com",
       countryCode: "US",
