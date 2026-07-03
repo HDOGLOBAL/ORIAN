@@ -1644,8 +1644,6 @@ export default function AddUpdate({ updateId = false }) {
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-white rounded shadow mt-10">
-      {/* Back Button */}
-
       <button
         type="button"
         onClick={() => router.back()}
@@ -1654,7 +1652,7 @@ export default function AddUpdate({ updateId = false }) {
         text-gray-700 text-sm font-medium
         hover:bg-gray-50 hover:shadow-md
         active:scale-95 transition-all duration-200"
-            >
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-4 w-4"
