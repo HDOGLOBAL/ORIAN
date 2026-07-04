@@ -12,7 +12,7 @@ import {
 } from "@/utils/slugify";
 import { productModel } from "@/models/product-models";
 import { cartModel } from "@/models/cart-models";
-import { mailSender } from "../../utils/mailSender";
+import { sendNewOrderNotifications } from "../../utils/mailSender";
 import { autoTranslateMissing } from "../../utils/translator";
 import { auth } from "@/auth";
 import { OrderModel } from "@/models/order-models";
@@ -1714,11 +1714,18 @@ export const placeOrder = async (formData) => {
 
     // Upsert: update if unpaid order exists for this trackingId, otherwise create
     const { trackingId: tid, ...fields } = order;
-    await OrderModel.findOneAndUpdate(
+    const savedOrder = await OrderModel.findOneAndUpdate(
       { trackingId: tid, paid: false },
       { $set: fields },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
+
+    try {
+      await sendNewOrderNotifications(savedOrder?.toObject ? savedOrder.toObject() : savedOrder);
+    } catch (emailError) {
+      console.error("Order email notifications failed:", emailError);
+    }
+
     return {
       success: true,
       grandTotal: order.totals.grandTotal,

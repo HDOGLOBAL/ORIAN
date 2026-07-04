@@ -37,13 +37,20 @@ export default async function SuccessPage({ searchParams }) {
       amount = session.amount_total || 0;
       currencyCode = session.currency || "eur";
 
-      if (session.payment_status === "paid") {
+      if (
+        session.status === "complete" ||
+        session.payment_status === "paid" ||
+        session.payment_status === "no_payment_required"
+      ) {
         status = "succeeded";
         if (trackingId) {
           try { await markOrderAsPaid(trackingId, session.payment_intent); } catch {}
           try { await clearGuestCart(trackingId); } catch {}
         }
-      } else if (session.payment_status === "unpaid") {
+      } else if (
+        session.payment_status === "unpaid" &&
+        session.status !== "complete"
+      ) {
         status = "requires_payment_method";
       } else {
         status = "processing";
