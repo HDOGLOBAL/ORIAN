@@ -13,7 +13,7 @@ const DOMAIN_MAP = [
   { domain: "https://hdotrade.fr",     lang: "fr",    hreflang: "fr"    },
   { domain: "https://hdotrade.eu",     lang: "en",    hreflang: "en"    },
   { domain: "https://hdotrade.co.il",  lang: "he",    hreflang: "he"    },
-  { domain: "https://hdotrade.com.au", lang: "en",    hreflang: "en-AU" },
+  { domain: "https://hdotrade.au", lang: "en",    hreflang: "en-AU" },
 ];
 
 // Build full hreflang alternates for any page path
@@ -35,7 +35,7 @@ export function getDomainFromHost(hostname = "") {
   if (host.includes(".es"))     return "https://hdotrade.es";
   if (host.includes(".pt"))     return "https://www.hdotrade.pt";
   if (host.includes(".eu"))     return "https://hdotrade.eu";
-  if (host.includes(".com.au")) return "https://hdotrade.com.au";
+  if (host.includes(".com.au")) return "https://hdotrade.au";
   if (host.includes(".com"))    return "https://hdotrade.com";
   return "https://hdotrade.pt";
 }
