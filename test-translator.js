@@ -7,8 +7,10 @@ async function runTest() {
     name: "Old Product",
     description: "Old description",
     namePt: "Produto Antigo (Human Edited)",
+    nameFr: "[AUTO] Old Product",
     translationSource: new Map(Object.entries({
-      namePt: "human"
+      namePt: "human",
+      nameFr: "auto",
     }))
   };
 
@@ -33,7 +35,8 @@ async function runTest() {
   
   console.log("\nNotice:");
   console.log("- namePt remained untouched because it was marked 'human' in translationSource.");
-  console.log("- Other fields like nameFr, nameEs etc. were auto-translated (using the fallback [AUTO] prefix if no API key is set).");
+  console.log("- nameFr was refreshed because it was marked 'auto' and the English name changed.");
+  console.log("- Other empty fields like nameEs etc. were auto-translated (using the fallback [AUTO] prefix if no API key is set).");
   console.log("- translationSource map tracks which fields are 'auto' and 'human'.");
 }
 

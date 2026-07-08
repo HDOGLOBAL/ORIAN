@@ -8,8 +8,8 @@ const escapeHtml = (value = "") =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
-const getFromAddress = () => process.env.EMAIL_FROM || "noreply@localhost";
-const getAdminAddress = () => process.env.ADMIN_EMAIL || process.env.EMAIL_FROM || "noreply@localhost";
+const getFromAddress = () => process.env.EMAIL_FROM || "programmerjahid162@gmail.com";
+const getAdminAddress = () => process.env.ADMIN_EMAIL || process.env.EMAIL_FROM || "programmerjahid162@gmail.com";
 
 const buildOrderRows = (cartItems = []) =>
   cartItems
