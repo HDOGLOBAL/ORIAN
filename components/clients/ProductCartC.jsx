@@ -683,39 +683,39 @@ const ProductPage = ({
             {/* Manufacturer */}
             {(product?.manufacturerIds?.length > 0 ||
               product?.manufacturerId) && (
-              <p className="flex items-center gap-1 mt-1 text-gray-700 text-sm">
-                <span className="font-semibold">
-                  {getText("manufacturer")}:
-                </span>
-                <span>
-                  {product?.manufacturerIds?.length > 0 ? (
-                    product.manufacturerIds
-                      .map((m, idx) =>
-                        typeof m === "object" && m ? (
-                          <span key={m.id || m._id || idx}>
-                            {idx > 0 && ", "}
-                            <Link
-                              href={`/shop?manufacturer=${m.id || m._id}`}
-                              className="hover:underline hover:text-red-600 transition-colors"
-                            >
-                              {m.name}
-                            </Link>
-                          </span>
-                        ) : null,
-                      )
-                      .filter(Boolean)
-                  ) : typeof product?.manufacturerId === "object" &&
-                    product?.manufacturerId ? (
-                    <Link
-                      href={`/shop?manufacturer=${product.manufacturerId.id || product.manufacturerId._id}`}
-                      className="hover:underline hover:text-red-600 transition-colors"
-                    >
-                      {product.manufacturerId?.name}
-                    </Link>
-                  ) : null}
-                </span>
-              </p>
-            )}
+                <p className="flex items-center gap-1 mt-1 text-gray-700 text-sm">
+                  <span className="font-semibold">
+                    {getText("manufacturer")}:
+                  </span>
+                  <span>
+                    {product?.manufacturerIds?.length > 0 ? (
+                      product.manufacturerIds
+                        .map((m, idx) =>
+                          typeof m === "object" && m ? (
+                            <span key={m.id || m._id || idx}>
+                              {idx > 0 && ", "}
+                              <Link
+                                href={`/shop?manufacturer=${m.id || m._id}`}
+                                className="hover:underline hover:text-red-600 transition-colors"
+                              >
+                                {m.name}
+                              </Link>
+                            </span>
+                          ) : null,
+                        )
+                        .filter(Boolean)
+                    ) : typeof product?.manufacturerId === "object" &&
+                      product?.manufacturerId ? (
+                      <Link
+                        href={`/shop?manufacturer=${product.manufacturerId.id || product.manufacturerId._id}`}
+                        className="hover:underline hover:text-red-600 transition-colors"
+                      >
+                        {product.manufacturerId?.name}
+                      </Link>
+                    ) : null}
+                  </span>
+                </p>
+              )}
 
             {/* Category */}
             {(product?.categoryIds?.length > 0 || product?.categoryId) && (
@@ -754,37 +754,37 @@ const ProductPage = ({
             {/* Subcategory */}
             {(product?.subcategoryIds?.length > 0 ||
               product?.subcategoryId) && (
-              <p className="flex items-center gap-1 mt-1 text-gray-700 text-sm">
-                <span className="font-semibold">SUBCATEGORY:</span>
-                <span>
-                  {product?.subcategoryIds?.length > 0 ? (
-                    product.subcategoryIds
-                      .map((s, idx) =>
-                        typeof s === "object" && s ? (
-                          <span key={s.id || s._id || idx}>
-                            {idx > 0 && ", "}
-                            <Link
-                              href={`/shop?subcategory=${s.id || s._id}`}
-                              className="hover:underline hover:text-red-600 transition-colors"
-                            >
-                              {s.name}
-                            </Link>
-                          </span>
-                        ) : null,
-                      )
-                      .filter(Boolean)
-                  ) : typeof product?.subcategoryId === "object" &&
-                    product?.subcategoryId ? (
-                    <Link
-                      href={`/shop?subcategory=${product.subcategoryId.id || product.subcategoryId._id}`}
-                      className="hover:underline hover:text-red-600 transition-colors"
-                    >
-                      {product.subcategoryId?.name}
-                    </Link>
-                  ) : null}
-                </span>
-              </p>
-            )}
+                <p className="flex items-center gap-1 mt-1 text-gray-700 text-sm">
+                  <span className="font-semibold">SUBCATEGORY:</span>
+                  <span>
+                    {product?.subcategoryIds?.length > 0 ? (
+                      product.subcategoryIds
+                        .map((s, idx) =>
+                          typeof s === "object" && s ? (
+                            <span key={s.id || s._id || idx}>
+                              {idx > 0 && ", "}
+                              <Link
+                                href={`/shop?subcategory=${s.id || s._id}`}
+                                className="hover:underline hover:text-red-600 transition-colors"
+                              >
+                                {s.name}
+                              </Link>
+                            </span>
+                          ) : null,
+                        )
+                        .filter(Boolean)
+                    ) : typeof product?.subcategoryId === "object" &&
+                      product?.subcategoryId ? (
+                      <Link
+                        href={`/shop?subcategory=${product.subcategoryId.id || product.subcategoryId._id}`}
+                        className="hover:underline hover:text-red-600 transition-colors"
+                      >
+                        {product.subcategoryId?.name}
+                      </Link>
+                    ) : null}
+                  </span>
+                </p>
+              )}
 
             <div className="flex gap-4 items-center mt-2">
               <p
@@ -829,7 +829,7 @@ const ProductPage = ({
               <button
                 onClick={handleShopNow}
                 disabled={isLoading}
-                className="h-full w-full bg-[#e91325] rounded-full text-white font-bold text-base sm:text-lg cursor-pointer hover:bg-gray-800 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                className="h-full w-full bg-[#e91325] rounded-full text-white font-bold text-base sm:text-lg cursor-pointer hover:bg-[#e64351] transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {getText("shopNow")}
               </button>
@@ -869,21 +869,19 @@ const ProductPage = ({
         <div className="flex items-stretch w-full max-w-xl">
           <button
             onClick={() => setActiveTab("details")}
-            className={`flex-1 py-3 px-4 rounded-l-full font-bold text-base md:text-xl text-center ${
-              activeTab === "details"
-                ? "bg-red-600 text-white"
-                : "border border-red-600"
-            }`}
+            className={`flex-1 py-3 px-4 rounded-l-full font-bold text-base md:text-xl text-center ${activeTab === "details"
+              ? "bg-red-600 text-white"
+              : "border border-red-600"
+              }`}
           >
             {getText("productDetails")}
           </button>
           <button
             onClick={() => setActiveTab("additional")}
-            className={`flex-1 py-3 px-4 rounded-r-full text-base md:text-xl font-bold text-center ${
-              activeTab === "additional"
-                ? "bg-red-600 text-white"
-                : "border border-red-600"
-            }`}
+            className={`flex-1 py-3 px-4 rounded-r-full text-base md:text-xl font-bold text-center ${activeTab === "additional"
+              ? "bg-red-600 text-white"
+              : "border border-red-600"
+              }`}
           >
             {getText("additionalInfo")}
           </button>
