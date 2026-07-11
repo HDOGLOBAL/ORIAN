@@ -33,6 +33,9 @@ export default async function SuccessPage({ searchParams }) {
     if (sessionId) {
       const session = await stripe.checkout.sessions.retrieve(sessionId);
 
+      console.log("Session:", session);
+      console.log(JSON.stringify(session));
+
       displayId = session.payment_intent || sessionId;
       amount = session.amount_total || 0;
       currencyCode = session.currency || "eur";
@@ -44,8 +47,8 @@ export default async function SuccessPage({ searchParams }) {
       ) {
         status = "succeeded";
         if (trackingId) {
-          try { await markOrderAsPaid(trackingId, session.payment_intent); } catch {}
-          try { await clearGuestCart(trackingId); } catch {}
+          try { await markOrderAsPaid(trackingId, session.payment_intent); } catch { }
+          try { await clearGuestCart(trackingId); } catch { }
         }
       } else if (
         session.payment_status === "unpaid" &&
@@ -64,8 +67,8 @@ export default async function SuccessPage({ searchParams }) {
       currencyCode = paymentIntent.currency || "eur";
 
       if (status === "succeeded" && trackingId) {
-        try { await markOrderAsPaid(trackingId, paymentIntentId); } catch {}
-        try { await clearGuestCart(trackingId); } catch {}
+        try { await markOrderAsPaid(trackingId, paymentIntentId); } catch { }
+        try { await clearGuestCart(trackingId); } catch { }
       }
     }
   } catch (err) {
@@ -102,8 +105,8 @@ export default async function SuccessPage({ searchParams }) {
             {isSuccess
               ? "Your order has been confirmed. Thank you!"
               : isFailed
-              ? "Your payment was not completed. Please try again."
-              : "Your payment is being processed. We'll update you shortly."}
+                ? "Your payment was not completed. Please try again."
+                : "Your payment is being processed. We'll update you shortly."}
           </p>
         </div>
 

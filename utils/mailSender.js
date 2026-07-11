@@ -8,8 +8,14 @@ const escapeHtml = (value = "") =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
-const getFromAddress = () => process.env.EMAIL_FROM || "programmerjahid162@gmail.com";
-const getAdminAddress = () => process.env.ADMIN_EMAIL || process.env.EMAIL_FROM || "programmerjahid162@gmail.com";
+const getFromAddress = () => process.env.EMAIL_FROM || "sales@hdotrade.com";
+const getAdminAddress = () => {
+  const admin = process.env.ADMIN_EMAIL;
+  if (admin) return admin;
+  const from = process.env.EMAIL_FROM;
+  if (from && !from.includes("resend.dev")) return from;
+  return "sales@hdotrade.com";
+};
 
 const buildOrderRows = (cartItems = []) =>
   cartItems
@@ -34,7 +40,8 @@ const buildOrderSummaryHtml = (order) => {
       <p style="margin: 0 0 8px;"><strong>Customer:</strong> ${escapeHtml(order?.firstName || "") + " " + escapeHtml(order?.lastName || "")}</p>
       <p style="margin: 0 0 8px;"><strong>Email:</strong> ${escapeHtml(order?.email || "")}</p>
       <p style="margin: 0 0 8px;"><strong>Tracking ID:</strong> ${escapeHtml(order?.trackingId || "")}</p>
-      <p style="margin: 0 0 16px;"><strong>Payment status:</strong> ${order?.paid ? "Paid" : "Pending"}</p>
+      <p style="margin: 0 0 8px;"><strong>Payment status:</strong> ${order?.paid ? "Paid" : "Pending"}</p>
+      <p style="margin: 0 0 16px;"><strong>Order Link:</strong> <a href="${process.env.NEXT_PUBLIC_SITE_URL || 'https://hdotrade.eu'}/auth/dashboard/orders/${order?._id?.toString() || order?.id || ''}" style="color: #4f46e5; text-decoration: underline;">${process.env.NEXT_PUBLIC_SITE_URL || 'https://hdotrade.eu'}/auth/dashboard/orders/${order?._id?.toString() || order?.id || ''}</a></p>
 
       <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
         <thead>
@@ -79,6 +86,7 @@ const buildCustomerConfirmationHtml = (order) => {
       </table>
 
       <p style="margin: 0 0 4px;"><strong>Subtotal:</strong> €${Number(totals.subtotal || 0).toFixed(2)}</p>
+      <p style="margin: 0 0 4px;"><strong>Discount:</strong> €${Number(totals.discount || 0).toFixed(2)}</p>
       <p style="margin: 0 0 4px;"><strong>Shipping:</strong> €${Number(totals.shipping || 0).toFixed(2)}</p>
       <p style="margin: 0 0 4px;"><strong>Tax:</strong> €${Number(totals.tax || 0).toFixed(2)}</p>
       <p style="margin: 0 0 8px;"><strong>Grand total:</strong> €${Number(totals.grandTotal || 0).toFixed(2)}</p>
@@ -130,7 +138,14 @@ export const sendNewOrderNotifications = async (order) => {
   }
 
   const adminEmail = getAdminAddress();
-  const customerEmail = order.email;
+  let customerEmail = order.email;
+
+  // If using Resend sandbox (onboarding@resend.dev), redirect customer email to admin
+  // since Resend sandbox only allows sending to the account owner's email address
+  if (process.env.EMAIL_FROM && process.env.EMAIL_FROM.includes("resend.dev")) {
+    console.warn(`Resend sandbox mode active. Redirecting customer notification (${customerEmail}) to admin email (${adminEmail}) to avoid delivery block.`);
+    customerEmail = adminEmail;
+  }
 
   const adminPayload = {
     from: getFromAddress(),
@@ -154,8 +169,16 @@ export const sendNewOrderNotifications = async (order) => {
   ]);
 
   results.forEach((result, index) => {
+    const target = index === 0 ? "admin" : "customer";
     if (result.status === "rejected") {
-      console.error(`Order email notification ${index === 0 ? "to admin" : "to customer"} failed:`, result.reason);
+      console.error(`Order email notification to ${target} failed (promise rejected):`, result.reason);
+    } else {
+      const response = result.value;
+      if (response && response.error) {
+        console.error(`Order email notification to ${target} failed:`, response.error.message || response.error);
+      } else {
+        console.log(`Order email notification to ${target} succeeded:`, response?.data);
+      }
     }
   });
 };
