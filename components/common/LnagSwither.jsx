@@ -246,15 +246,15 @@ const [currentDomain, setCurrentDomain] = useState("");
       link: "https://hdotrade.uk/",
       domainMatch: ".uk", 
     },
-    {
-      // AU → English + AUD
-      code: "au",
-      countryCode: "AU",
-      language: "English (AU) — $ AUD",
-      title: "AU",
-      link: "https://hdotrade.au/",
-      domainMatch: ".com.au", 
-    },
+    // {
+    //   // AU → English + AUD
+    //   code: "au",
+    //   countryCode: "AU",
+    //   language: "English (AU) — $ AUD",
+    //   title: "AU",
+    //   link: "https://hdotrade.au/",
+    //   domainMatch: ".com.au", 
+    // },
     {
       // COM → English + USD only
       code: "com",

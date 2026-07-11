@@ -37,7 +37,7 @@ export default async function robots() {
       "https://hdotrade.es/sitemap.xml",
       "https://hdotrade.fr/sitemap.xml",
       "https://hdotrade.co.il/sitemap.xml",
-      "https://hdotrade.au/sitemap.xml",
+      // "https://hdotrade.au/sitemap.xml",
     ],
     host: baseUrl,
   };
