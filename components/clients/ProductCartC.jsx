@@ -53,7 +53,6 @@
 //   const productDescription = descriptionMap[lang] || product?.description;
 //   const quantityText = quantityMap[lang] || "Quantity";
 
-
 //   const { fetchCart } = useCart();
 //   const router = useRouter();
 
@@ -246,7 +245,6 @@
 
 // export default ProductPage;
 
-
 "use client";
 import { MdKeyboardArrowRight, MdChat } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa";
@@ -271,13 +269,20 @@ import { convertPrice, formatPrice } from "@/utils/getExchangeRates";
 import { getUiLanguage } from "@/utils/uiLanguage";
 import DetailGallery from "@/components/detailProduct/DetailGallery";
 
-const ProductPage = ({ product, currency, lang: langProp, rates = { usd: 1.08, gbp: 0.86 } }) => {
+const ProductPage = ({
+  product,
+  currency,
+  lang: langProp,
+  rates = { usd: 1.08, gbp: 0.86 },
+}) => {
   const [isClient, setIsClient] = useState(false);
   const [count, setCount] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("details");
   const [showChat, setShowChat] = useState(false);
-  const { isSupportOnline } = useSupportStatus?.() || { isSupportOnline: false };
+  const { isSupportOnline } = useSupportStatus?.() || {
+    isSupportOnline: false,
+  };
   const domainLang = useDomain();
   const lang = langProp || domainLang;
   const uiLang = getUiLanguage(lang);
@@ -471,7 +476,7 @@ const ProductPage = ({ product, currency, lang: langProp, rates = { usd: 1.08, g
           getTextWithParams("onlyInStock", { quantity: product?.quantity }),
           {
             position: "bottom-right",
-          }
+          },
         );
       }
     } else if (action === "decrement") {
@@ -511,7 +516,10 @@ const ProductPage = ({ product, currency, lang: langProp, rates = { usd: 1.08, g
       });
 
       // If item already existed, update its quantity to the selected count
-      if (!response?.success && response?.message === "Item already exists in cart") {
+      if (
+        !response?.success &&
+        response?.message === "Item already exists in cart"
+      ) {
         await setCartItemQuantity(trackingId, product?.id, finalCount);
       }
 
@@ -528,27 +536,22 @@ const ProductPage = ({ product, currency, lang: langProp, rates = { usd: 1.08, g
 
   // Handle WhatsApp contact
   const handleWhatsAppContact = () => {
-    const message = encodeURIComponent(
-      `${productName}`
-    );
+    const message = encodeURIComponent(`${productName}`);
     window.open(`https://wa.me/351935210099?text=${message}`, "_blank");
   };
 
   // Handle Email contact
-const handleEmailContact = () => {
-  const subject = encodeURIComponent(`Inquiry about ${productName}`);
-  const body = encodeURIComponent(
-    `${productName}`
-  );
-  const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=sales@hdotrade.com&su=${subject}&body=${body}`;
-  window.open(gmailLink, "_blank");
-};
+  const handleEmailContact = () => {
+    const subject = encodeURIComponent(`Inquiry about ${productName}`);
+    const body = encodeURIComponent(`${productName}`);
+    const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=sales@hdotrade.com&su=${subject}&body=${body}`;
+    window.open(gmailLink, "_blank");
+  };
 
-// Handle Chat Open
-const handleChatOpen = () => {
-  setShowChat(true);
-};
-
+  // Handle Chat Open
+  const handleChatOpen = () => {
+    setShowChat(true);
+  };
 
   // Render additional information content
   const renderAdditionalInfo = () => {
@@ -599,22 +602,33 @@ const handleChatOpen = () => {
         <p className="text-[16px]">{getText("home")}</p>
         <MdKeyboardArrowRight className="text-xl" />
         <p className="text-[16px] text-gray-600">
-          {product?.manufacturerIds?.length > 0
-            ? product.manufacturerIds.map((m, idx) =>
+          {product?.manufacturerIds?.length > 0 ? (
+            product.manufacturerIds
+              .map((m, idx) =>
                 typeof m === "object" && m ? (
                   <span key={m.id || m._id || idx}>
                     {idx > 0 && ", "}
-                    <Link href={`/shop?manufacturer=${m.id || m._id}`} className="hover:underline hover:text-red-600 transition-colors">
+                    <Link
+                      href={`/shop?manufacturer=${m.id || m._id}`}
+                      className="hover:underline hover:text-red-600 transition-colors"
+                    >
                       {m.name}
                     </Link>
                   </span>
-                ) : null
-              ).filter(Boolean)
-            : typeof product?.manufacturerId === "object" && product?.manufacturerId ? (
-                <Link href={`/shop?manufacturer=${product.manufacturerId.id || product.manufacturerId._id}`} className="hover:underline hover:text-red-600 transition-colors">
-                  {product.manufacturerId?.name}
-                </Link>
-              ) : getText("manufacturer")}
+                ) : null,
+              )
+              .filter(Boolean)
+          ) : typeof product?.manufacturerId === "object" &&
+            product?.manufacturerId ? (
+            <Link
+              href={`/shop?manufacturer=${product.manufacturerId.id || product.manufacturerId._id}`}
+              className="hover:underline hover:text-red-600 transition-colors"
+            >
+              {product.manufacturerId?.name}
+            </Link>
+          ) : (
+            getText("manufacturer")
+          )}
         </p>
         <MdKeyboardArrowRight className="text-xl" />
         <p
@@ -634,8 +648,8 @@ const handleChatOpen = () => {
               product?.images?.length > 0
                 ? product.images
                 : product?.image
-                ? [product.image]
-                : []
+                  ? [product.image]
+                  : []
             }
           />
         </div>
@@ -667,12 +681,15 @@ const handleChatOpen = () => {
             </p>
 
             {/* Manufacturer */}
-            {(product?.manufacturerIds?.length > 0 || product?.manufacturerId) && (
-              <p className="flex items-center gap-1 mt-1 text-gray-700 text-sm">
-                <span className="font-semibold">{getText("manufacturer")}:</span>
-                <span>
-                  {product?.manufacturerIds?.length > 0
-                    ? product.manufacturerIds
+            {(product?.manufacturerIds?.length > 0 ||
+              product?.manufacturerId) && (
+                <p className="flex items-center gap-1 mt-1 text-gray-700 text-sm">
+                  <span className="font-semibold">
+                    {getText("manufacturer")}:
+                  </span>
+                  <span>
+                    {product?.manufacturerIds?.length > 0 ? (
+                      product.manufacturerIds
                         .map((m, idx) =>
                           typeof m === "object" && m ? (
                             <span key={m.id || m._id || idx}>
@@ -684,61 +701,64 @@ const handleChatOpen = () => {
                                 {m.name}
                               </Link>
                             </span>
-                          ) : null
+                          ) : null,
                         )
                         .filter(Boolean)
-                    : typeof product?.manufacturerId === "object" && product?.manufacturerId ? (
-                        <Link
-                          href={`/shop?manufacturer=${product.manufacturerId.id || product.manufacturerId._id}`}
-                          className="hover:underline hover:text-red-600 transition-colors"
-                        >
-                          {product.manufacturerId?.name}
-                        </Link>
-                      ) : null}
-                </span>
-              </p>
-            )}
+                    ) : typeof product?.manufacturerId === "object" &&
+                      product?.manufacturerId ? (
+                      <Link
+                        href={`/shop?manufacturer=${product.manufacturerId.id || product.manufacturerId._id}`}
+                        className="hover:underline hover:text-red-600 transition-colors"
+                      >
+                        {product.manufacturerId?.name}
+                      </Link>
+                    ) : null}
+                  </span>
+                </p>
+              )}
 
             {/* Category */}
             {(product?.categoryIds?.length > 0 || product?.categoryId) && (
               <p className="flex items-center gap-1 mt-1 text-gray-700 text-sm">
                 <span className="font-semibold">CATEGORY:</span>
                 <span>
-                  {product?.categoryIds?.length > 0
-                    ? product.categoryIds
-                        .map((c, idx) =>
-                          typeof c === "object" && c ? (
-                            <span key={c.id || c._id || idx}>
-                              {idx > 0 && ", "}
-                              <Link
-                                href={`/shop?category=${c.id || c._id}`}
-                                className="hover:underline hover:text-red-600 transition-colors"
-                              >
-                                {c.name}
-                              </Link>
-                            </span>
-                          ) : null
-                        )
-                        .filter(Boolean)
-                    : typeof product?.categoryId === "object" && product?.categoryId ? (
-                        <Link
-                          href={`/shop?category=${product.categoryId.id || product.categoryId._id}`}
-                          className="hover:underline hover:text-red-600 transition-colors"
-                        >
-                          {product.categoryId?.name}
-                        </Link>
-                      ) : null}
+                  {product?.categoryIds?.length > 0 ? (
+                    product.categoryIds
+                      .map((c, idx) =>
+                        typeof c === "object" && c ? (
+                          <span key={c.id || c._id || idx}>
+                            {idx > 0 && ", "}
+                            <Link
+                              href={`/shop?category=${c.id || c._id}`}
+                              className="hover:underline hover:text-red-600 transition-colors"
+                            >
+                              {c.name}
+                            </Link>
+                          </span>
+                        ) : null,
+                      )
+                      .filter(Boolean)
+                  ) : typeof product?.categoryId === "object" &&
+                    product?.categoryId ? (
+                    <Link
+                      href={`/shop?category=${product.categoryId.id || product.categoryId._id}`}
+                      className="hover:underline hover:text-red-600 transition-colors"
+                    >
+                      {product.categoryId?.name}
+                    </Link>
+                  ) : null}
                 </span>
               </p>
             )}
 
             {/* Subcategory */}
-            {(product?.subcategoryIds?.length > 0 || product?.subcategoryId) && (
-              <p className="flex items-center gap-1 mt-1 text-gray-700 text-sm">
-                <span className="font-semibold">SUBCATEGORY:</span>
-                <span>
-                  {product?.subcategoryIds?.length > 0
-                    ? product.subcategoryIds
+            {(product?.subcategoryIds?.length > 0 ||
+              product?.subcategoryId) && (
+                <p className="flex items-center gap-1 mt-1 text-gray-700 text-sm">
+                  <span className="font-semibold">SUBCATEGORY:</span>
+                  <span>
+                    {product?.subcategoryIds?.length > 0 ? (
+                      product.subcategoryIds
                         .map((s, idx) =>
                           typeof s === "object" && s ? (
                             <span key={s.id || s._id || idx}>
@@ -750,44 +770,49 @@ const handleChatOpen = () => {
                                 {s.name}
                               </Link>
                             </span>
-                          ) : null
+                          ) : null,
                         )
                         .filter(Boolean)
-                    : typeof product?.subcategoryId === "object" && product?.subcategoryId ? (
-                        <Link
-                          href={`/shop?subcategory=${product.subcategoryId.id || product.subcategoryId._id}`}
-                          className="hover:underline hover:text-red-600 transition-colors"
-                        >
-                          {product.subcategoryId?.name}
-                        </Link>
-                      ) : null}
-                </span>
+                    ) : typeof product?.subcategoryId === "object" &&
+                      product?.subcategoryId ? (
+                      <Link
+                        href={`/shop?subcategory=${product.subcategoryId.id || product.subcategoryId._id}`}
+                        className="hover:underline hover:text-red-600 transition-colors"
+                      >
+                        {product.subcategoryId?.name}
+                      </Link>
+                    ) : null}
+                  </span>
+                </p>
+              )}
+
+            <div className="flex gap-4 items-center mt-2">
+              <p
+                className="font-bold text-xl sm:text-2xl mt-2 mb-2"
+                suppressHydrationWarning
+              >
+                {formatPrice(
+                  convertPrice(product?.price?.eur, currency, rates),
+                  currency,
+                )}
               </p>
-            )}
-
-            {/* Price */}
-            <p className="font-bold text-xl sm:text-2xl mt-2 mb-2" suppressHydrationWarning>
-              {formatPrice(convertPrice(product?.price?.eur, currency, rates), currency)}
-            </p>
-
-            {/* Quantity */}
-            <p className="font-bold text-[15px] mb-1">{quantityText}</p>
-            <div className="flex items-center justify-center border border-gray-400 rounded-2xl px-2 py-1 w-[120px] space-x-2 mb-2">
-              <button
-                onClick={() => handleCountChange("decrement")}
-                className="text-2xl font-bold cursor-pointer text-gray-600"
-                disabled={count <= 1}
-              >
-                −
-              </button>
-              <span className="text-xl text-gray-600">{count}</span>
-              <button
-                onClick={() => handleCountChange("increment")}
-                className="text-2xl font-bold cursor-pointer text-gray-600"
-                disabled={count >= product?.quantity}
-              >
-                +
-              </button>
+              <div className="flex items-center justify-center border border-gray-400 rounded-2xl px-2 py-1 w-[120px] space-x-2 mb-2">
+                <button
+                  onClick={() => handleCountChange("decrement")}
+                  className="text-2xl font-bold cursor-pointer text-gray-600"
+                  disabled={count <= 1}
+                >
+                  −
+                </button>
+                <span className="text-xl text-gray-600">{count}</span>
+                <button
+                  onClick={() => handleCountChange("increment")}
+                  className="text-2xl font-bold cursor-pointer text-gray-600"
+                  disabled={count >= product?.quantity}
+                >
+                  +
+                </button>
+              </div>
             </div>
           </div>
 
@@ -804,7 +829,7 @@ const handleChatOpen = () => {
               <button
                 onClick={handleShopNow}
                 disabled={isLoading}
-                className="h-full w-full bg-black rounded-full text-white font-bold text-base sm:text-lg cursor-pointer hover:bg-gray-800 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                className="h-full w-full bg-[#e91325] rounded-full text-white font-bold text-base sm:text-lg cursor-pointer hover:bg-[#e64351] transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {getText("shopNow")}
               </button>
@@ -827,7 +852,10 @@ const handleChatOpen = () => {
               onClick={handleChatOpen}
               className="w-full flex-1 min-h-[48px] bg-[#c41e3a] text-white px-3 font-bold text-sm sm:text-base rounded-full cursor-pointer hover:bg-[#a01829] transition-all flex items-center justify-center gap-2 shadow-sm"
               disabled={!isSupportOnline}
-              style={{ opacity: !isSupportOnline ? 0.5 : 1, pointerEvents: !isSupportOnline ? 'none' : 'auto' }}
+              style={{
+                opacity: !isSupportOnline ? 0.5 : 1,
+                pointerEvents: !isSupportOnline ? "none" : "auto",
+              }}
             >
               <MdChat className="text-white text-xl flex-shrink-0" />
               {getText("chatBtn")}
@@ -841,21 +869,19 @@ const handleChatOpen = () => {
         <div className="flex items-stretch w-full max-w-xl">
           <button
             onClick={() => setActiveTab("details")}
-            className={`flex-1 py-3 px-4 rounded-l-full font-bold text-base md:text-xl text-center ${
-              activeTab === "details"
-                ? "bg-red-600 text-white"
-                : "border border-red-600"
-            }`}
+            className={`flex-1 py-3 px-4 rounded-l-full font-bold text-base md:text-xl text-center ${activeTab === "details"
+              ? "bg-red-600 text-white"
+              : "border border-red-600"
+              }`}
           >
             {getText("productDetails")}
           </button>
           <button
             onClick={() => setActiveTab("additional")}
-            className={`flex-1 py-3 px-4 rounded-r-full text-base md:text-xl font-bold text-center ${
-              activeTab === "additional"
-                ? "bg-red-600 text-white"
-                : "border border-red-600"
-            }`}
+            className={`flex-1 py-3 px-4 rounded-r-full text-base md:text-xl font-bold text-center ${activeTab === "additional"
+              ? "bg-red-600 text-white"
+              : "border border-red-600"
+              }`}
           >
             {getText("additionalInfo")}
           </button>

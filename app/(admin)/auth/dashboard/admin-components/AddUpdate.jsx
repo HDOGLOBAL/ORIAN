@@ -288,7 +288,7 @@
 //     const formData = new FormData();
 //     formData.append("image", imageFile);
 
-     
+
 //     try {
 //       const response = await fetch(
 //         `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
@@ -1005,6 +1005,7 @@
 
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import JoditRich from "./RichText";
 import {
@@ -1018,6 +1019,7 @@ import {
 import Image from "next/image";
 
 export default function AddUpdate({ updateId = false }) {
+  const router = useRouter();
   const [form, setForm] = useState({
     name: "",
     namePt: "",
@@ -1468,7 +1470,7 @@ export default function AddUpdate({ updateId = false }) {
     const formData = new FormData();
     formData.append("image", imageFile);
 
-     
+
     try {
       const response = await fetch(
         `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
@@ -1542,11 +1544,11 @@ export default function AddUpdate({ updateId = false }) {
         discountCodes:
           form.discountCodes.length > 0
             ? [
-                {
-                  ...form.discountCodes[0],
-                  value: parseFloat(form.discountCodes[0].value),
-                },
-              ]
+              {
+                ...form.discountCodes[0],
+                value: parseFloat(form.discountCodes[0].value),
+              },
+            ]
             : [],
       };
       let res;
@@ -1575,7 +1577,7 @@ export default function AddUpdate({ updateId = false }) {
             nameFr: "",
             nameEs: "",
             nameHe: "",
-    nameDe: "",
+            nameDe: "",
             nameIt: "",
             image: "",
             priceUSD: "",
@@ -1597,7 +1599,7 @@ export default function AddUpdate({ updateId = false }) {
             descriptionFr: "",
             descriptionEs: "",
             descriptionHe: "",
-    descriptionDe: "",
+            descriptionDe: "",
             descriptionIt: "",
             sizes: [],
             colors: [],
@@ -1642,6 +1644,32 @@ export default function AddUpdate({ updateId = false }) {
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-white rounded shadow mt-10">
+      <button
+        type="button"
+        onClick={() => router.back()}
+        className="inline-flex items-center gap-2 px-4 py-2 rounded-full 
+        bg-white border border-gray-200 shadow-sm
+        text-gray-700 text-sm font-medium
+        hover:bg-gray-50 hover:shadow-md
+        active:scale-95 transition-all duration-200"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+        Back
+      </button>
+
       <h2 className="text-2xl text-[#0eadef] font-bold mb-6">
         {updateId ? "Update Product" : "Add Product"}
       </h2>
@@ -2270,8 +2298,8 @@ export default function AddUpdate({ updateId = false }) {
               ? "Updating..."
               : "Creating..."
             : updateId
-            ? "Update Product"
-            : "Create Product"}
+              ? "Update Product"
+              : "Create Product"}
         </button>
       </form>
     </div>

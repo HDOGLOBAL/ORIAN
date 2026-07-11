@@ -108,6 +108,7 @@ export const metadata = {
       "es":        "https://hdotrade.es",
       "fr":        "https://hdotrade.fr",
       "he":        "https://hdotrade.co.il",
+      "en-AU":     "https://hdotrade.au",
     },
   },
   verification: {
@@ -150,6 +151,7 @@ const organizationSchema = {
     "https://hdotrade.fr",
     "https://hdotrade.eu",
     "https://hdotrade.co.il",
+    "https://hdotrade.au",
   ],
 };
 

@@ -1,4 +1,11 @@
-export default function robots() {
+import { headers } from "next/headers";
+
+export default async function robots() {
+  const headersList = await headers();
+  const host = headersList.get("x-forwarded-host") || headersList.get("host") || "hdotrade.pt";
+  const protocol = headersList.get("x-forwarded-proto") || "https";
+  const baseUrl = `${protocol}://${host}`;
+
   return {
     rules: [
       {
@@ -13,10 +20,6 @@ export default function robots() {
           "/add-card/",
           "/admin/",
           "/vat-check/",
-          "/*?search=*",        // avoid indexing search result variants
-          "/*?manufacturer=*",  // avoid filter combination duplicates
-          "/*?subcategory=*",
-          "/*?page=*",          // canonical handles pagination, no need to index
         ],
       },
       // Block bad SEO bots that waste crawl budget
@@ -30,11 +33,12 @@ export default function robots() {
       "https://hdotrade.com/sitemap.xml",
       "https://hdotrade.eu/sitemap.xml",
       "https://hdotrade.de/sitemap.xml",
-      "https://hdotrade.uk/sitemap.xml",   // ← was hdotrade.uk (wrong), fixed
+      "https://hdotrade.uk/sitemap.xml",
       "https://hdotrade.es/sitemap.xml",
       "https://hdotrade.fr/sitemap.xml",
       "https://hdotrade.co.il/sitemap.xml",
+      // "https://hdotrade.au/sitemap.xml",
     ],
-    host: "https://hdotrade.pt",
+    host: baseUrl,
   };
 }
