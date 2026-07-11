@@ -35,7 +35,7 @@ export function getDomainFromHost(hostname = "") {
   if (host.includes(".es"))     return "https://hdotrade.es";
   if (host.includes(".pt"))     return "https://www.hdotrade.pt";
   if (host.includes(".eu"))     return "https://hdotrade.eu";
-  if (host.includes(".com.au")) return "https://hdotrade.au";
+  // if (host.includes(".com.au")) return "https://hdotrade.au";
   if (host.includes(".com"))    return "https://hdotrade.com";
   return "https://hdotrade.pt";
 }
