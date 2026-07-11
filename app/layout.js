@@ -100,15 +100,15 @@ export const metadata = {
     canonical: "https://hdotrade.pt",
     languages: {
       "x-default": "https://hdotrade.pt",
-      "en":        "https://hdotrade.pt",
-      "en-GB":     "https://hdotrade.uk",
-      "en-US":     "https://hdotrade.com",
-      "de":        "https://hdotrade.de",
-      "pt":        "https://hdotrade.pt",
-      "es":        "https://hdotrade.es",
-      "fr":        "https://hdotrade.fr",
-      "he":        "https://hdotrade.co.il",
-      "en-AU":     "https://hdotrade.au",
+      "en": "https://hdotrade.pt",
+      "en-GB": "https://hdotrade.uk",
+      "en-US": "https://hdotrade.com",
+      "de": "https://hdotrade.de",
+      "pt": "https://hdotrade.pt",
+      "es": "https://hdotrade.es",
+      "fr": "https://hdotrade.fr",
+      "he": "https://hdotrade.co.il",
+      // "en-AU":     "https://hdotrade.au",
     },
   },
   verification: {
@@ -151,7 +151,7 @@ const organizationSchema = {
     "https://hdotrade.fr",
     "https://hdotrade.eu",
     "https://hdotrade.co.il",
-    "https://hdotrade.au",
+    // "https://hdotrade.au",
   ],
 };
 
