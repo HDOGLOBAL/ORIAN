@@ -33,9 +33,6 @@ export default async function SuccessPage({ searchParams }) {
     if (sessionId) {
       const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-      console.log("Session:", session);
-      console.log(JSON.stringify(session));
-
       displayId = session.payment_intent || sessionId;
       amount = session.amount_total || 0;
       currencyCode = session.currency || "eur";

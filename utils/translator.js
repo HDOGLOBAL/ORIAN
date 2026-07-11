@@ -137,8 +137,12 @@ export async function autoTranslateMissing(data, existingDoc, baseFields = ["nam
   };
 
   for (const field of baseFields) {
-    const englishText = result[field];
+    const englishText = result[field] || existingDoc?.[field];
     if (!englishText) continue;
+
+    if (result[field] === undefined) {
+      result[field] = englishText;
+    }
 
     const existingEnglishText = existingDoc?.[field] || "";
     const englishChanged = Boolean(existingDoc) && englishText !== existingEnglishText;
@@ -159,10 +163,12 @@ export async function autoTranslateMissing(data, existingDoc, baseFields = ["nam
         continue;
       }
 
-      if (source === "human" || (!source && existingTargetText)) {
-        result.translationSource[sourceKey] = "human";
-        result[targetField] = incomingTargetText || existingTargetText;
-        continue;
+      if (incomingTargetText || existingTargetText) {
+        if (source === "human" || (!source && existingTargetText)) {
+          result.translationSource[sourceKey] = "human";
+          result[targetField] = incomingTargetText || existingTargetText;
+          continue;
+        }
       }
 
       const currentTargetText = incomingTargetText || existingTargetText;
