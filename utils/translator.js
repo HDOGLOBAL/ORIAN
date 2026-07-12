@@ -20,7 +20,7 @@ export async function translateText(text, targetLang) {
   }
 
   console.warn("No translation API key is set. Returning original text.");
-  return `[AUTO] ${text}`; // Fallback for testing purposes without API key
+  return `${text}`; // Fallback for testing purposes without API key
 }
 
 function isHtml(text) {
