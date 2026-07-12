@@ -386,7 +386,7 @@
 "use client";
 import { deleteProductById, getPaginatedProducts } from "@/database/queries";
 import Image from "next/image";
-import { useEffect, useState, useCallback, useMemo, Suspense } from "react";
+import { useEffect, useState, useCallback, useMemo, useRef, Suspense } from "react";
 import placeholder from "@/public/client/banner/placeholder.png";
 import { toast } from "react-toastify";
 import Link from "next/link";
@@ -412,20 +412,32 @@ export default function AllProducts() {
 }
 
 function AllProductsInner() {
+  const searchParams = useSearchParams();
+  const categoryId = searchParams.get("categoryId") || "";
+
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  // Pagination state
-  const [currentPage, setCurrentPage] = useState(0); // 0-based for ReactPaginate
+  // Initialize currentPage from sessionStorage (saved when clicking Edit)
+  const [currentPage, setCurrentPage] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = sessionStorage.getItem("adminProductPage");
+      if (saved !== null) {
+        sessionStorage.removeItem("adminProductPage");
+        return parseInt(saved, 10);
+      }
+    }
+    return 0;
+  });
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [totalProducts, setTotalProducts] = useState(0);
   // Search state
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [searchTimeout, setSearchTimeout] = useState(null);
-  // Category filter from URL
-  const searchParams = useSearchParams();
-  const categoryId = searchParams.get("categoryId") || "";
+
+  // Track previous searchQuery to skip debounce on mount / StrictMode double-render
+  const prevSearchQueryRef = useRef("");
 
   // Memoized calculations
   const pageCount = useMemo(
@@ -493,24 +505,24 @@ function AllProductsInner() {
     }
   }, [categoryId]);
 
-  // Debounced search function
+  // Debounced search — only fires when searchQuery actually changes (not on mount)
   useEffect(() => {
-    if (searchTimeout) {
-      clearTimeout(searchTimeout);
-    }
+    const prevQuery = prevSearchQueryRef.current;
+    prevSearchQueryRef.current = searchQuery;
+    if (prevQuery === searchQuery) return; // no real change, skip
+
+    if (searchTimeout) clearTimeout(searchTimeout);
     const timer = setTimeout(() => {
-      setCurrentPage(0); // Reset to first page on search
+      setCurrentPage(0);
       fetchProducts(0, itemsPerPage, searchQuery);
     }, 1000);
     setSearchTimeout(timer);
     return () => {
-      if (searchTimeout) {
-        clearTimeout(searchTimeout);
-      }
+      if (searchTimeout) clearTimeout(searchTimeout);
     };
   }, [searchQuery, itemsPerPage, fetchProducts]);
 
-  // Fetch products when page or itemsPerPage changes
+  // Fetch products when page changes
   useEffect(() => {
     fetchProducts(currentPage, itemsPerPage, searchQuery);
   }, [currentPage, itemsPerPage, fetchProducts]);
@@ -757,6 +769,9 @@ function AllProductsInner() {
                       <div className="flex justify-center gap-2">
                         <Link
                           href={`/auth/dashboard/products/${product?.id}`}
+                          onClick={() =>
+                            sessionStorage.setItem("adminProductPage", currentPage.toString())
+                          }
                           className="inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-blue-600 border border-blue-600 rounded hover:bg-blue-50 transition-colors"
                         >
                           ✏️ Edit
