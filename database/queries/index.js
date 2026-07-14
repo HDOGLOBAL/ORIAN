@@ -2129,7 +2129,7 @@ export async function createProduct(data) {
       };
     }
     // Save product to database
-    const translatedProductData = await autoTranslateMissing(productData, null);
+    const translatedProductData = await autoTranslateMissing(productData, null, ["name", "description"]);
     const newProduct = await productModel.create(translatedProductData);
     return {
       success: true,
@@ -2343,7 +2343,7 @@ export async function updateProduct(productId, data) {
       };
     }
 
-    const translatedProductData = await autoTranslateMissing(productData, existingProduct);
+    const translatedProductData = await autoTranslateMissing(productData, existingProduct, ["name", "description"]);
     const updatedProduct = await productModel
       .findByIdAndUpdate(productId, translatedProductData, { new: true });
 
