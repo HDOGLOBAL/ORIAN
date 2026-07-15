@@ -196,7 +196,7 @@ export default function ProductCard({
             src={product?.image || placeholder}
             alt={productName || "Product image"}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            // sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-contain transition-transform duration-300 hover:scale-105"
           />
         </div>
