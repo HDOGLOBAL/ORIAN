@@ -14,7 +14,11 @@ const nextConfig = {
       { protocol: "https", hostname: "lh3.googleusercontent.com" },
       { protocol: "https", hostname: "i.ibb.co" },
       { protocol: "https", hostname: "via.placeholder.com" },
-      { protocol: "https", hostname: "hdotrade.com" },
+      {
+        protocol: 'https',
+        hostname: 'hdotrade.com',
+        pathname: '/wp-images/**',
+      },
       { protocol: "https", hostname: "hdotrade.pt" },
       { protocol: "https", hostname: "hdotrade.eu" },
       { protocol: "https", hostname: "hdotrade.co.uk" },
