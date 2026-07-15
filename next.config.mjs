@@ -15,15 +15,14 @@ const nextConfig = {
       { protocol: "https", hostname: "i.ibb.co" },
       { protocol: "https", hostname: "via.placeholder.com" },
       {
-        protocol: 'https',
-        hostname: 'hdotrade.com',
-        pathname: '/wp-images/**',
+        protocol: "https",
+        hostname: "hdotrade.com",
+        pathname: "/wp-images/**",
       },
       {
-        protocol: 'https',
-        hostname: 'img.hdotrade.com',
-        pathname: '/wp-images/**',
-      },  
+        protocol: "https",
+        hostname: "img.hdotrade.com",
+      },
       { protocol: "https", hostname: "hdotrade.pt" },
       { protocol: "https", hostname: "hdotrade.eu" },
       { protocol: "https", hostname: "hdotrade.co.uk" },
@@ -45,41 +44,63 @@ const nextConfig = {
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           { key: "X-XSS-Protection", value: "1; mode=block" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(self), interest-cohort=()" },
-          { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+          {
+            key: "Permissions-Policy",
+            value:
+              "camera=(), microphone=(), geolocation=(self), interest-cohort=()",
+          },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
         ],
       },
       {
         // Cache static assets for 1 year
         source: "/_next/static/(.*)",
         headers: [
-          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
         ],
       },
       {
         // Cache local images for 30 days
         source: "/client/(.*)",
         headers: [
-          { key: "Cache-Control", value: "public, max-age=2592000, stale-while-revalidate=86400" },
+          {
+            key: "Cache-Control",
+            value: "public, max-age=2592000, stale-while-revalidate=86400",
+          },
         ],
       },
       {
         source: "/assets/(.*)",
         headers: [
-          { key: "Cache-Control", value: "public, max-age=2592000, stale-while-revalidate=86400" },
+          {
+            key: "Cache-Control",
+            value: "public, max-age=2592000, stale-while-revalidate=86400",
+          },
         ],
       },
       {
         source: "/fonts/(.*)",
         headers: [
-          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
         ],
       },
       {
         source: "/sitemap.xml",
         headers: [
           { key: "Content-Type", value: "application/xml" },
-          { key: "Cache-Control", value: "public, max-age=3600, s-maxage=86400" },
+          {
+            key: "Cache-Control",
+            value: "public, max-age=3600, s-maxage=86400",
+          },
         ],
       },
       {
