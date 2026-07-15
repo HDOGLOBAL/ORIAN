@@ -19,6 +19,11 @@ const nextConfig = {
         hostname: 'hdotrade.com',
         pathname: '/wp-images/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'img.hdotrade.com',
+        pathname: '/wp-images/**',
+      },  
       { protocol: "https", hostname: "hdotrade.pt" },
       { protocol: "https", hostname: "hdotrade.eu" },
       { protocol: "https", hostname: "hdotrade.co.uk" },
