@@ -12,7 +12,7 @@ const nextConfig = {
       { protocol: "https", hostname: "source.unsplash.com" },
       { protocol: "https", hostname: "images.pexels.com" },
       { protocol: "https", hostname: "lh3.googleusercontent.com" },
-      { protocol: "https", hostname: "i.ibb.co" },
+      // { protocol: "https", hostname: "i.ibb.co" },
       { protocol: "https", hostname: "via.placeholder.com" },
       {
         protocol: "https",
