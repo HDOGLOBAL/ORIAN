@@ -2,8 +2,15 @@
 const nextConfig = {
   output: "standalone",
 
-  // Image optimization — AVIF first for best compression
+  // Image optimization — AVIF first for best compression.
+  // NOTE: external product images are hosted on img.hdotrade.com (Cloudflare
+  // protected). The server-side /_next/image optimizer does an origin fetch +
+  // re-encode, which fails (500) when the host cannot reach the CDN (egress
+  // blocked / datacenter IP challenged). `unoptimized` makes next/image serve
+  // the original URL straight from the browser, eliminating those 500s while
+  // still validating hosts via remotePatterns.
   images: {
+    unoptimized: true,
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
