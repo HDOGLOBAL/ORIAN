@@ -249,7 +249,7 @@ sudo certbot renew --dry-run
 Update your `.env` file on the VPS. The app auto-detects the domain via the `Host` header — no separate `.env` per domain needed:
 
 ```env
-MONGODB_URI=mongodb://admin:PASSWORD@72.60.88.241:27017/comet-commerce?authSource=admin
+MONGODB_URI=mongodb://admin:YOUR_PASSWORD@YOUR_HOST:27017/comet-commerce?authSource=admin
 
 # Set to your canonical domain
 NEXTAUTH_URL=https://hdotrade.pt
@@ -265,7 +265,7 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
 RESEND_API_KEY=your_resend_key
 EMAIL_FROM=noreply@hdotrade.pt
 
-NEXT_PUBLIC_imageBB_key=684748b99852107ac1328b64a3f22baf
+NEXT_PUBLIC_imageBB_key=your_imgbb_api_key_here
 ```
 
 ---

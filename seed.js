@@ -4,7 +4,7 @@ import { userModel } from "./models/users-model.js";
 import bcrypt from "bcryptjs";
 
 // MongoDB connection
-const MONGO_URL = process.env.MONGO_URL || "mongodb://admin:X9Tp4mQ8Wv7B2Zr6@72.60.88.241:27017/comet-commerce?authSource=admin";
+const MONGO_URL = process.env.MONGO_URL || process.env.MONGODB_URI;
 
 async function seedUsers() {
   try {
