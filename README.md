@@ -1,87 +1,192 @@
-# Comet Assistant E-commerce Project
+# ORIAN - e-commerce platform
 
-This is a [Next.js](https://nextjs.org/) e-commerce project built with modern technologies and optimized for deployment on Dokploy.
+Full-stack e-commerce application built with Next.js, MongoDB, and Stripe.
 
-🚀 **Auto-deployment test - Updated at:** $(date)
+## Tech Stack
 
-## Features
+- **Frontend (FE):** Next.js 16, React 19, Tailwind CSS
+- **Backend (BE):** Custom Node.js server (`server.js`) with Socket.IO for real-time chat, Next.js API Routes, NextAuth.js v5
+- **Database (DB):** MongoDB 7.0, Mongoose ODM
+- **Payments:** Stripe
+- **Email:** Resend
+- **Translation:** DeepL (primary) + Google Translate (fallback)
+- **Image Hosting:** ImgBB
+- **Deployment:** Dokploy, Docker, PM2
 
-- **Modern E-commerce Platform**: Full-featured online store with product catalog
-- **Multi-language Support**: English, Portuguese, Spanish, French
-- **Product Search & Filtering**: Advanced search with manufacturer, category, and subcategory filters
-- **Shopping Cart**: Full cart functionality with Euro currency support
-- **Admin Dashboard**: Complete admin panel for managing products, orders, and users
-- **Responsive Design**: Mobile-friendly interface
-- **Payment Integration**: Stripe payment processing
-- **User Authentication**: NextAuth.js integration
-- **Database**: MongoDB with Mongoose ODM
-
-## Getting Started
-
-First, run the development server:
+## Quick Start (New Branch)
 
 ```bash
+git clone <repository-url>
+
+cd ORIAN
+
+npm install
+
+cp .env.example .env.local
+
+# Edit .env.local with your values
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000
 
-## Environment Setup
+> **Note:** This project uses a custom server (`node server.js`) instead of `next dev`, because Socket.IO is integrated directly into the server for real-time support chat.
 
-Create a `.env.local` file with the following variables:
+## Prerequisites
 
-```env
-# Database
-MONGODB_URI=mongodb://localhost:27017/comet-ecommerce
+- Node.js 22+
+- Docker & Docker Compose (optional, for easy setup)
+- npm
 
-# NextAuth.js
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your-secret-key-here
+## When to Run `npm install`
 
-# Site Configuration
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
+| Situation | Why |
+|-----------|-----|
+| Cloned the project for the first time | No `node_modules` folder exists |
+| Switched branches | The new branch may have different dependencies in `package.json` |
+| Someone added/removed a package | `package.json` changed but `node_modules` wasn't updated |
+| Deleted `node_modules` manually | To clean up or fix issues |
+| Getting "module not found" errors | Dependencies are missing |
 
-# Stripe Configuration
-STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key_here
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_publishable_key_here
+You **don't need** `npm install` when:
+- `node_modules` already exists and you haven't changed `package.json`
+- You're only editing `.js`/`.jsx`/`.ts`/`.tsx` files
 
-# Email Configuration (Resend)
-RESEND_API_KEY=your_resend_api_key_here
-EMAIL_FROM=noreply@yourdomain.com
+## Running the Project
 
-# Image Upload (ImgBB)
-NEXT_PUBLIC_imageBB_key=your_imgbb_api_key_here
+### Option 1: Docker Compose (recommended)
+
+Starts the app (FE + BE) and database (DB) together.
+
+```bash
+cp .env.example .env
+
+# Edit .env with your values
+
+docker-compose up -d
 ```
 
-## Deployment on Dokploy
+- **App (FE + BE):** http://localhost:3000
+- **MongoDB (DB):** localhost:27017
 
-This project is configured for Dokploy deployment. To deploy:
+### Option 2: Local Development
+
+**1. Start MongoDB (DB)**
+
+```bash
+docker run -d --name orian-mongo -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -v mongodb_data:/data/db mongo:7.0
+```
+
+**2. Configure environment**
+
+```bash
+cp .env.example .env.local
+```
+
+Edit `.env.local` and set `MONGODB_URI`:
+
+```
+MONGODB_URI=mongodb://admin:password@localhost:27017/comet-ecommerce?authSource=admin
+```
+
+**3. Install dependencies and start (FE + BE)**
+
+```bash
+npm install
+npm run dev
+```
+
+App available at http://localhost:3000
+
+**4. Seed admin user (optional)**
+
+```bash
+node seed.js
+```
+
+### Production
+
+```bash
+npm run build
+npm start
+```
+
+## Verifying the Setup
+
+After running `npm run dev`, verify each layer is working:
+
+| Layer | What to check | How |
+|-------|---------------|-----|
+| **FE (Frontend)** | Page loads correctly | Open http://localhost:3000 — you should see the e-commerce interface |
+| **BE (Backend)** | API routes respond | Open http://localhost:3000/api/socket — you should get a JSON response or 200/404 status |
+| **DB (Database)** | MongoDB is connected | Load a page that fetches data (e.g. product catalog) — if products appear, the DB is connected |
+
+### Common Issues
+
+| Error | Cause |
+|-------|-------|
+| `ECONNREFUSED` on MongoDB | MongoDB is down or port is blocked |
+| Port 3000 already in use | Another process is using the port |
+| `NEXTAUTH_SECRET` warning | The value in `.env.local` is a placeholder — works for dev but not for production |
+| Module factory not available (HMR) | Delete `.next` folder and restart: `Remove-Item -Recurse -Force .next` |
+
+## Environment Variables
+
+Copy `.env.example` to `.env.local` and configure:
+
+| Variable | Description |
+|----------|-------------|
+| `MONGODB_URI` | MongoDB connection string |
+| `NEXTAUTH_URL` | App URL (e.g. `http://localhost:3000`) |
+| `NEXTAUTH_SECRET` | NextAuth secret key |
+| `NEXT_PUBLIC_SITE_URL` | Public site URL |
+| `STRIPE_SECRET_KEY` | Stripe secret key |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key |
+| `RESEND_API_KEY` | Resend API key for emails |
+| `EMAIL_FROM` | Sender email address |
+| `NEXT_PUBLIC_imageBB_key` | ImgBB API key for image uploads |
+| `DEEPL_API_KEY` | DeepL API key for translations (primary) |
+| `GOOGLE_TRANSLATE_API_KEY` | Google Translate API key (fallback) |
+
+## Deployment
+
+### Dokploy
 
 1. Connect your GitHub repository to Dokploy
-2. Set up the environment variables in Dokploy dashboard
-3. Configure MongoDB database connection
-4. Deploy the application
+2. Set environment variables in the Dokploy dashboard
+3. Configure: Build command `npm run build`, Start command `npm start`, Port `3000`
 
-## Technical Stack
+### PM2 (VPS)
 
-- **Frontend**: Next.js 15, React 18, Tailwind CSS
-- **Backend**: Next.js API Routes, NextAuth.js
-- **Database**: MongoDB with Mongoose
-- **Payment**: Stripe
-- **Email**: Resend
-- **Deployment**: Dokploy
+```bash
+npm ci
+npm run build
+pm2 start npm --name "orian" -- start
+pm2 save
+```
 
-## Learn More
+### Docker
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+docker build -t orian-app .
+docker run -p 3000:3000 -e MONGODB_URI="mongodb://..." orian-app
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+app/                # Next.js pages and API routes (App Router with route groups: (admin), (main))
+components/         # React components (home, shop, auth, checkout, chatbot, seo, etc.)
+models/             # Mongoose models (users, products, orders, categories, messages, etc.)
+database/           # MongoDB queries, connection, and country data
+service/            # Database connection utility (mongo.js)
+lib/                # Core libraries (dbConnect.js, socketio.js)
+utils/              # Utility functions (SEO, translation, email, PDF, slugify, etc.)
+providers/          # React context providers (Cart, Toast, SupportStatus, Currency, Domain)
+shared/             # Shared UI components
+action/             # Server actions
+auth.js             # NextAuth v5 configuration
+server.js           # Custom Node.js server (Socket.IO + Next.js)
+seed.js             # Database seeding script (admin user)
+```
