@@ -250,9 +250,10 @@ import { MdKeyboardArrowRight, MdChat } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa";
 import { RiCheckboxCircleLine } from "react-icons/ri";
 import { SiGmail } from "react-icons/si";
+import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import placeholder from "@/public/client/banner/placeholder.png";
 import AddCard from "../shop/AddCard";
 import { toast } from "react-toastify";
@@ -280,6 +281,8 @@ const ProductPage = ({
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("details");
   const [showChat, setShowChat] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
+
   const { isSupportOnline } = useSupportStatus?.() || {
     isSupportOnline: false,
   };
@@ -401,6 +404,14 @@ const ProductPage = ({
       en: "Contact our customer service by Chat",
       he: "פנו לשירות הלקוחות שלנו בצ'אט",
       de: "Kundenservice per Chat kontaktieren",
+    },
+    contactUs: {
+      pt: "Contacte-nos",
+      fr: "Contactez-nous",
+      es: "Contáctenos",
+      en: "Contact us",
+      he: "צרו קשר",
+      de: "Kontaktieren Sie uns",
     },
   };
 
@@ -596,7 +607,7 @@ const ProductPage = ({
   }
 
   return (
-    <div className="max-w-[1440px] mx-auto px-3 pb-[50px]">
+    <div className="max-w-[1440px] mx-auto px-3 pb-[50px]" suppressHydrationWarning>
       {/* Breadcrumb */}
       <div className="my-8 flex items-center gap-1">
         <p className="text-[16px]">{getText("home")}</p>
@@ -654,215 +665,283 @@ const ProductPage = ({
           />
         </div>
 
-        {/* Right: Product Card */}
-        <div className="border border-red-600 bg-[#FFF6F6] rounded-2xl flex flex-col overflow-hidden">
-          <div className="pt-4 px-4 sm:px-5 flex flex-col">
-            <h1
-              className={`font-medium text-2xl sm:text-3xl lg:text-4xl leading-tight ${isHebrewProduct ? "text-right" : ""}`}
-              dir={isHebrewProduct ? "rtl" : "ltr"}
-            >
-              {productName}
-            </h1>
-
-            {/* Stock Status */}
-            <p className="flex items-center gap-2 mt-2">
-              {product?.quantity > 0 ? (
-                <>
-                  <RiCheckboxCircleLine className="text-xl text-green-600" />
-                  <span className="font-bold text-lg sm:text-xl text-green-600">
-                    {inStock}
-                  </span>
-                </>
-              ) : (
-                <span className="font-bold text-lg sm:text-xl text-red-600">
-                  {getText("outOfStock")}
-                </span>
-              )}
-            </p>
-
-            {/* Manufacturer */}
-            {(product?.manufacturerIds?.length > 0 ||
-              product?.manufacturerId) && (
-                <p className="flex items-center gap-1 mt-1 text-gray-700 text-sm">
-                  <span className="font-semibold">
-                    {getText("manufacturer")}:
-                  </span>
-                  <span>
-                    {product?.manufacturerIds?.length > 0 ? (
-                      product.manufacturerIds
-                        .map((m, idx) =>
-                          typeof m === "object" && m ? (
-                            <span key={m.id || m._id || idx}>
-                              {idx > 0 && ", "}
-                              <Link
-                                href={`/shop?manufacturer=${m.id || m._id}`}
-                                className="hover:underline hover:text-red-600 transition-colors"
-                              >
-                                {m.name}
-                              </Link>
-                            </span>
-                          ) : null,
-                        )
-                        .filter(Boolean)
-                    ) : typeof product?.manufacturerId === "object" &&
-                      product?.manufacturerId ? (
-                      <Link
-                        href={`/shop?manufacturer=${product.manufacturerId.id || product.manufacturerId._id}`}
-                        className="hover:underline hover:text-red-600 transition-colors"
-                      >
-                        {product.manufacturerId?.name}
-                      </Link>
-                    ) : null}
-                  </span>
-                </p>
-              )}
-
-            {/* Category */}
-            {(product?.categoryIds?.length > 0 || product?.categoryId) && (
-              <p className="flex items-center gap-1 mt-1 text-gray-700 text-sm">
-                <span className="font-semibold">CATEGORY:</span>
-                <span>
-                  {product?.categoryIds?.length > 0 ? (
-                    product.categoryIds
-                      .map((c, idx) =>
-                        typeof c === "object" && c ? (
-                          <span key={c.id || c._id || idx}>
-                            {idx > 0 && ", "}
-                            <Link
-                              href={`/shop?category=${c.id || c._id}`}
-                              className="hover:underline hover:text-red-600 transition-colors"
-                            >
-                              {c.name}
-                            </Link>
-                          </span>
-                        ) : null,
-                      )
-                      .filter(Boolean)
-                  ) : typeof product?.categoryId === "object" &&
-                    product?.categoryId ? (
-                    <Link
-                      href={`/shop?category=${product.categoryId.id || product.categoryId._id}`}
-                      className="hover:underline hover:text-red-600 transition-colors"
-                    >
-                      {product.categoryId?.name}
-                    </Link>
-                  ) : null}
-                </span>
-              </p>
-            )}
-
-            {/* Subcategory */}
-            {(product?.subcategoryIds?.length > 0 ||
-              product?.subcategoryId) && (
-                <p className="flex items-center gap-1 mt-1 text-gray-700 text-sm">
-                  <span className="font-semibold">SUBCATEGORY:</span>
-                  <span>
-                    {product?.subcategoryIds?.length > 0 ? (
-                      product.subcategoryIds
-                        .map((s, idx) =>
-                          typeof s === "object" && s ? (
-                            <span key={s.id || s._id || idx}>
-                              {idx > 0 && ", "}
-                              <Link
-                                href={`/shop?subcategory=${s.id || s._id}`}
-                                className="hover:underline hover:text-red-600 transition-colors"
-                              >
-                                {s.name}
-                              </Link>
-                            </span>
-                          ) : null,
-                        )
-                        .filter(Boolean)
-                    ) : typeof product?.subcategoryId === "object" &&
-                      product?.subcategoryId ? (
-                      <Link
-                        href={`/shop?subcategory=${product.subcategoryId.id || product.subcategoryId._id}`}
-                        className="hover:underline hover:text-red-600 transition-colors"
-                      >
-                        {product.subcategoryId?.name}
-                      </Link>
-                    ) : null}
-                  </span>
-                </p>
-              )}
-
-            <div className="flex gap-4 items-center mt-2">
-              <p
-                className="font-bold text-xl sm:text-2xl mt-2 mb-2"
-                suppressHydrationWarning
+        {/* Right: Product Card + Contact Us */}
+        <div className="flex flex-col gap-4 h-full">
+          {/* Product Card */}
+          <div className="border border-red-600 bg-[#FFF6F6] rounded-2xl flex flex-col overflow-hidden min-h-0 flex-1">
+            <div className="pt-4 px-4 sm:px-5 flex-1 flex flex-col justify-between">
+              <h1
+                className={`font-medium text-4xl sm:text-5xl lg:text-6xl leading-tight ${isHebrewProduct ? "text-right" : ""}`}
+                dir={isHebrewProduct ? "rtl" : "ltr"}
               >
-                {formatPrice(
-                  convertPrice(product?.price?.eur, currency, rates),
-                  currency,
+                {productName}
+              </h1>
+
+              {/* Stock Status */}
+              <p className="flex items-center gap-2 mt-3">
+                {product?.quantity > 0 ? (
+                  <>
+                    <RiCheckboxCircleLine className="text-3xl text-green-600" />
+                    <span className="font-bold text-2xl sm:text-3xl text-green-600">
+                      {inStock}
+                    </span>
+                  </>
+                ) : (
+                  <span className="font-bold text-2xl sm:text-3xl text-red-600">
+                    {getText("outOfStock")}
+                  </span>
                 )}
               </p>
-              <div className="flex items-center justify-center border border-gray-400 rounded-2xl px-2 py-1 w-[120px] space-x-2 mb-2">
-                <button
-                  onClick={() => handleCountChange("decrement")}
-                  className="text-2xl font-bold cursor-pointer text-gray-600"
-                  disabled={count <= 1}
+
+              {/* Manufacturer */}
+              {(product?.manufacturerIds?.length > 0 ||
+                product?.manufacturerId) && (
+                  // VERTICAL SPACE
+                  <p className="flex items-center gap-1 mt-6 text-gray-700 text-sm sm:text-lg">
+                    <span className="font-semibold">
+                      {getText("manufacturer")}:
+                    </span>
+                    <span>
+                      {product?.manufacturerIds?.length > 0 ? (
+                        product.manufacturerIds
+                          .map((m, idx) =>
+                            typeof m === "object" && m ? (
+                              <span key={m.id || m._id || idx}>
+                                {idx > 0 && ", "}
+                                <Link
+                                  href={`/shop?manufacturer=${m.id || m._id}`}
+                                  className="hover:underline hover:text-red-600 transition-colors"
+                                >
+                                  {m.name}
+                                </Link>
+                              </span>
+                            ) : null,
+                          )
+                          .filter(Boolean)
+                      ) : typeof product?.manufacturerId === "object" &&
+                        product?.manufacturerId ? (
+                        <Link
+                          href={`/shop?manufacturer=${product.manufacturerId.id || product.manufacturerId._id}`}
+                          className="hover:underline hover:text-red-600 transition-colors"
+                        >
+                          {product.manufacturerId?.name}
+                        </Link>
+                      ) : null}
+                    </span>
+                  </p>
+                )}
+
+              {/* Category */}
+              {(product?.categoryIds?.length > 0 || product?.categoryId) && (
+                <p className="flex items-center gap-1 mt-3 text-gray-700 text-sm sm:text-lg">
+                  <span className="font-semibold">CATEGORY:</span>
+                  <span>
+                    {product?.categoryIds?.length > 0 ? (
+                      product.categoryIds
+                        .map((c, idx) =>
+                          typeof c === "object" && c ? (
+                            <span key={c.id || c._id || idx}>
+                              {idx > 0 && ", "}
+                              <Link
+                                href={`/shop?category=${c.id || c._id}`}
+                                className="hover:underline hover:text-red-600 transition-colors"
+                              >
+                                {c.name}
+                              </Link>
+                            </span>
+                          ) : null,
+                        )
+                        .filter(Boolean)
+                    ) : typeof product?.categoryId === "object" &&
+                      product?.categoryId ? (
+                      <Link
+                        href={`/shop?category=${product.categoryId.id || product.categoryId._id}`}
+                        className="hover:underline hover:text-red-600 transition-colors"
+                      >
+                        {product.categoryId?.name}
+                      </Link>
+                    ) : null}
+                  </span>
+                </p>
+              )}
+
+              {/* SKU */}
+              {product?.sku && (
+                <p className="flex items-center gap-1 mt-3 text-gray-700 text-sm sm:text-lg">
+                  <span className="font-semibold">SKU CODE:</span>
+                  <span>{product.sku}</span>
+                </p>
+              )}
+
+              {/* Subcategory */}
+              {(product?.subcategoryIds?.length > 0 ||
+                product?.subcategoryId) && (
+                  <p className="flex items-center gap-1 mt-3 text-gray-700 text-lg">
+                    <span className="font-semibold">SUBCATEGORY:</span>
+                    <span>
+                      {product?.subcategoryIds?.length > 0 ? (
+                        product.subcategoryIds
+                          .map((s, idx) =>
+                            typeof s === "object" && s ? (
+                              <span key={s.id || s._id || idx}>
+                                {idx > 0 && ", "}
+                                <Link
+                                  href={`/shop?subcategory=${s.id || s._id}`}
+                                  className="hover:underline hover:text-red-600 transition-colors"
+                                >
+                                  {s.name}
+                                </Link>
+                              </span>
+                            ) : null,
+                          )
+                          .filter(Boolean)
+                      ) : typeof product?.subcategoryId === "object" &&
+                        product?.subcategoryId ? (
+                        <Link
+                          href={`/shop?subcategory=${product.subcategoryId.id || product.subcategoryId._id}`}
+                          className="hover:underline hover:text-red-600 transition-colors"
+                        >
+                          {product.subcategoryId?.name}
+                        </Link>
+                      ) : null}
+                    </span>
+                  </p>
+                )}
+
+              <div className="flex gap-4 items-center mt-8">
+                <p
+                  className="font-bold text-3xl sm:text-4xl mt-2 mb-2"
+                  suppressHydrationWarning
                 >
-                  −
-                </button>
-                <span className="text-xl text-gray-600">{count}</span>
+                  {formatPrice(
+                    convertPrice(product?.price?.eur, currency, rates),
+                    currency,
+                  )}
+                </p>
+                <div className="flex items-center justify-center border border-gray-400 rounded-2xl px-2 py-1 w-[120px] space-x-2 mb-2">
+                  <button
+                    onClick={() => handleCountChange("decrement")}
+                    className="text-4xl font-bold cursor-pointer text-gray-600"
+                    disabled={count <= 1}
+                  >
+                    −
+                  </button>
+                  <span className="text-3xl text-gray-600">{count}</span>
+                  <button
+                    onClick={() => handleCountChange("increment")}
+                    className="text-4xl font-bold cursor-pointer text-gray-600"
+                    disabled={count >= product?.quantity}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Buttons */}
+            <div className=" px-4 sm:px-5 py-3 flex-1 flex flex-col gap-4 min-h-0 justify-center">
+              <div className=" grid grid-cols-2 gap-4 min-h-[90px]">
+                <AddCard
+                  productId={product?.id}
+                  quantity={count}
+                  quantities={product?.quantity}
+                  singleProduct={true}
+                  className="h-full w-full py-8"
+                />
                 <button
-                  onClick={() => handleCountChange("increment")}
-                  className="text-2xl font-bold cursor-pointer text-gray-600"
-                  disabled={count >= product?.quantity}
+                  onClick={handleShopNow}
+                  disabled={isLoading}
+                  className="h-full w-full bg-[#e91325] rounded-full text-white font-bold text-2xl sm:text-2xl cursor-pointer hover:bg-[#e64351] transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  +
+                  {getText("shopNow")}
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Buttons */}
-          <div className="px-4 sm:px-5 pb-4 pt-4 flex-1 flex flex-col gap-3 min-h-0">
-            <div className="grid grid-cols-2 gap-3 flex-1 min-h-[52px]">
-              <AddCard
-                productId={product?.id}
-                quantity={count}
-                quantities={product?.quantity}
-                singleProduct={true}
-                className="h-full w-full"
-              />
-              <button
-                onClick={handleShopNow}
-                disabled={isLoading}
-                className="h-full w-full bg-[#e91325] rounded-full text-white font-bold text-base sm:text-lg cursor-pointer hover:bg-[#e64351] transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {getText("shopNow")}
-              </button>
-            </div>
-            <button
-              onClick={handleWhatsAppContact}
-              className="w-full flex-1 min-h-[48px] bg-[#25D366] text-white px-3 font-bold text-sm sm:text-base rounded-full cursor-pointer hover:bg-[#1fb855] transition-all flex items-center justify-center gap-2 shadow-sm"
-            >
-              <FaWhatsapp className="text-white text-xl flex-shrink-0" />
-              {getText("whatsappBtn")}
-            </button>
-            <button
-              onClick={handleEmailContact}
-              className="w-full flex-1 min-h-[48px] bg-white text-gray-800 px-3 font-bold text-sm sm:text-base rounded-full cursor-pointer hover:bg-gray-100 transition-all flex items-center justify-center gap-2 shadow-sm border border-gray-300"
-            >
-              <SiGmail className="text-[#EA4335] text-xl flex-shrink-0" />
-              {getText("emailBtn")}
-            </button>
-            <button
-              onClick={handleChatOpen}
-              className="w-full flex-1 min-h-[48px] bg-[#c41e3a] text-white px-3 font-bold text-sm sm:text-base rounded-full cursor-pointer hover:bg-[#a01829] transition-all flex items-center justify-center gap-2 shadow-sm"
-              disabled={!isSupportOnline}
-              style={{
-                opacity: !isSupportOnline ? 0.5 : 1,
-                pointerEvents: !isSupportOnline ? "none" : "auto",
-              }}
-            >
-              <MdChat className="text-white text-xl flex-shrink-0" />
-              {getText("chatBtn")}
-            </button>
-          </div>
+          {/* Contact Us Button */}
+          <button
+            onClick={() => setShowContactModal(true)}
+            className="shrink-0 w-full min-h-[48px] bg-[#c41e3a] text-white px-3 font-bold text-sm sm:text-base rounded-full cursor-pointer hover:bg-[#a01829] transition-all flex items-center justify-center gap-2 shadow-sm"
+          >
+            <MdChat className="text-white text-xl flex-shrink-0" />
+            {getText("contactUs")}
+          </button>
         </div>
       </div>
+
+      {/* Contact Us Modal */}
+      <Transition show={showContactModal} as={Fragment}>
+        <Dialog onClose={() => setShowContactModal(false)} className="relative z-50">
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-200"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0" style={{ backgroundColor: "rgba(100, 100, 100, 0.9)" }} />
+          </Transition.Child>
+
+          <div className="fixed inset-0 flex items-center justify-center p-4">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-200"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <Dialog.Panel className="rounded-xl bg-white shadow-xl overflow-hidden" style={{ width: "100%", maxWidth: "420px" }}>
+                <div className="p-5 border-b border-gray-200 flex items-center justify-between">
+                  <Dialog.Title className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                    <MdChat className="text-[#c41e3a] text-xl flex-shrink-0" />
+                    {getText("contactUs")}
+                  </Dialog.Title>
+                  <button
+                    onClick={() => setShowContactModal(false)}
+                    className="text-gray-400 hover:text-gray-600 transition-colors text-2xl leading-none cursor-pointer"
+                  >
+                    ×
+                  </button>
+                </div>
+
+                <div className="p-4 flex flex-col gap-3">
+                  <button
+                    onClick={handleWhatsAppContact}
+                    className="w-full min-h-[48px] bg-[#25D366] text-white px-3 font-bold text-sm rounded-full cursor-pointer hover:bg-[#1fb855] transition-all flex items-center justify-center gap-2 shadow-sm"
+                  >
+                    <FaWhatsapp className="text-white text-lg flex-shrink-0" />
+                    {getText("whatsappBtn")}
+                  </button>
+                  <button
+                    onClick={handleEmailContact}
+                    className="w-full min-h-[48px] bg-white text-gray-800 px-3 font-bold text-sm rounded-full cursor-pointer hover:bg-gray-100 transition-all flex items-center justify-center gap-2 shadow-sm border border-gray-300"
+                  >
+                    <SiGmail className="text-[#EA4335] text-lg flex-shrink-0" />
+                    {getText("emailBtn")}
+                  </button>
+                  <button
+                    onClick={handleChatOpen}
+                    className="w-full min-h-[48px] bg-[#98033a] text-white px-3 font-bold text-sm rounded-full cursor-pointer hover:bg-[#7a022e] transition-all flex items-center justify-center gap-2 shadow-sm"
+                    disabled={!isSupportOnline}
+                    style={{
+                      opacity: !isSupportOnline ? 0.5 : 1,
+                      pointerEvents: !isSupportOnline ? "none" : "auto",
+                    }}
+                  >
+                    <MdChat className="text-white text-lg flex-shrink-0" />
+                    {getText("chatBtn")}
+                  </button>
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </Dialog>
+      </Transition>
 
       {/* Product Description - Below the grid */}
       <div className="mt-8">
