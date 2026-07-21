@@ -1,4 +1,4 @@
-import CountrySelector from "@/components/clients/CountryModal";
+import CountrySelectorWrapper from "@/components/clients/CountrySelectorWrapper";
 import ProductPage from "@/components/clients/ProductCartC";
 import RelatedProduct from "@/components/detailProduct/RelatedProduct";
 import ProductSchema from "@/components/seo/ProductSchema";
@@ -41,7 +41,7 @@ export default async function page(props) {
   return (
     <SupportStatusProvider>
       <ProductSchema product={product} currency={currency} lang={lang} domain={domain} />
-      <CountrySelector />
+      <CountrySelectorWrapper />
       <div>
         <ProductPage product={product} currency={currency} lang={lang} rates={rates} />
         <RelatedProduct category={product?.categoryId} />
