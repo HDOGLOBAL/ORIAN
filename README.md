@@ -39,19 +39,6 @@ Open http://localhost:3000
 - Docker & Docker Compose (optional, for easy setup)
 - npm
 
-## When to Run `npm install`
-
-| Situation | Why |
-|-----------|-----|
-| Cloned the project for the first time | No `node_modules` folder exists |
-| Switched branches | The new branch may have different dependencies in `package.json` |
-| Someone added/removed a package | `package.json` changed but `node_modules` wasn't updated |
-| Deleted `node_modules` manually | To clean up or fix issues |
-| Getting "module not found" errors | Dependencies are missing |
-
-You **don't need** `npm install` when:
-- `node_modules` already exists and you haven't changed `package.json`
-- You're only editing `.js`/`.jsx`/`.ts`/`.tsx` files
 
 ## Running the Project
 
@@ -150,9 +137,9 @@ After running `npm run dev`, verify each layer is working:
 
 | Layer | What to check | How |
 |-------|---------------|-----|
-| **FE (Frontend)** | Page loads correctly | Open http://localhost:3000 — you should see the e-commerce interface |
-| **BE (Backend)** | API routes respond | Open http://localhost:3000/api/socket — you should get a JSON response or 200/404 status |
-| **DB (Database)** | MongoDB is connected | Load a page that fetches data (e.g. product catalog) — if products appear, the DB is connected |
+| **FE (Frontend)** | Page loads correctly | Open http://localhost:3000 - you should see the e-commerce interface |
+| **BE (Backend)** | API routes respond | Open http://localhost:3000/api/socket - you should get a JSON response or 200/404 status |
+| **DB (Database)** | MongoDB is connected | Load a page that fetches data (e.g. product catalog) - if products appear, the DB is connected |
 
 ### Common Issues
 
@@ -160,26 +147,8 @@ After running `npm run dev`, verify each layer is working:
 |-------|-------|
 | `ECONNREFUSED` on MongoDB | MongoDB is down or port is blocked |
 | Port 3000 already in use | Another process is using the port |
-| `NEXTAUTH_SECRET` warning | The value in `.env.local` is a placeholder — works for dev but not for production |
+| `NEXTAUTH_SECRET` warning | The value in `.env.local` is a placeholder - works for dev but not for production |
 | Module factory not available (HMR) | Delete `.next` folder and restart: `Remove-Item -Recurse -Force .next` |
-
-## Environment Variables
-
-Copy `.env.example` to `.env.local` and configure:
-
-| Variable | Description |
-|----------|-------------|
-| `MONGODB_URI` | MongoDB connection string |
-| `NEXTAUTH_URL` | App URL (e.g. `http://localhost:3000`) |
-| `NEXTAUTH_SECRET` | NextAuth secret key |
-| `NEXT_PUBLIC_SITE_URL` | Public site URL |
-| `STRIPE_SECRET_KEY` | Stripe secret key |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key |
-| `RESEND_API_KEY` | Resend API key for emails |
-| `EMAIL_FROM` | Sender email address |
-| `NEXT_PUBLIC_imageBB_key` | ImgBB API key for image uploads |
-| `DEEPL_API_KEY` | DeepL API key for translations (primary) |
-| `GOOGLE_TRANSLATE_API_KEY` | Google Translate API key (fallback) |
 
 ## Deployment
 
