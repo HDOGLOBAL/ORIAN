@@ -1,4 +1,4 @@
-# ORIAN - e-commerce platform
+# Comet Assistant E-commerce Project
 
 Full-stack e-commerce application built with Next.js, MongoDB, and Stripe.
 
@@ -82,6 +82,38 @@ docker run -d --name orian-mongo -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=ad
 
 ```bash
 cp .env.example .env.local
+
+# Database Configuration
+MONGODB_URI=mongodb://mongodb:27017/comet-ecommerce
+# For external MongoDB (MongoDB Atlas or external service)
+# MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/comet-ecommerce
+
+# NextAuth.js Configuration
+NEXTAUTH_URL=https://your-domain.com
+NEXTAUTH_SECRET=your-super-secret-key-here
+
+# Site Configuration
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+
+# Stripe Configuration
+STRIPE_SECRET_KEY=sk_live_your_stripe_secret_key_here
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_your_stripe_publishable_key_here
+
+# Email Configuration (Resend)
+RESEND_API_KEY=re_your_resend_api_key_here
+EMAIL_FROM=noreply@yourdomain.com
+
+# Image Upload (ImgBB)
+NEXT_PUBLIC_imageBB_key=your_imgbb_api_key_here
+
+# Translation APIs - DeepL is used first, Google is fallback
+DEEPL_API_KEY=your_deepl_api_key_here
+GOOGLE_TRANSLATE_API_KEY=your_google_translate_api_key_here
+
+# MongoDB Configuration (for docker-compose)
+MONGO_ROOT_USERNAME=admin
+MONGO_ROOT_PASSWORD=password
+MONGO_DATABASE=comet-ecommerce
 ```
 
 Edit `.env.local` and set `MONGODB_URI`:
