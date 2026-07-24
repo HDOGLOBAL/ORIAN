@@ -16,6 +16,7 @@ import { sendNewOrderNotifications } from "../../utils/mailSender";
 import { autoTranslateMissing } from "../../utils/translator";
 import { auth } from "@/auth";
 import { OrderModel } from "@/models/order-models";
+import { CounterModel } from "@/models/counter-model";
 import { dbConnect } from "@/service/mongo";
 import { manufacturerModel } from "@/models/manufacture-model";
 import { categoryModel } from "@/models/category-models";
@@ -1674,6 +1675,21 @@ export async function deleteUserById(userId) {
   }
 }
 
+export const getNextOrderNumber = async () => {
+  try {
+    await dbConnect();
+    const counter = await CounterModel.findOneAndUpdate(
+      { _id: "orderNumber" },
+      { $inc: { seq: 1 } },
+      { upsert: true, new: true }
+    );
+    return counter.seq;
+  } catch (error) {
+    console.error("Error getting next order number:", error);
+    throw error;
+  }
+};
+
 export const placeOrder = async (formData) => {
   try {
     await dbConnect();
@@ -1712,13 +1728,32 @@ export const placeOrder = async (formData) => {
       },
     };
 
-    // Upsert: update if unpaid order exists for this trackingId, otherwise create
-    const { trackingId: tid, ...fields } = order;
-    const savedOrder = await OrderModel.findOneAndUpdate(
-      { trackingId: tid, paid: false },
-      { $set: fields },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
-    );
+    // Check if an unpaid order already exists for this trackingId
+    const existingOrder = await OrderModel.findOne({
+      trackingId: formData.trackingId,
+      paid: false,
+    });
+
+    let savedOrder;
+
+    if (existingOrder) {
+      // Update existing unpaid order (no new orderNumber)
+      const { trackingId: tid, ...fields } = order;
+      savedOrder = await OrderModel.findOneAndUpdate(
+        { trackingId: tid, paid: false },
+        { $set: fields },
+        { new: true }
+      );
+    } else {
+      // New order - get next orderNumber
+      const orderNumber = await getNextOrderNumber();
+      const { trackingId: tid, ...fields } = order;
+      savedOrder = await OrderModel.findOneAndUpdate(
+        { trackingId: tid, paid: false },
+        { $set: { ...fields, orderNumber } },
+        { upsert: true, new: true, setDefaultsOnInsert: true }
+      );
+    }
 
     try {
       await sendNewOrderNotifications(savedOrder?.toObject ? savedOrder.toObject() : savedOrder);
@@ -2543,7 +2578,7 @@ export async function getPaginatedOrders({
 }) {
   try {
     await dbConnect();
-    let query = {};
+    let query = { archived: { $ne: true } };
 
     // Add search criteria if provided
     if (searchQuery) {
@@ -2552,6 +2587,7 @@ export async function getPaginatedOrders({
         { lastName: { $regex: searchQuery, $options: "i" } },
         { email: { $regex: searchQuery, $options: "i" } },
         { transactionId: { $regex: searchQuery, $options: "i" } },
+        { orderNumber: parseInt(searchQuery.match(/\d+/)?.[0]) || -1 },
       ];
     }
 
@@ -2561,7 +2597,7 @@ export async function getPaginatedOrders({
     }
 
     const orders = await OrderModel.find(query)
-      .sort({ createdAt: -1 })
+      .sort({ orderNumber: -1 })
       .skip(offset)
       .limit(limit)
       .lean();
@@ -2581,7 +2617,7 @@ export async function getPaginatedOrders({
 export async function deleteOrderById(id) {
   try {
     await dbConnect();
-    await OrderModel.findByIdAndDelete(id);
+    await OrderModel.findByIdAndUpdate(id, { archived: true });
   } catch (error) {
     console.error("Error deleting order:", error);
     throw error;

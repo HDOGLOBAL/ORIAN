@@ -136,7 +136,7 @@ export default function OrderDetails() {
       <div className="bg-white p-6 rounded shadow">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-light text-[#0eadef]">
-            Order Details: {order.trackingId}
+            Order nº{order.orderNumber || "-"} — {order.trackingId}
           </h2>
           <Link
             href="/auth/dashboard/orders"
@@ -208,6 +208,12 @@ export default function OrderDetails() {
             <h3 className="text-lg font-medium text-gray-800 mb-4">
               Transaction Details
             </h3>
+            <div className="mb-4">
+              <span className="font-medium block mb-1">Order Number:</span>
+              <span className="text-gray-900 font-semibold">
+                {order.orderNumber || "-"}
+              </span>
+            </div>
             <div className="mb-4">
               <span className="font-medium block mb-1">Transaction ID:</span>
               {isEditingTransactionId ? (
