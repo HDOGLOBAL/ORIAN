@@ -211,7 +211,7 @@ export default function OrderManagement() {
             <div className="relative flex-1">
               <input
                 type="text"
-                placeholder="Search orders by name, email, tracking ID..."
+                placeholder="Search by name, email, tracking ID or order nº..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyPress={handleSearchKeyPress}
@@ -235,7 +235,7 @@ export default function OrderManagement() {
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
               disabled={isLoading}
             >
-              <option value="all">All Statuses</option>
+              <option value="all">All Status</option>
               <option value="Ordered">Ordered</option>
               <option value="Processing">Processing</option>
               <option value="Shipped">Shipped</option>
@@ -298,6 +298,7 @@ export default function OrderManagement() {
           <table className="min-w-full text-sm text-left border border-gray-200">
             <thead className="bg-gray-100 text-gray-700">
               <tr>
+                <th className="px-4 py-3 border">Order nº </th>
                 <th className="px-4 py-3 border">Transaction ID</th>
                 <th className="px-4 py-3 border">Customer</th>
                 <th className="px-4 py-3 border">Email</th>
@@ -314,7 +315,7 @@ export default function OrderManagement() {
               {orders.length === 0 ? (
                 <tr>
                   <td
-                    colSpan="9"
+                    colSpan="10"
                     className="text-center py-6 text-gray-500 italic"
                   >
                     {searchQuery || statusFilter !== "all"
@@ -328,6 +329,9 @@ export default function OrderManagement() {
                     key={order._id}
                     className="hover:bg-gray-50 transition-colors duration-150"
                   >
+                    <td className="px-4 py-2 border font-semibold">
+                      {order?.orderNumber || "-"}
+                    </td>
                     <td className="px-4 py-2 border font-mono">
                       {order?.transactionId || "Unpaid"}
                     </td>

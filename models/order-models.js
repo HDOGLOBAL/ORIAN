@@ -69,6 +69,15 @@ const orderSchema = new Schema(
       type: String,
       required: false,
     },
+    orderNumber: {
+      type: Number,
+      unique: true,
+      sparse: true,
+    },
+    archived: {
+      type: Boolean,
+      default: false,
+    },
     vatValid: {
       type: Boolean,
       required: false,
