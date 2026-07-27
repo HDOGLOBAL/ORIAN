@@ -623,8 +623,8 @@ export default function CheckoutPage({
         id: product.id,
         name: getProductName(product),
         qty: product.quantity,
-        price: product.price?.eur || 0, // always store EUR in DB
-        displayPrice: convertPrice(product.price?.eur, currency, rates), // for display
+        price: product.price?.eur || 0,
+        displayPrice: convertPrice(product.price?.eur, currency, rates),
         image: product.image,
       })),
       totals: {
