@@ -765,14 +765,6 @@ const ProductPage = ({
                 </p>
               )}
 
-              {/* SKU */}
-              {product?.sku && (
-                <p className="flex items-center gap-1 mt-3 text-gray-700 text-sm sm:text-lg">
-                  <span className="font-semibold">SKU CODE:</span>
-                  <span>{product.sku}</span>
-                </p>
-              )}
-
               {/* Subcategory */}
               {(product?.subcategoryIds?.length > 0 ||
                 product?.subcategoryId) && (

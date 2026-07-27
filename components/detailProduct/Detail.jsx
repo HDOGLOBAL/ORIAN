@@ -203,10 +203,6 @@ export default function Detail({ product, userId, lan, currency, rates = { usd: 
               <span className="text-gray-600">{product?.category}</span>
             </p>
             <p className="space-x-2">
-              <span className="text-gray-800 font-semibold">{lan?.SKU}: </span>
-              <span className="text-gray-600">{product?.sku}</span>
-            </p>
-            <p className="space-x-2">
               <span className="text-gray-800 font-semibold">{lan?.size}: </span>
               {product?.sizes.map((size, index) => (
                 <span key={index} className="text-primary font-bold">
