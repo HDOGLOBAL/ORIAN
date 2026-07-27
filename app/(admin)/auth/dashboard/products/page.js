@@ -609,7 +609,7 @@ function AllProductsInner() {
             <div className="relative flex-1">
               <input
                 type="text"
-                placeholder="Search products by name and ID..."
+                placeholder="Search products by name, ID or SKU..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyPress={handleSearchKeyPress}
@@ -635,7 +635,7 @@ function AllProductsInner() {
             </button>
           </div>
           <p className="text-sm text-gray-500 mt-2">
-            Search by product name or ID. Results update as you type.
+            Search by product name, ID or SKU. Results update as you type.
           </p>
         </div>
 

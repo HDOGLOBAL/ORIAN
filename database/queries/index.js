@@ -2456,7 +2456,7 @@ export async function getPaginatedProducts({
     if (searchQuery && searchQuery.trim() !== "") {
       const trimmedQuery = searchQuery.trim();
       const isObjectId = /^[0-9a-fA-F]{24}$/.test(trimmedQuery);
-      const searchConditionsArray = [{ name: new RegExp(trimmedQuery, "i") }];
+      const searchConditionsArray = [{ name: new RegExp(trimmedQuery, "i") }, { sku: new RegExp(trimmedQuery, "i") }];
       if (isObjectId) {
         searchConditionsArray.push({ _id: trimmedQuery });
       }
