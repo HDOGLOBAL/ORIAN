@@ -1755,12 +1755,6 @@ export const placeOrder = async (formData) => {
       );
     }
 
-    try {
-      await sendNewOrderNotifications(savedOrder?.toObject ? savedOrder.toObject() : savedOrder);
-    } catch (emailError) {
-      console.error("Order email notifications failed:", emailError);
-    }
-
     return {
       success: true,
       grandTotal: order.totals.grandTotal,
@@ -1792,6 +1786,14 @@ export const markOrderAsPaid = async (trackingId, paymentIntentId) => {
         success: false,
         message: "Order not found",
       };
+    }
+
+    try {
+      await sendNewOrderNotifications(
+        updatedOrder.toObject ? updatedOrder.toObject() : updatedOrder
+      );
+    } catch (emailError) {
+      console.error("Order email notifications failed:", emailError);
     }
 
     return {
@@ -2575,10 +2577,18 @@ export async function getPaginatedOrders({
   limit,
   searchQuery,
   statusFilter,
+  paidFilter = "paid",
 }) {
   try {
     await dbConnect();
     let query = { archived: { $ne: true } };
+
+    // Filter by payment status (default: only paid orders)
+    if (paidFilter === "paid") {
+      query.paid = true;
+    } else if (paidFilter === "unpaid") {
+      query.paid = false;
+    }
 
     // Add search criteria if provided
     if (searchQuery) {
