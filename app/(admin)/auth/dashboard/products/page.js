@@ -418,13 +418,13 @@ function AllProductsInner() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  // Initialize currentPage from sessionStorage (saved when clicking Edit)
+  // Restore page + search saved when clicking Edit (one-shot read)
   const [currentPage, setCurrentPage] = useState(() => {
     if (typeof window !== "undefined") {
       const saved = sessionStorage.getItem("adminProductPage");
       if (saved !== null) {
         sessionStorage.removeItem("adminProductPage");
-        return parseInt(saved, 10);
+        return parseInt(saved, 10) || 0;
       }
     }
     return 0;
@@ -432,12 +432,21 @@ function AllProductsInner() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [totalProducts, setTotalProducts] = useState(0);
   // Search state
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = sessionStorage.getItem("adminProductSearch");
+      if (saved !== null) {
+        sessionStorage.removeItem("adminProductSearch");
+        return saved;
+      }
+    }
+    return "";
+  });
   const [isSearching, setIsSearching] = useState(false);
   const [searchTimeout, setSearchTimeout] = useState(null);
 
   // Track previous searchQuery to skip debounce on mount / StrictMode double-render
-  const prevSearchQueryRef = useRef("");
+  const prevSearchQueryRef = useRef(searchQuery);
 
   // Memoized calculations
   const pageCount = useMemo(
@@ -769,9 +778,10 @@ function AllProductsInner() {
                       <div className="flex justify-center gap-2">
                         <Link
                           href={`/auth/dashboard/products/${product?.id}`}
-                          onClick={() =>
-                            sessionStorage.setItem("adminProductPage", currentPage.toString())
-                          }
+                          onClick={() => {
+                            sessionStorage.setItem("adminProductPage", currentPage.toString());
+                            sessionStorage.setItem("adminProductSearch", searchQuery);
+                          }}
                           className="inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-blue-600 border border-blue-600 rounded hover:bg-blue-50 transition-colors"
                         >
                           ✏️ Edit

@@ -1570,6 +1570,9 @@ export default function AddUpdate({ updateId = false }) {
             : "Product added successfully!",
           { position: "bottom-right" }
         );
+        if (updateId) {
+          router.push("/auth/dashboard/products");
+        }
         if (!updateId) {
           setForm({
             name: "",
