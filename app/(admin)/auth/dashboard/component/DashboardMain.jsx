@@ -25,16 +25,12 @@ const stats = {
 
 export default function DashboardMain() {
   return (
-    <>
+    <div className="flex flex-col gap-6">
       <HeaderStats {...stats} />
 
-      <div className="px-4 md:px-10 mx-auto w-full -m-24">
-        <div className="flex flex-wrap mt-4">
-          <div className="w-full mb-12 xl:mb-0 px-4">
-            <CardPageVisits />
-          </div>
-        </div>
+      <div className="px-4 md:px-6 mx-auto w-full -mt-24">
+        <CardPageVisits />
       </div>
-    </>
+    </div>
   );
 }
