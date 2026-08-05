@@ -4,7 +4,7 @@ import DashboardMain from "./component/DashboardMain";
 
 export default async function DashboardPage() {
   return (
-    <div className="relative md:ml-64 bg-blueGray-100">
+    <div className="relative md:ml-64 bg-slate-100 min-h-screen">
       <Suspense fallback={<DashboardSkeleton />}>
         <DashboardMain />
       </Suspense>
