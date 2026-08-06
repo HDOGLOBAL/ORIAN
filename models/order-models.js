@@ -50,6 +50,18 @@ const orderSchema = new Schema(
       type: String,
       default: "",
     },
+    invoiceNumber: {
+      type: String,
+      default: "",
+    },
+    deliveryCompany: {
+      type: String,
+      default: "",
+    },
+    salesChannel: {
+      type: String,
+      default: "Website",
+    },
 
     currentStatus: {
       type: String,
@@ -104,6 +116,10 @@ const orderSchema = new Schema(
         price: {
           type: Number,
           required: true,
+        },
+        sku: {
+          type: String,
+          default: "",
         },
       },
     ],

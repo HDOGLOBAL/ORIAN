@@ -10,6 +10,7 @@ import {
   getOrderById,
   updateOrderStatusById,
   updateOrderPaymentStatus,
+  updateOrderInfoById,
 } from "@/database/queries";
 
 export default function OrderDetails() {
@@ -22,6 +23,12 @@ export default function OrderDetails() {
   const [isEditingTransactionId] = useState(false);
   const [newTransactionId, setNewTransactionId] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
+  const [orderInfo, setOrderInfo] = useState({
+    invoiceNumber: "",
+    deliveryCompany: "",
+    salesChannel: "Website",
+  });
+  const [isSavingInfo, setIsSavingInfo] = useState(false);
 
   useEffect(() => {
     fetchOrder();
@@ -34,11 +41,39 @@ export default function OrderDetails() {
       const orderData = await getOrderById(orderId);
       setOrder(orderData);
       setNewTransactionId(orderData.transactionId || "");
+      setOrderInfo({
+        invoiceNumber: orderData.invoiceNumber || "",
+        deliveryCompany: orderData.deliveryCompany || "",
+        salesChannel: orderData.salesChannel || "Website",
+      });
     } catch (err) {
       setError("Failed to load order details. Please try again.");
       console.error("Fetch error:", err);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const saveOrderInfo = async () => {
+    try {
+      setIsSavingInfo(true);
+      const updated = await updateOrderInfoById(orderId, orderInfo);
+      setOrder((prev) => ({
+        ...prev,
+        invoiceNumber: updated.invoiceNumber,
+        deliveryCompany: updated.deliveryCompany,
+        salesChannel: updated.salesChannel,
+      }));
+      toast.success("Order details updated successfully!", {
+        position: "bottom-right",
+      });
+    } catch (err) {
+      toast.error("Failed to update order details", {
+        position: "bottom-right",
+      });
+      console.error("Order info update error:", err);
+    } finally {
+      setIsSavingInfo(false);
     }
   };
 
@@ -249,6 +284,71 @@ export default function OrderDetails() {
               </div>
             )}
           </div>
+
+          {/* Order Details Card */}
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h3 className="text-lg font-medium text-gray-800 mb-4">
+              Order Details
+            </h3>
+            <div className="mb-3">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Invoice Number
+              </label>
+              <input
+                type="text"
+                value={orderInfo.invoiceNumber}
+                onChange={(e) =>
+                  setOrderInfo((prev) => ({
+                    ...prev,
+                    invoiceNumber: e.target.value,
+                  }))
+                }
+                placeholder="e.g. INV-2025-001"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div className="mb-3">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Delivery Company
+              </label>
+              <input
+                type="text"
+                value={orderInfo.deliveryCompany}
+                onChange={(e) =>
+                  setOrderInfo((prev) => ({
+                    ...prev,
+                    deliveryCompany: e.target.value,
+                  }))
+                }
+                placeholder="e.g. FedEX, UPS..."
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div className="mb-3">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Sales Channel
+              </label>
+              <input
+                type="text"
+                value={orderInfo.salesChannel}
+                onChange={(e) =>
+                  setOrderInfo((prev) => ({
+                    ...prev,
+                    salesChannel: e.target.value,
+                  }))
+                }
+                placeholder="e.g. Website, eBay, Office..."
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <button
+              onClick={saveOrderInfo}
+              disabled={isSavingInfo}
+              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50 transition-colors"
+            >
+              {isSavingInfo ? "Saving..." : "Save"}
+            </button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -324,7 +424,7 @@ export default function OrderDetails() {
             <table className="min-w-full text-sm text-left border border-gray-200">
               <thead className="bg-gray-100 text-gray-700">
                 <tr>
-                  <th className="px-4 py-2 border">Product ID</th>
+                  <th className="px-4 py-2 border">SKU / Code</th>
                   <th className="px-4 py-2 border">Product Name</th>
                   <th className="px-4 py-2 border">Quantity</th>
                   <th className="px-4 py-2 border">Price</th>
@@ -334,7 +434,9 @@ export default function OrderDetails() {
               <tbody>
                 {order.cartItems.map((item, index) => (
                   <tr key={index} className="hover:bg-gray-50">
-                    <td className="px-4 py-2 border font-mono">{item.id}</td>
+                    <td className="px-4 py-2 border font-mono">
+                      {item.sku || item.id}
+                    </td>
                     <td className="px-4 py-2 border">{item.name}</td>
                     <td className="px-4 py-2 border text-center">{item.qty}</td>
                     <td className="px-4 py-2 border">
