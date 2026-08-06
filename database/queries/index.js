@@ -1694,6 +1694,16 @@ export const placeOrder = async (formData) => {
   try {
     await dbConnect();
 
+    const productIds = formData.cartItems.map((item) => item.id);
+    const orderedProducts = await productModel
+      .find({ _id: { $in: productIds } })
+      .select("_id sku")
+      .lean();
+    const skuMap = {};
+    for (const p of orderedProducts) {
+      skuMap[p._id.toString()] = p.sku || "";
+    }
+
     const order = {
       firstName: formData.firstName,
 
@@ -1717,6 +1727,7 @@ export const placeOrder = async (formData) => {
         name: item.name,
         qty: item.qty,
         price: item.price,
+        sku: skuMap[item.id] || "",
       })),
       totals: {
         subtotal: formData.totals.subtotal.toString(),
@@ -1768,9 +1779,43 @@ export const placeOrder = async (formData) => {
   }
 };
 
+const adjustStockForItems = async (items, direction) => {
+  if (!items || items.length === 0) return;
+
+  for (const item of items) {
+    if (!item?.id || !item?.qty) continue;
+
+    if (direction === "decrement") {
+      const product = await productModel.findById(item.id);
+      if (!product) continue;
+      const newQty = Math.max(0, (product.quantity || 0) - item.qty);
+      await productModel.updateOne(
+        { _id: item.id },
+        { $set: { quantity: newQty } }
+      );
+    } else {
+      await productModel.updateOne(
+        { _id: item.id },
+        { $inc: { quantity: item.qty } }
+      );
+    }
+  }
+};
+
 export const markOrderAsPaid = async (trackingId, paymentIntentId) => {
   try {
     await dbConnect();
+
+    const existingOrder = await OrderModel.findOne({ trackingId });
+
+    if (!existingOrder) {
+      return {
+        success: false,
+        message: "Order not found",
+      };
+    }
+
+    const wasPaid = existingOrder.paid;
 
     const updatedOrder = await OrderModel.findOneAndUpdate(
       { trackingId },
@@ -1781,11 +1826,8 @@ export const markOrderAsPaid = async (trackingId, paymentIntentId) => {
       { new: true }
     );
 
-    if (!updatedOrder) {
-      return {
-        success: false,
-        message: "Order not found",
-      };
+    if (!wasPaid) {
+      await adjustStockForItems(updatedOrder.cartItems, "decrement");
     }
 
     try {
@@ -2577,6 +2619,7 @@ export async function getPaginatedOrders({
   limit,
   searchQuery,
   statusFilter,
+  channelFilter,
   paidFilter = "paid",
 }) {
   try {
@@ -2597,6 +2640,8 @@ export async function getPaginatedOrders({
         { lastName: { $regex: searchQuery, $options: "i" } },
         { email: { $regex: searchQuery, $options: "i" } },
         { transactionId: { $regex: searchQuery, $options: "i" } },
+        { invoiceNumber: { $regex: searchQuery, $options: "i" } },
+        { salesChannel: { $regex: searchQuery, $options: "i" } },
         { orderNumber: parseInt(searchQuery.match(/\d+/)?.[0]) || -1 },
       ];
     }
@@ -2604,6 +2649,14 @@ export async function getPaginatedOrders({
     // Add status filter if provided
     if (statusFilter && statusFilter !== "all") {
       query.currentStatus = statusFilter;
+    }
+
+    // Add channel filter if provided
+    if (channelFilter && channelFilter !== "all") {
+      query.salesChannel = {
+        $regex: `^${channelFilter}$`,
+        $options: "i",
+      };
     }
 
     const orders = await OrderModel.find(query)
@@ -2637,7 +2690,22 @@ export async function deleteOrderById(id) {
 export async function updateOrderStatusById(id, status) {
   try {
     await dbConnect();
+    const order = await OrderModel.findById(id);
+    if (!order) {
+      throw new Error("Order not found");
+    }
+
+    const prevStatus = order.currentStatus;
+
     await OrderModel.findByIdAndUpdate(id, { currentStatus: status });
+
+    if (order.paid) {
+      if (status === "Cancelled" && prevStatus !== "Cancelled") {
+        await adjustStockForItems(order.cartItems, "restore");
+      } else if (prevStatus === "Cancelled" && status !== "Cancelled") {
+        await adjustStockForItems(order.cartItems, "decrement");
+      }
+    }
   } catch (error) {
     console.error("Error updating order status:", error);
     throw error;
@@ -2669,6 +2737,14 @@ export async function updateOrderPaymentStatus(
   try {
     // await dbConnect(); // Uncomment if you need to connect to DB
 
+    const existingOrder = await OrderModel.findById(id);
+
+    if (!existingOrder) {
+      throw new Error("Order not found");
+    }
+
+    const wasPaid = existingOrder.paid;
+
     const updateData = {};
 
     if (paidStatus !== undefined) {
@@ -2687,9 +2763,45 @@ export async function updateOrderPaymentStatus(
       throw new Error("Order not found");
     }
 
+    if (paidStatus === true && !wasPaid) {
+      await adjustStockForItems(updatedOrder.cartItems, "decrement");
+    } else if (paidStatus === false && wasPaid) {
+      await adjustStockForItems(updatedOrder.cartItems, "restore");
+    }
+
     return updatedOrder;
   } catch (error) {
     console.error("Error updating payment status:", error);
+    throw error;
+  }
+}
+
+export async function updateOrderInfoById(id, info = {}) {
+  try {
+    await dbConnect();
+    const updateData = {};
+
+    if (info.invoiceNumber !== undefined) {
+      updateData.invoiceNumber = info.invoiceNumber;
+    }
+    if (info.deliveryCompany !== undefined) {
+      updateData.deliveryCompany = info.deliveryCompany;
+    }
+    if (info.salesChannel !== undefined) {
+      updateData.salesChannel = info.salesChannel;
+    }
+
+    const updatedOrder = await OrderModel.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
+
+    if (!updatedOrder) {
+      throw new Error("Order not found");
+    }
+
+    return JSON.parse(JSON.stringify(updatedOrder));
+  } catch (error) {
+    console.error("Error updating order info:", error);
     throw error;
   }
 }

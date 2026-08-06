@@ -30,6 +30,9 @@ export default function OrderManagement() {
   // Status filter
   const [statusFilter, setStatusFilter] = useState("all");
 
+  // Channel filter
+  const [channelFilter, setChannelFilter] = useState("all");
+
   // Memoized calculations
   const pageCount = useMemo(
     () => Math.ceil(totalOrders / itemsPerPage),
@@ -89,7 +92,7 @@ export default function OrderManagement() {
   };
 
   const fetchOrders = useCallback(
-    async (page, limit, query = "", status = "all") => {
+    async (page, limit, query = "", status = "all", channel = "all") => {
       try {
         setIsLoading(true);
         setIsSearching(!!query);
@@ -99,6 +102,7 @@ export default function OrderManagement() {
           limit,
           searchQuery: query,
           statusFilter: status,
+          channelFilter: channel,
         });
         setOrders(result.orders);
         setTotalOrders(result.totalCount);
@@ -120,7 +124,7 @@ export default function OrderManagement() {
 
     const timer = setTimeout(() => {
       setCurrentPage(0);
-      fetchOrders(0, itemsPerPage, searchQuery, statusFilter);
+      fetchOrders(0, itemsPerPage, searchQuery, statusFilter, channelFilter);
     }, 1500);
 
     setSearchTimeout(timer);
@@ -130,10 +134,10 @@ export default function OrderManagement() {
         clearTimeout(searchTimeout);
       }
     };
-  }, [searchQuery, statusFilter, itemsPerPage, fetchOrders]);
+  }, [searchQuery, statusFilter, channelFilter, itemsPerPage, fetchOrders]);
 
   useEffect(() => {
-    fetchOrders(currentPage, itemsPerPage, searchQuery, statusFilter);
+    fetchOrders(currentPage, itemsPerPage, searchQuery, statusFilter, channelFilter);
   }, [currentPage, itemsPerPage, fetchOrders]);
 
   // Handle page change
@@ -145,6 +149,7 @@ export default function OrderManagement() {
   const clearSearch = () => {
     setSearchQuery("");
     setStatusFilter("all");
+    setChannelFilter("all");
     setCurrentPage(0);
   };
 
@@ -154,7 +159,7 @@ export default function OrderManagement() {
       clearTimeout(searchTimeout);
     }
     setCurrentPage(0);
-    fetchOrders(0, itemsPerPage, searchQuery, statusFilter);
+    fetchOrders(0, itemsPerPage, searchQuery, statusFilter, channelFilter);
   };
 
   // Handle Enter key in search
@@ -243,6 +248,18 @@ export default function OrderManagement() {
               <option value="Cancelled">Cancelled</option>
             </select>
 
+            <select
+              value={channelFilter}
+              onChange={(e) => setChannelFilter(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+              disabled={isLoading}
+            >
+              <option value="all">All Channels</option>
+              <option value="Website">Website</option>
+              <option value="eBay">eBay</option>
+              <option value="Office">Office</option>
+            </select>
+
             <button
               onClick={handleManualSearch}
               disabled={isLoading}
@@ -251,7 +268,7 @@ export default function OrderManagement() {
               {isLoading ? "Searching..." : "Search"}
             </button>
 
-            {(searchQuery || statusFilter !== "all") && (
+            {(searchQuery || statusFilter !== "all" || channelFilter !== "all") && (
               <button
                 onClick={clearSearch}
                 className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
@@ -261,7 +278,8 @@ export default function OrderManagement() {
             )}
           </div>
           <p className="text-sm text-gray-500">
-            Search by customer name, email, or Transaction ID.
+            Search by customer name, email, Transaction ID, invoice nº or
+            channel.
           </p>
         </div>
 
@@ -288,7 +306,7 @@ export default function OrderManagement() {
           <div className="text-gray-700 text-sm">
             Showing {showingRange.start} to {showingRange.end} of {totalOrders}{" "}
             entries
-            {(searchQuery || statusFilter !== "all") && (
+            {(searchQuery || statusFilter !== "all" || channelFilter !== "all") && (
               <span className="ml-2 text-blue-500">(filtered)</span>
             )}
           </div>
@@ -299,10 +317,14 @@ export default function OrderManagement() {
             <thead className="bg-gray-100 text-gray-700">
               <tr>
                 <th className="px-4 py-3 border">Order nº </th>
+                <th className="px-4 py-3 border">Invoice</th>
                 <th className="px-4 py-3 border">Transaction ID</th>
                 <th className="px-4 py-3 border">Customer</th>
                 <th className="px-4 py-3 border">Email</th>
+                <th className="px-4 py-3 border">Channel</th>
                 <th className="px-4 py-3 border">Items</th>
+                <th className="px-4 py-3 border">Delivery Company</th>
+                <th className="px-4 py-3 border">Shipping</th>
                 <th className="px-4 py-3 border">Total Amount</th>
                 <th className="px-4 py-3 border">Status</th>
                 <th className="px-4 py-3 border">Order Date</th>
@@ -315,10 +337,10 @@ export default function OrderManagement() {
               {orders.length === 0 ? (
                 <tr>
                   <td
-                    colSpan="10"
+                    colSpan="14"
                     className="text-center py-6 text-gray-500 italic"
                   >
-                    {searchQuery || statusFilter !== "all"
+                    {searchQuery || statusFilter !== "all" || channelFilter !== "all"
                       ? "No orders found matching your criteria."
                       : "No orders found."}
                   </td>
@@ -332,6 +354,13 @@ export default function OrderManagement() {
                     <td className="px-4 py-2 border font-semibold">
                       {order?.orderNumber || "-"}
                     </td>
+                    <td className="px-4 py-2 border">
+                      {order?.invoiceNumber ? (
+                        order.invoiceNumber
+                      ) : (
+                        <span className="text-gray-400">—</span>
+                      )}
+                    </td>
                     <td className="px-4 py-2 border font-mono">
                       {order?.transactionId || "Unpaid"}
                     </td>
@@ -340,7 +369,20 @@ export default function OrderManagement() {
                     </td>
                     <td className="px-4 py-2 border">{order.email}</td>
                     <td className="px-4 py-2 border">
+                      {order?.salesChannel || "Website"}
+                    </td>
+                    <td className="px-4 py-2 border">
                       {order.cartItems.length} item(s)
+                    </td>
+                    <td className="px-4 py-2 border">
+                      {order?.deliveryCompany ? (
+                        order.deliveryCompany
+                      ) : (
+                        <span className="text-gray-400">—</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-2 border">
+                      {order.totals.currency} {order.totals.shipping.toFixed(2)}
                     </td>
                     <td className="px-4 py-2 border font-semibold">
                       {order.totals.currency}{" "}
