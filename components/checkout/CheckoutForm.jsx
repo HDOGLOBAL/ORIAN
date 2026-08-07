@@ -10,7 +10,7 @@ const CheckoutForm = forwardRef(({ formData, handleChange }, ref) => {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label htmlFor="first-name" className="text-gray-600">
-              First Name <span className="text-primary">*</span>
+              First name <span className="text-primary">*</span>
             </label>
             <input
               type="text"

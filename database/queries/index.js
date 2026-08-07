@@ -2619,7 +2619,6 @@ export async function getPaginatedOrders({
   limit,
   searchQuery,
   statusFilter,
-  channelFilter,
   paidFilter = "paid",
 }) {
   try {
@@ -2640,8 +2639,6 @@ export async function getPaginatedOrders({
         { lastName: { $regex: searchQuery, $options: "i" } },
         { email: { $regex: searchQuery, $options: "i" } },
         { transactionId: { $regex: searchQuery, $options: "i" } },
-        { invoiceNumber: { $regex: searchQuery, $options: "i" } },
-        { salesChannel: { $regex: searchQuery, $options: "i" } },
         { orderNumber: parseInt(searchQuery.match(/\d+/)?.[0]) || -1 },
       ];
     }
@@ -2649,14 +2646,6 @@ export async function getPaginatedOrders({
     // Add status filter if provided
     if (statusFilter && statusFilter !== "all") {
       query.currentStatus = statusFilter;
-    }
-
-    // Add channel filter if provided
-    if (channelFilter && channelFilter !== "all") {
-      query.salesChannel = {
-        $regex: `^${channelFilter}$`,
-        $options: "i",
-      };
     }
 
     const orders = await OrderModel.find(query)
@@ -2787,8 +2776,8 @@ export async function updateOrderInfoById(id, info = {}) {
     if (info.deliveryCompany !== undefined) {
       updateData.deliveryCompany = info.deliveryCompany;
     }
-    if (info.salesChannel !== undefined) {
-      updateData.salesChannel = info.salesChannel;
+    if (info.deliveryCompany !== undefined) {
+      updateData.deliveryCompany = info.deliveryCompany;
     }
 
     const updatedOrder = await OrderModel.findByIdAndUpdate(id, updateData, {
@@ -2802,6 +2791,123 @@ export async function updateOrderInfoById(id, info = {}) {
     return JSON.parse(JSON.stringify(updatedOrder));
   } catch (error) {
     console.error("Error updating order info:", error);
+    throw error;
+  }
+}
+
+export async function createManualOrder(data) {
+  try {
+    await dbConnect();
+
+    const {
+      firstName,
+      lastName,
+      email = "",
+      phone = "",
+      streetAddress = "",
+      state = "",
+      city = "",
+      zip = "",
+      items,
+      deliveryCompany = "",
+      shipping = 0,
+      awb = "",
+      invoiceNumber = "",
+      currency = "EUR",
+      paid = true,
+    } = data;
+
+    if (!firstName || !lastName) {
+      return { success: false, error: "Customer first and last name are required" };
+    }
+    if (!Array.isArray(items) || items.length === 0) {
+      return { success: false, error: "At least one item is required" };
+    }
+
+    const productIds = items.map((i) => i.productId);
+    const products = await productModel.find({
+      _id: { $in: productIds },
+      quantity: { $gte: 0 },
+    }).lean();
+
+    const productMap = new Map(products.map((p) => [String(p._id), p]));
+
+    const cartItems = [];
+    for (const item of items) {
+      const product = productMap.get(String(item.productId));
+      if (!product) {
+        return {
+          success: false,
+          error: `Product not found: ${item.name || item.productId}`,
+        };
+      }
+      const qty = Math.max(1, parseInt(item.qty, 10) || 1);
+      const price = Math.max(0, parseFloat(item.price) || 0);
+      cartItems.push({
+        id: String(product._id),
+        name: product.name,
+        sku: product.sku || "",
+        qty,
+        price,
+      });
+    }
+
+    const subtotal = cartItems.reduce((sum, i) => sum + i.price * i.qty, 0);
+    const shippingPrice = Math.max(0, parseFloat(shipping) || 0);
+    const grandTotal = subtotal + shippingPrice;
+
+    const orderNumber = await getNextOrderNumber();
+    const trackingId = awb && awb.trim() ? awb.trim() : `MAN-${orderNumber}`;
+
+    const orderData = {
+      firstName,
+      lastName,
+      email,
+      phone,
+      streetAddress,
+      state,
+      city,
+      zip,
+      sameAddress: false,
+      paid,
+      coupon: "",
+      orderComment: "",
+      agreeTerms: true,
+      trackingId,
+      transactionId: "",
+      vatValid: false,
+      vatNumber: "0",
+      orderNumber,
+      invoiceNumber: invoiceNumber ? invoiceNumber.trim() : "",
+      deliveryCompany: deliveryCompany.trim(),
+      salesChannel: "",
+      orderType: "Old",
+      cartItems,
+      totals: {
+        subtotal: subtotal.toString(),
+        discount: 0,
+        shipping: shippingPrice,
+        tax: 0,
+        grandTotal,
+        currency,
+      },
+    };
+
+    const order = await OrderModel.create(orderData);
+
+    if (order.paid) {
+      await adjustStockForItems(order.cartItems, "decrement");
+    }
+
+    return {
+      success: true,
+      order: JSON.parse(JSON.stringify(order)),
+    };
+  } catch (error) {
+    console.error("Error creating manual order:", error);
+    if (error.code === 11000) {
+      return { success: false, error: "AWB (tracking number) already in use" };
+    }
     throw error;
   }
 }
