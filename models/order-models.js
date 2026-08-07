@@ -62,6 +62,10 @@ const orderSchema = new Schema(
       type: String,
       default: "Website",
     },
+    orderType: {
+      type: String,
+      default: "New",
+    },
 
     currentStatus: {
       type: String,

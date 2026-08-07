@@ -48,7 +48,7 @@ export default function CheckoutPage({
   const textMap = {
     // Form labels
     firstName: {
-      en: "First Name",
+      en: "First name",
       pt: "Nome",
       fr: "Prénom",
       es: "Nombre",
