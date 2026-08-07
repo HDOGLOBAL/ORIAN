@@ -2776,9 +2776,6 @@ export async function updateOrderInfoById(id, info = {}) {
     if (info.deliveryCompany !== undefined) {
       updateData.deliveryCompany = info.deliveryCompany;
     }
-    if (info.deliveryCompany !== undefined) {
-      updateData.deliveryCompany = info.deliveryCompany;
-    }
 
     const updatedOrder = await OrderModel.findByIdAndUpdate(id, updateData, {
       new: true,
