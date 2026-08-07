@@ -20,6 +20,9 @@ import {
 // Import additional icons for variety
 import { RiAdminLine, RiProductHuntLine, RiAuctionLine } from "react-icons/ri";
 import { BiSupport } from "react-icons/bi";
+import { toast } from "react-toastify";
+import { createManualOrder } from "@/database/queries";
+import CompanyOrderModal from "./CompanyOrderModal";
 import Logout from "./Logout";
 
 export default function AdminSidebar() {
@@ -37,6 +40,33 @@ export default function AdminSidebar() {
       ...prev,
       [menuName]: !prev[menuName],
     }));
+  };
+
+  const [showCompanyOrder, setShowCompanyOrder] = useState(false);
+  const [savingCompanyOrder, setSavingCompanyOrder] = useState(false);
+
+  const submitCompanyOrder = async (formData) => {
+    setSavingCompanyOrder(true);
+    try {
+      const result = await createManualOrder(formData);
+      if (result && result.success) {
+        toast.success("Company order created successfully!", {
+          position: "bottom-right",
+        });
+        setShowCompanyOrder(false);
+      } else {
+        toast.error(result?.error || "Failed to create company order", {
+          position: "bottom-right",
+        });
+      }
+    } catch (err) {
+      console.error("Create manual order error:", err);
+      toast.error("Failed to create company order", {
+        position: "bottom-right",
+      });
+    } finally {
+      setSavingCompanyOrder(false);
+    }
   };
 
   // Check if a link is active
@@ -118,6 +148,12 @@ export default function AdminSidebar() {
           label: "Support Chat",
           icon: <BiSupport className="text-lg" />,
           color: "text-red-500",
+        },
+        {
+          action: "companyOrder",
+          label: "Company Order",
+          icon: <FiPlusCircle className="text-lg" />,
+          color: "text-teal-500",
         },
       ],
     },
@@ -262,6 +298,17 @@ export default function AdminSidebar() {
                           </span>
                           <span>{item.label}</span>
                         </button>
+                      ) : item.action === "companyOrder" ? (
+                        // Company Order button
+                        <button
+                          onClick={() => setShowCompanyOrder(true)}
+                          className="w-full text-left text-sm py-3 flex items-center gap-3 px-4 rounded-lg transition-colors duration-200 group text-gray-600 hover:bg-emerald-50 hover:text-emerald-600"
+                        >
+                          <span className="text-teal-500 group-hover:text-emerald-600">
+                            {item.icon}
+                          </span>
+                          <span>{item.label}</span>
+                        </button>
                       ) : (
                         // Submenu item
                         <div>
@@ -330,6 +377,14 @@ export default function AdminSidebar() {
           </div>
         </div>
       </nav>
+
+      {showCompanyOrder && (
+        <CompanyOrderModal
+          saving={savingCompanyOrder}
+          onClose={() => setShowCompanyOrder(false)}
+          onSubmit={submitCompanyOrder}
+        />
+      )}
     </>
   );
 }
