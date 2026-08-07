@@ -58,6 +58,9 @@ const orderSchema = new Schema(
       type: String,
       default: "",
     },
+    shippingDate: {
+      type: Date,
+    },
     salesChannel: {
       type: String,
       default: "Website",

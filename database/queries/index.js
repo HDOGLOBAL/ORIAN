@@ -1784,6 +1784,7 @@ const adjustStockForItems = async (items, direction) => {
 
   for (const item of items) {
     if (!item?.id || !item?.qty) continue;
+    if (!mongoose.Types.ObjectId.isValid(item.id)) continue;
 
     if (direction === "decrement") {
       const product = await productModel.findById(item.id);
@@ -2776,6 +2777,9 @@ export async function updateOrderInfoById(id, info = {}) {
     if (info.deliveryCompany !== undefined) {
       updateData.deliveryCompany = info.deliveryCompany;
     }
+    if (info.shippingDate !== undefined) {
+      updateData.shippingDate = info.shippingDate ? new Date(info.shippingDate) : null;
+    }
 
     const updatedOrder = await OrderModel.findByIdAndUpdate(id, updateData, {
       new: true,
@@ -2810,6 +2814,7 @@ export async function createManualOrder(data) {
       shipping = 0,
       awb = "",
       invoiceNumber = "",
+      shippingDate = null,
       currency = "EUR",
       paid = true,
     } = data;
@@ -2821,29 +2826,31 @@ export async function createManualOrder(data) {
       return { success: false, error: "At least one item is required" };
     }
 
-    const productIds = items.map((i) => i.productId);
-    const products = await productModel.find({
-      _id: { $in: productIds },
-      quantity: { $gte: 0 },
-    }).lean();
-
-    const productMap = new Map(products.map((p) => [String(p._id), p]));
-
     const cartItems = [];
     for (const item of items) {
-      const product = productMap.get(String(item.productId));
-      if (!product) {
-        return {
-          success: false,
-          error: `Product not found: ${item.name || item.productId}`,
-        };
+      const name = (item.name || "").trim();
+      if (!name) {
+        return { success: false, error: "Item name is required" };
       }
+      const code = (item.code || "").trim().toUpperCase();
       const qty = Math.max(1, parseInt(item.qty, 10) || 1);
       const price = Math.max(0, parseFloat(item.price) || 0);
+
+      let productId = `manual-${cartItems.length}`;
+      if (code) {
+        const product = await productModel
+          .findOne({ sku: code })
+          .select("_id")
+          .lean();
+        if (product) {
+          productId = String(product._id);
+        }
+      }
+
       cartItems.push({
-        id: String(product._id),
-        name: product.name,
-        sku: product.sku || "",
+        id: productId,
+        name,
+        sku: code,
         qty,
         price,
       });
@@ -2877,6 +2884,7 @@ export async function createManualOrder(data) {
       orderNumber,
       invoiceNumber: invoiceNumber ? invoiceNumber.trim() : "",
       deliveryCompany: deliveryCompany.trim(),
+      shippingDate: shippingDate ? new Date(shippingDate) : null,
       salesChannel: "",
       orderType: "Old",
       cartItems,
