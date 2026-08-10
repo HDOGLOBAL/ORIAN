@@ -4,35 +4,35 @@ const orderSchema = new Schema(
   {
     firstName: {
       type: String,
-      required: true,
+      default: "",
     },
     lastName: {
       type: String,
-      required: true,
+      default: "",
     },
     email: {
       type: String,
-      required: true,
+      default: "",
     },
     streetAddress: {
       type: String,
-      required: true,
+      default: "",
     },
     state: {
       type: String,
-      required: true,
+      default: "",
     },
     city: {
       type: String,
-      required: true,
+      default: "",
     },
     zip: {
       type: String,
-      required: true,
+      default: "",
     },
     phone: {
       type: String,
-      required: true,
+      default: "",
     },
     sameAddress: {
       type: Boolean,
