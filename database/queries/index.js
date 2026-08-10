@@ -2615,33 +2615,56 @@ export async function getPaginatedProducts({
   }
 }
 
+function orderChannelFilter(orderChannel) {
+  if (orderChannel === "company") {
+    return { $or: [{ orderType: "Old" }, { salesChannel: "Company" }] };
+  }
+  if (orderChannel === "website") {
+    return { orderType: { $ne: "Old" }, salesChannel: { $ne: "Company" } };
+  }
+  return null;
+}
+
 export async function getPaginatedOrders({
   offset,
   limit,
   searchQuery,
   statusFilter,
   paidFilter = "paid",
+  orderChannel = "website",
 }) {
   try {
     await dbConnect();
     let query = { archived: { $ne: true } };
+
+    const channelFilter = orderChannelFilter(orderChannel);
+
+    // Add search criteria if provided
+    const searchFilter = searchQuery
+      ? {
+          $or: [
+            { firstName: { $regex: searchQuery, $options: "i" } },
+            { lastName: { $regex: searchQuery, $options: "i" } },
+            { email: { $regex: searchQuery, $options: "i" } },
+            { transactionId: { $regex: searchQuery, $options: "i" } },
+            { orderNumber: parseInt(searchQuery.match(/\d+/)?.[0]) || -1 },
+          ],
+        }
+      : null;
+
+    if (channelFilter && searchFilter) {
+      query.$and = [channelFilter, searchFilter];
+    } else if (channelFilter) {
+      Object.assign(query, channelFilter);
+    } else if (searchFilter) {
+      Object.assign(query, searchFilter);
+    }
 
     // Filter by payment status (default: only paid orders)
     if (paidFilter === "paid") {
       query.paid = true;
     } else if (paidFilter === "unpaid") {
       query.paid = false;
-    }
-
-    // Add search criteria if provided
-    if (searchQuery) {
-      query.$or = [
-        { firstName: { $regex: searchQuery, $options: "i" } },
-        { lastName: { $regex: searchQuery, $options: "i" } },
-        { email: { $regex: searchQuery, $options: "i" } },
-        { transactionId: { $regex: searchQuery, $options: "i" } },
-        { orderNumber: parseInt(searchQuery.match(/\d+/)?.[0]) || -1 },
-      ];
     }
 
     // Add status filter if provided
@@ -2801,15 +2824,15 @@ export async function createManualOrder(data) {
     await dbConnect();
 
     const {
-      firstName,
-      lastName,
+      firstName = "",
+      lastName = "",
       email = "",
       phone = "",
       streetAddress = "",
       state = "",
       city = "",
       zip = "",
-      items,
+      items = [],
       deliveryCompany = "",
       shipping = 0,
       awb = "",
@@ -2819,21 +2842,17 @@ export async function createManualOrder(data) {
       paid = true,
     } = data;
 
-    if (!firstName || !lastName) {
-      return { success: false, error: "Customer first and last name are required" };
-    }
-    if (!Array.isArray(items) || items.length === 0) {
-      return { success: false, error: "At least one item is required" };
+    if (!awb || !awb.trim()) {
+      return { success: false, error: "AWB (tracking number) is required" };
     }
 
     const cartItems = [];
-    for (const item of items) {
+    for (const item of items || []) {
       const name = (item.name || "").trim();
-      if (!name) {
-        return { success: false, error: "Item name is required" };
-      }
+      if (!name) continue;
       const code = (item.code || "").trim().toUpperCase();
-      const qty = Math.max(1, parseInt(item.qty, 10) || 1);
+      const qty = Math.max(0, parseInt(item.qty, 10) || 0);
+      if (qty <= 0) continue;
       const price = Math.max(0, parseFloat(item.price) || 0);
 
       let productId = `manual-${cartItems.length}`;
@@ -2861,7 +2880,7 @@ export async function createManualOrder(data) {
     const grandTotal = subtotal + shippingPrice;
 
     const orderNumber = await getNextOrderNumber();
-    const trackingId = awb && awb.trim() ? awb.trim() : `MAN-${orderNumber}`;
+    const trackingId = awb.trim();
 
     const orderData = {
       firstName,
@@ -2885,7 +2904,7 @@ export async function createManualOrder(data) {
       invoiceNumber: invoiceNumber ? invoiceNumber.trim() : "",
       deliveryCompany: deliveryCompany.trim(),
       shippingDate: shippingDate ? new Date(shippingDate) : null,
-      salesChannel: "",
+      salesChannel: "Company",
       orderType: "Old",
       cartItems,
       totals: {
@@ -2917,10 +2936,15 @@ export async function createManualOrder(data) {
   }
 }
 
-export async function getTotalOrdersCount() {
+export async function getTotalOrdersCount({ channel = "website" } = {}) {
   try {
     await dbConnect(); // Make sure to connect to database first
-    const totalCount = await OrderModel.countDocuments();
+    const query = {};
+    const channelFilter = orderChannelFilter(channel);
+    if (channelFilter) {
+      Object.assign(query, channelFilter);
+    }
+    const totalCount = await OrderModel.countDocuments(query);
     return totalCount;
   } catch (error) {
     console.error("Error getting total orders count:", error);

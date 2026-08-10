@@ -173,18 +173,31 @@ export default function OrderDetails() {
     );
   }
 
+  const isCompanyOrder =
+    order.salesChannel === "Company" || order.orderType === "Old";
+  const backHref = isCompanyOrder
+    ? "/auth/dashboard/company-orders"
+    : "/auth/dashboard/orders";
+
   return (
     <div className="relative md:ml-64 bg-blueGray-100 mt-[40px]">
       <div className="bg-white p-6 rounded shadow">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-light text-[#0eadef]">
-            Order nº{order.orderNumber || "-"} — {order.trackingId}
-          </h2>
+          <div className="flex items-center gap-3">
+            <h2 className="text-2xl font-light text-[#0eadef]">
+              Order nº{order.orderNumber || "-"} — {order.trackingId || "-"}
+            </h2>
+            {isCompanyOrder && (
+              <span className="px-2 py-1 rounded-full text-xs bg-teal-100 text-teal-800">
+                Company
+              </span>
+            )}
+          </div>
           <Link
-            href="/auth/dashboard/orders"
+            href={backHref}
             className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
           >
-            ← Back to Orders
+            ← Back to {isCompanyOrder ? "Company Orders" : "Orders"}
           </Link>
         </div>
 

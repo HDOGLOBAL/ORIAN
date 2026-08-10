@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { toast } from "react-toastify";
 
 export default function CompanyOrderModal({ saving, onClose, onSubmit }) {
   const [firstName, setFirstName] = useState("");
@@ -13,6 +12,7 @@ export default function CompanyOrderModal({ saving, onClose, onSubmit }) {
   const [city, setCity] = useState("");
   const [zip, setZip] = useState("");
   const [deliveryCompany, setDeliveryCompany] = useState("");
+  const [customDeliveryCompany, setCustomDeliveryCompany] = useState("");
   const [shipping, setShipping] = useState("0");
   const [awb, setAwb] = useState("");
   const [invoiceNumber, setInvoiceNumber] = useState("");
@@ -39,17 +39,9 @@ export default function CompanyOrderModal({ saving, onClose, onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!firstName.trim() || !lastName.trim()) {
-      toast.warning("Customer first and last name are required");
-      return;
-    }
     const validItems = items.filter(
       (it) => it.name.trim() && Number(it.qty) > 0
     );
-    if (validItems.length === 0) {
-      toast.warning("Add at least one item with a name");
-      return;
-    }
     onSubmit({
       firstName: firstName.trim(),
       lastName: lastName.trim(),
@@ -59,7 +51,10 @@ export default function CompanyOrderModal({ saving, onClose, onSubmit }) {
       phone: phone.trim(),
       city: city.trim(),
       zip: zip.trim(),
-      deliveryCompany: deliveryCompany.trim(),
+      deliveryCompany:
+        deliveryCompany === "Other"
+          ? customDeliveryCompany.trim()
+          : deliveryCompany.trim(),
       shipping: Number(shipping) || 0,
       awb: awb.trim(),
       invoiceNumber: invoiceNumber.trim(),
@@ -95,21 +90,19 @@ export default function CompanyOrderModal({ saving, onClose, onSubmit }) {
         <form onSubmit={handleSubmit} className="px-6 py-4 space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className={labelClass}>First name *</label>
+              <label className={labelClass}>First name</label>
               <input
                 className={inputClass}
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                required
               />
             </div>
             <div>
-              <label className={labelClass}>Last name *</label>
+              <label className={labelClass}>Last name</label>
               <input
                 className={inputClass}
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                required
               />
             </div>
             <div>
@@ -164,7 +157,7 @@ export default function CompanyOrderModal({ saving, onClose, onSubmit }) {
 
           <div>
             <div className="flex justify-between items-center mb-2">
-              <label className={labelClass}>Items *</label>
+              <label className={labelClass}>Items</label>
               <button
                 type="button"
                 onClick={addItem}
@@ -174,6 +167,13 @@ export default function CompanyOrderModal({ saving, onClose, onSubmit }) {
               </button>
             </div>
             <div className="space-y-2">
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_110px_70px_110px_40px] gap-2 text-xs font-medium text-gray-500 mb-1">
+                <span>Item name</span>
+                <span>Product code</span>
+                <span>Quantity</span>
+                <span>Price/Net Value (€)</span>
+                <span></span>
+              </div>
               {items.map((item, index) => (
                 <div
                   key={index}
@@ -181,21 +181,21 @@ export default function CompanyOrderModal({ saving, onClose, onSubmit }) {
                 >
                   <input
                     className={inputClass}
-                    placeholder="Item"
+                    placeholder="name"
                     value={item.name}
                     onChange={(e) => updateItem(index, "name", e.target.value)}
                   />
                   <input
                     className={inputClass}
-                    placeholder="Code"
+                    placeholder="code"
                     value={item.code}
                     onChange={(e) => updateItem(index, "code", e.target.value)}
                   />
                   <input
                     type="number"
-                    min="1"
+                    min="0"
                     className={inputClass}
-                    placeholder="Qty"
+                    placeholder="Quantity"
                     value={item.qty}
                     onChange={(e) => updateItem(index, "qty", e.target.value)}
                   />
@@ -204,7 +204,7 @@ export default function CompanyOrderModal({ saving, onClose, onSubmit }) {
                     min="0"
                     step="0.01"
                     className={inputClass}
-                    placeholder="Price"
+                    placeholder="Price/Net Value (€)"
                     value={item.price}
                     onChange={(e) => updateItem(index, "price", e.target.value)}
                   />
@@ -224,12 +224,24 @@ export default function CompanyOrderModal({ saving, onClose, onSubmit }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className={labelClass}>Delivery company</label>
-              <input
+              <select
                 className={inputClass}
                 value={deliveryCompany}
                 onChange={(e) => setDeliveryCompany(e.target.value)}
-                placeholder="e.g. FedEX, UPS..."
-              />
+              >
+                <option value="">Select delivery company</option>
+                <option value="UPS">UPS</option>
+                <option value="FedEX">FedEX</option>
+                <option value="Other">Other</option>
+              </select>
+              {deliveryCompany === "Other" && (
+                <input
+                  className={`${inputClass} mt-2`}
+                  value={customDeliveryCompany}
+                  onChange={(e) => setCustomDeliveryCompany(e.target.value)}
+                  placeholder="Delivery company name"
+                />
+              )}
             </div>
             <div>
               <label className={labelClass}>Shipping price (€)</label>
@@ -243,16 +255,23 @@ export default function CompanyOrderModal({ saving, onClose, onSubmit }) {
               />
             </div>
             <div>
-              <label className={labelClass}>AWB (tracking number)</label>
+              <label className={labelClass}>AWB (tracking number) *</label>
               <input
                 className={inputClass}
                 value={awb}
                 onChange={(e) => setAwb(e.target.value)}
-                placeholder="Auto-generated if empty"
+                placeholder="Tracking number"
+                required
+                onInvalid={(e) =>
+                  e.currentTarget.setCustomValidity(
+                    "AWB (tracking number) is required"
+                  )
+                }
+                onInput={(e) => e.currentTarget.setCustomValidity("")}
               />
             </div>
             <div>
-              <label className={labelClass}>Invoice</label>
+              <label className={labelClass}>Invoice Number</label>
               <input
                 className={inputClass}
                 value={invoiceNumber}

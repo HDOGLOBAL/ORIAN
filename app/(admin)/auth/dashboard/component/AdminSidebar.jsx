@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 
 // Import React Icons
@@ -15,6 +15,7 @@ import {
   FiChevronDown,
   FiShoppingCart as FiCart,
   FiLayers,
+  FiShoppingBag,
 } from "react-icons/fi";
 
 // Import additional icons for variety
@@ -29,6 +30,7 @@ export default function AdminSidebar() {
   const [collapseShow, setCollapseShow] = useState("hidden");
   const [openSubmenus, setOpenSubmenus] = useState({});
   const pathname = usePathname();
+  const router = useRouter();
 
   // Auto-close mobile menu when route changes
   useEffect(() => {
@@ -54,6 +56,7 @@ export default function AdminSidebar() {
           position: "bottom-right",
         });
         setShowCompanyOrder(false);
+        router.push("/auth/dashboard/company-orders");
       } else {
         toast.error(result?.error || "Failed to create company order", {
           position: "bottom-right",
@@ -150,10 +153,16 @@ export default function AdminSidebar() {
           color: "text-red-500",
         },
         {
-          action: "companyOrder",
-          label: "Company Order",
-          icon: <FiPlusCircle className="text-lg" />,
+          href: "/auth/dashboard/company-orders",
+          label: "Company Orders",
+          icon: <FiShoppingBag className="text-lg" />,
           color: "text-teal-500",
+        },
+        {
+          action: "companyOrder",
+          label: "New Company Order",
+          icon: <FiPlusCircle className="text-lg" />,
+          color: "text-emerald-500",
         },
       ],
     },
