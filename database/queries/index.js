@@ -2804,6 +2804,17 @@ export async function updateOrderInfoById(id, info = {}) {
     if (info.shippingDate !== undefined) {
       updateData.shippingDate = info.shippingDate ? new Date(info.shippingDate) : null;
     }
+    if (info.shippingPrice !== undefined) {
+      const shippingPrice = Math.max(0, parseFloat(info.shippingPrice) || 0);
+      updateData["totals.shipping"] = shippingPrice;
+      const order = await OrderModel.findById(id);
+      if (order) {
+        const subtotal = parseFloat(order.totals?.subtotal) || 0;
+        const discount = parseFloat(order.totals?.discount) || 0;
+        const tax = parseFloat(order.totals?.tax) || 0;
+        updateData["totals.grandTotal"] = subtotal - discount + shippingPrice + tax;
+      }
+    }
 
     const updatedOrder = await OrderModel.findByIdAndUpdate(id, updateData, {
       new: true,
