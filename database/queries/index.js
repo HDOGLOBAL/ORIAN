@@ -16,6 +16,7 @@ import { sendNewOrderNotifications } from "../../utils/mailSender";
 import { autoTranslateMissing } from "../../utils/translator";
 import { auth } from "@/auth";
 import { OrderModel } from "@/models/order-models";
+import { PendingOrderModel } from "@/models/pending-order-models";
 import { CounterModel } from "@/models/counter-model";
 import { dbConnect } from "@/service/mongo";
 import { manufacturerModel } from "@/models/manufacture-model";
@@ -2976,5 +2977,180 @@ export async function createUser(data) {
       return { success: false, error: "Email already exists" };
     }
     return { success: false, error: "Internal server error" };
+  }
+}
+
+// pending orders -------------------------------------------------------------------
+
+export async function createPendingOrder(data) {
+  try {
+    await dbConnect();
+
+    const {
+      firstName = "",
+      lastName = "",
+      address = "",
+      email = "",
+      parts = [],
+    } = data;
+
+    const validParts = (parts || [])
+      .filter((p) => p.partsNumber.trim() || p.manufacturer.trim())
+      .map((p) => ({
+        manufacturer: p.manufacturer.trim(),
+        partsNumber: p.partsNumber.trim(),
+        qty: Math.max(1, parseInt(p.qty, 10) || 1),
+      }));
+
+    const pendingOrder = await PendingOrderModel.create({
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      address: address.trim(),
+      email: email.trim(),
+      parts: validParts,
+    });
+
+    return {
+      success: true,
+      pendingOrder: JSON.parse(JSON.stringify(pendingOrder)),
+    };
+  } catch (error) {
+    console.error("Error creating pending order:", error);
+    throw error;
+  }
+}
+
+export async function getPendingOrders({
+  offset,
+  limit,
+  searchQuery,
+  statusFilter,
+}) {
+  try {
+    await dbConnect();
+    let query = {};
+
+    const searchFilter = searchQuery
+      ? {
+          $or: [
+            { firstName: { $regex: searchQuery, $options: "i" } },
+            { lastName: { $regex: searchQuery, $options: "i" } },
+            { email: { $regex: searchQuery, $options: "i" } },
+            { "parts.partsNumber": { $regex: searchQuery, $options: "i" } },
+          ],
+        }
+      : null;
+
+    if (searchFilter) {
+      query = searchFilter;
+    }
+
+    if (statusFilter && statusFilter !== "all") {
+      query.currentStatus = statusFilter;
+    }
+
+    const pendingOrders = await PendingOrderModel.find(query)
+      .sort({ createdAt: -1 })
+      .skip(offset)
+      .limit(limit)
+      .lean();
+
+    const totalCount = await PendingOrderModel.countDocuments(query);
+
+    return {
+      pendingOrders: JSON.parse(JSON.stringify(pendingOrders)),
+      totalCount,
+    };
+  } catch (error) {
+    console.error("Error fetching pending orders:", error);
+    throw error;
+  }
+}
+
+export async function getPendingOrderById(id) {
+  try {
+    await dbConnect();
+    const pendingOrder = await PendingOrderModel.findById(id).lean();
+    if (!pendingOrder) {
+      throw new Error("Pending order not found");
+    }
+    return JSON.parse(JSON.stringify(pendingOrder));
+  } catch (error) {
+    console.error("Error fetching pending order:", error);
+    throw error;
+  }
+}
+
+export async function updatePendingOrderById(id, data = {}) {
+  try {
+    await dbConnect();
+
+    const updateData = {};
+    if (data.firstName !== undefined) {
+      updateData.firstName = data.firstName.trim();
+    }
+    if (data.lastName !== undefined) {
+      updateData.lastName = data.lastName.trim();
+    }
+    if (data.address !== undefined) {
+      updateData.address = data.address.trim();
+    }
+    if (data.email !== undefined) {
+      updateData.email = data.email.trim();
+    }
+    if (data.parts !== undefined) {
+      updateData.parts = (data.parts || [])
+        .filter((p) => p.partsNumber.trim() || p.manufacturer.trim())
+        .map((p) => ({
+          manufacturer: p.manufacturer.trim(),
+          partsNumber: p.partsNumber.trim(),
+          qty: Math.max(1, parseInt(p.qty, 10) || 1),
+        }));
+    }
+
+    const updatedPendingOrder = await PendingOrderModel.findByIdAndUpdate(
+      id,
+      updateData,
+      { new: true }
+    );
+
+    if (!updatedPendingOrder) {
+      throw new Error("Pending order not found");
+    }
+
+    return JSON.parse(JSON.stringify(updatedPendingOrder));
+  } catch (error) {
+    console.error("Error updating pending order:", error);
+    throw error;
+  }
+}
+
+export async function updatePendingOrderStatusById(id, status) {
+  try {
+    await dbConnect();
+    const updatedPendingOrder = await PendingOrderModel.findByIdAndUpdate(
+      id,
+      { currentStatus: status },
+      { new: true }
+    );
+
+    if (!updatedPendingOrder) {
+      throw new Error("Pending order not found");
+    }
+
+    return JSON.parse(JSON.stringify(updatedPendingOrder));
+  } catch (error) {
+    console.error("Error updating pending order status:", error);
+    throw error;
+  }
+}
+
+export async function deletePendingOrder(id) {
+  try {
+    await dbConnect();
+    await PendingOrderModel.findByIdAndDelete(id);
+  } catch (error) {
+    console.error("Error deleting pending order:", error);
+    throw error;
   }
 }

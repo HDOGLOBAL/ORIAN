@@ -22,8 +22,9 @@ import {
 import { RiAdminLine, RiProductHuntLine, RiAuctionLine } from "react-icons/ri";
 import { BiSupport } from "react-icons/bi";
 import { toast } from "react-toastify";
-import { createManualOrder } from "@/database/queries";
+import { createManualOrder, createPendingOrder } from "@/database/queries";
 import CompanyOrderModal from "./CompanyOrderModal";
+import PendingOrderModal from "./PendingOrderModal";
 import Logout from "./Logout";
 
 export default function AdminSidebar() {
@@ -46,6 +47,34 @@ export default function AdminSidebar() {
 
   const [showCompanyOrder, setShowCompanyOrder] = useState(false);
   const [savingCompanyOrder, setSavingCompanyOrder] = useState(false);
+
+  const [showPendingOrder, setShowPendingOrder] = useState(false);
+  const [savingPendingOrder, setSavingPendingOrder] = useState(false);
+
+  const submitPendingOrder = async (formData) => {
+    setSavingPendingOrder(true);
+    try {
+      const result = await createPendingOrder(formData);
+      if (result && result.success) {
+        toast.success("Pending order created successfully!", {
+          position: "bottom-right",
+        });
+        setShowPendingOrder(false);
+        router.push("/auth/dashboard/pending-orders");
+      } else {
+        toast.error(result?.error || "Failed to create pending order", {
+          position: "bottom-right",
+        });
+      }
+    } catch (err) {
+      console.error("Create pending order error:", err);
+      toast.error("Failed to create pending order", {
+        position: "bottom-right",
+      });
+    } finally {
+      setSavingPendingOrder(false);
+    }
+  };
 
   const submitCompanyOrder = async (formData) => {
     setSavingCompanyOrder(true);
@@ -159,10 +188,22 @@ export default function AdminSidebar() {
           color: "text-teal-500",
         },
         {
+          href: "/auth/dashboard/pending-orders",
+          label: "Pending Orders",
+          icon: <FiShoppingBag className="text-lg" />,
+          color: "text-amber-500",
+        },
+        {
           action: "companyOrder",
           label: "New Company Order",
           icon: <FiPlusCircle className="text-lg" />,
           color: "text-emerald-500",
+        },
+        {
+          action: "pendingOrder",
+          label: "New Pending Order",
+          icon: <FiPlusCircle className="text-lg" />,
+          color: "text-amber-500",
         },
       ],
     },
@@ -318,6 +359,17 @@ export default function AdminSidebar() {
                           </span>
                           <span>{item.label}</span>
                         </button>
+                      ) : item.action === "pendingOrder" ? (
+                        // Pending Order button
+                        <button
+                          onClick={() => setShowPendingOrder(true)}
+                          className="w-full text-left text-sm py-3 flex items-center gap-3 px-4 rounded-lg transition-colors duration-200 group text-gray-600 hover:bg-amber-50 hover:text-amber-600"
+                        >
+                          <span className="text-amber-500 group-hover:text-amber-600">
+                            {item.icon}
+                          </span>
+                          <span>{item.label}</span>
+                        </button>
                       ) : (
                         // Submenu item
                         <div>
@@ -392,6 +444,14 @@ export default function AdminSidebar() {
           saving={savingCompanyOrder}
           onClose={() => setShowCompanyOrder(false)}
           onSubmit={submitCompanyOrder}
+        />
+      )}
+
+      {showPendingOrder && (
+        <PendingOrderModal
+          saving={savingPendingOrder}
+          onClose={() => setShowPendingOrder(false)}
+          onSubmit={submitPendingOrder}
         />
       )}
     </>
