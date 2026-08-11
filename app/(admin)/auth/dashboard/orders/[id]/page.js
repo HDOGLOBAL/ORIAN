@@ -27,6 +27,7 @@ export default function OrderDetails() {
     invoiceNumber: "",
     deliveryCompany: "",
     shippingDate: "",
+    shippingPrice: "0",
   });
   const [isSavingInfo, setIsSavingInfo] = useState(false);
 
@@ -52,6 +53,10 @@ export default function OrderDetails() {
         invoiceNumber: orderData.invoiceNumber || "",
         deliveryCompany: orderData.deliveryCompany || "",
         shippingDate: formatDateInput(orderData.shippingDate),
+        shippingPrice:
+          orderData.totals?.shipping != null
+            ? String(orderData.totals.shipping)
+            : "0",
       });
     } catch (err) {
       setError("Failed to load order details. Please try again.");
@@ -70,6 +75,7 @@ export default function OrderDetails() {
         invoiceNumber: updated.invoiceNumber,
         deliveryCompany: updated.deliveryCompany,
         shippingDate: updated.shippingDate,
+        totals: updated.totals,
       }));
       toast.success("Order details updated successfully!", {
         position: "bottom-right",
@@ -357,6 +363,25 @@ export default function OrderDetails() {
                     shippingDate: e.target.value,
                   }))
                 }
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div className="mb-3">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Shipping price (€)
+              </label>
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                value={orderInfo.shippingPrice}
+                onChange={(e) =>
+                  setOrderInfo((prev) => ({
+                    ...prev,
+                    shippingPrice: e.target.value,
+                  }))
+                }
+                placeholder="0.00"
                 className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
               />
             </div>

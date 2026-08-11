@@ -12,7 +12,6 @@ export default function CompanyOrderModal({ saving, onClose, onSubmit }) {
   const [city, setCity] = useState("");
   const [zip, setZip] = useState("");
   const [deliveryCompany, setDeliveryCompany] = useState("");
-  const [customDeliveryCompany, setCustomDeliveryCompany] = useState("");
   const [shipping, setShipping] = useState("0");
   const [awb, setAwb] = useState("");
   const [invoiceNumber, setInvoiceNumber] = useState("");
@@ -51,10 +50,7 @@ export default function CompanyOrderModal({ saving, onClose, onSubmit }) {
       phone: phone.trim(),
       city: city.trim(),
       zip: zip.trim(),
-      deliveryCompany:
-        deliveryCompany === "Other"
-          ? customDeliveryCompany.trim()
-          : deliveryCompany.trim(),
+      deliveryCompany: deliveryCompany.trim(),
       shipping: Number(shipping) || 0,
       awb: awb.trim(),
       invoiceNumber: invoiceNumber.trim(),
@@ -224,24 +220,12 @@ export default function CompanyOrderModal({ saving, onClose, onSubmit }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className={labelClass}>Delivery company</label>
-              <select
+              <input
                 className={inputClass}
                 value={deliveryCompany}
                 onChange={(e) => setDeliveryCompany(e.target.value)}
-              >
-                <option value="">Select delivery company</option>
-                <option value="UPS">UPS</option>
-                <option value="FedEX">FedEX</option>
-                <option value="Other">Other</option>
-              </select>
-              {deliveryCompany === "Other" && (
-                <input
-                  className={`${inputClass} mt-2`}
-                  value={customDeliveryCompany}
-                  onChange={(e) => setCustomDeliveryCompany(e.target.value)}
-                  placeholder="Delivery company name"
-                />
-              )}
+                placeholder="e.g. UPS, FedEX..."
+              />
             </div>
             <div>
               <label className={labelClass}>Shipping price (€)</label>
