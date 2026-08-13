@@ -162,7 +162,7 @@ export default function PendingOrderModal({ saving, onClose, onSubmit }) {
             </div>
           </div>
 
-          <div className="flex justify-between items-center pt-2 border-t border-gray-200">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-gray-200">
             <span className="text-sm text-gray-500">
               {parts.filter((p) => p.partsNumber.trim() || p.manufacturer.trim())
                 .length}{" "}

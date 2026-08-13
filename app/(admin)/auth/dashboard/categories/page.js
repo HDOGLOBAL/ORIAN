@@ -136,8 +136,8 @@ export default function AllCategories() {
 
   return (
     <div className="relative md:ml-64 bg-blueGray-100 mt-[40px]">
-      <div className="bg-white p-6 rounded shadow">
-        <h2 className="text-2xl font-light text-[#0eadef] mb-6">
+      <div className="bg-white p-4 sm:p-6 rounded shadow">
+        <h2 className="text-xl sm:text-2xl font-light text-[#0eadef] mb-6">
           All Categories
         </h2>
 
@@ -147,10 +147,10 @@ export default function AllCategories() {
               <tr>
                 <th className="px-4 py-3 border">Image</th>
                 <th className="px-4 py-3 border">ID</th>
-                <th className="px-4 py-3 border">Manufacturer</th>
+                <th className="hidden lg:table-cell px-4 py-3 border">Manufacturer</th>
                 <th className="px-4 py-3 border">Name</th>
                 <th className="px-4 py-3 border text-center">Products</th>
-                <th className="px-4 py-3 border text-center">Featured</th>
+                <th className="hidden lg:table-cell px-4 py-3 border text-center">Featured</th>
                 <th className="px-4 py-3 border text-center">Actions</th>
               </tr>
             </thead>
@@ -193,7 +193,7 @@ export default function AllCategories() {
                       {category.id}
                     </td>
 
-                    <td className="px-4 py-2 border font-medium">
+                    <td className="hidden lg:table-cell px-4 py-2 border font-medium">
                       {category.manufacturerName || getManufacturerName(category.manufacturerId)}
                     </td>
 
@@ -210,7 +210,7 @@ export default function AllCategories() {
                       </Link>
                     </td>
 
-                    <td className="px-4 py-2 border text-center">
+                    <td className="hidden lg:table-cell px-4 py-2 border text-center">
                       <span
                         className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
                           category.isFeatured

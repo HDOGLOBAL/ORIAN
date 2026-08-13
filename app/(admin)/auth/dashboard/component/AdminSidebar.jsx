@@ -237,12 +237,13 @@ export default function AdminSidebar() {
 
   return (
     <>
-      <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-lg bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
+      <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-lg bg-white flex flex-wrap items-center justify-between relative w-full md:w-64 z-30 py-3 px-4 md:py-4 md:px-6">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
           {/* Toggler */}
           <button
-            className="cursor-pointer text-gray-600 opacity-70 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
+            className="cursor-pointer text-gray-600 opacity-70 md:hidden px-3 py-1 text-2xl leading-none bg-transparent rounded border border-solid border-transparent"
             type="button"
+            aria-label="Open menu"
             onClick={() => setCollapseShow("bg-white m-2 py-3 px-6")}
           >
             <FiMenu />
@@ -251,7 +252,7 @@ export default function AdminSidebar() {
           {/* Brand */}
           <Link
             href="/auth/dashboard"
-            className="text-blue-600 md:block text-left md:pb-2 mr-0 inline-block whitespace-nowrap text-xl font-bold uppercase p-4 px-0"
+            className="text-blue-600 md:block text-left md:pb-2 mr-0 inline-block whitespace-nowrap text-base md:text-xl font-bold uppercase p-3 md:p-4 px-0"
           >
             <div className="flex items-center">
               <span className="bg-gradient-to-r from-blue-500 to-purple-500 p-2 rounded-md mr-2 text-white">
@@ -272,7 +273,7 @@ export default function AdminSidebar() {
           {/* Collapse */}
           <div
             className={
-              "md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded " +
+              "md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-full left-0 right-0 z-40 overflow-y-auto overflow-x-hidden max-h-[calc(100vh-4rem)] items-stretch flex-1 rounded " +
               collapseShow
             }
           >

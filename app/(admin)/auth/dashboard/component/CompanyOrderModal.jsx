@@ -273,7 +273,7 @@ export default function CompanyOrderModal({ saving, onClose, onSubmit }) {
             </div>
           </div>
 
-          <div className="flex justify-between items-center pt-2 border-t border-gray-200">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-gray-200">
             <div className="text-sm text-gray-700">
               <span className="font-medium">Subtotal:</span> €{subtotal.toFixed(2)}{" "}
               ·{" "}

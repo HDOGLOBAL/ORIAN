@@ -187,8 +187,8 @@ export default function PendingOrders() {
 
   return (
     <div className="relative md:ml-64 bg-blueGray-100 mt-[40px]">
-      <div className="bg-white p-6 rounded shadow">
-        <h2 className="text-2xl font-light text-[#0eadef] mb-6">
+      <div className="bg-white p-4 sm:p-6 rounded shadow">
+        <h2 className="text-xl sm:text-2xl font-light text-[#0eadef] mb-6">
           Pending Orders
         </h2>
 
@@ -253,7 +253,7 @@ export default function PendingOrders() {
         </div>
 
         {/* Items per page selector and pagination info */}
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
           <div className="flex items-center">
             <span className="mr-2 text-gray-700">Show</span>
             <select
@@ -286,11 +286,11 @@ export default function PendingOrders() {
             <thead className="bg-gray-100 text-gray-700">
               <tr>
                 <th className="px-4 py-3 border">Customer</th>
-                <th className="px-4 py-3 border">Address</th>
-                <th className="px-4 py-3 border">Email</th>
+                <th className="hidden lg:table-cell px-4 py-3 border">Address</th>
+                <th className="hidden lg:table-cell px-4 py-3 border">Email</th>
                 <th className="px-4 py-3 border">Parts</th>
                 <th className="px-4 py-3 border">Status</th>
-                <th className="px-4 py-3 border">Date</th>
+                <th className="hidden lg:table-cell px-4 py-3 border">Date</th>
                 <th className="px-4 py-3 border text-center">Actions</th>
               </tr>
             </thead>
@@ -316,8 +316,8 @@ export default function PendingOrders() {
                     <td className="px-4 py-2 border font-medium">
                       {order?.firstName} {order.lastName}
                     </td>
-                    <td className="px-4 py-2 border">{order.address || "-"}</td>
-                    <td className="px-4 py-2 border">{order.email}</td>
+                    <td className="hidden lg:table-cell px-4 py-2 border">{order.address || "-"}</td>
+                    <td className="hidden lg:table-cell px-4 py-2 border">{order.email}</td>
                     <td className="px-4 py-2 border">
                       {(order.parts || []).map((p, i) => (
                         <div key={i} className="text-xs">
@@ -355,7 +355,7 @@ export default function PendingOrders() {
                         <option value="Cancelled">Cancelled</option>
                       </select>
                     </td>
-                    <td className="px-4 py-2 border">
+                    <td className="hidden lg:table-cell px-4 py-2 border">
                       {formatDate(order.createdAt)}
                     </td>
                     <td className="px-4 py-2 border text-center">
@@ -383,7 +383,7 @@ export default function PendingOrders() {
 
         {/* Pagination Controls */}
         {pageCount > 1 && (
-          <div className="flex justify-between items-center mt-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-6">
             <div className="text-sm text-gray-700">
               Page {currentPage + 1} of {pageCount}
             </div>
@@ -392,14 +392,14 @@ export default function PendingOrders() {
               nextLabel="›"
               pageCount={pageCount}
               onPageChange={handlePageChange}
-              containerClassName="flex items-center space-x-2"
-              pageClassName="border border-gray-300 rounded w-10 h-10 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors"
+              containerClassName="flex items-center justify-center sm:justify-end flex-wrap space-x-2"
+              pageClassName="border border-gray-300 rounded w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors"
               activeClassName="bg-blue-500 text-white border-blue-500"
-              previousClassName="border border-gray-300 rounded w-10 h-10 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors"
-              nextClassName="border border-gray-300 rounded w-10 h-10 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors"
+              previousClassName="border border-gray-300 rounded w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors"
+              nextClassName="border border-gray-300 rounded w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors"
               disabledClassName="opacity-50 cursor-not-allowed"
               breakLabel="..."
-              breakClassName="border border-gray-300 rounded w-10 h-10 flex items-center justify-center text-gray-500"
+              breakClassName="border border-gray-300 rounded w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-gray-500"
               marginPagesDisplayed={1}
               pageRangeDisplayed={3}
               forcePage={currentPage}

@@ -93,9 +93,9 @@ const handleImageUpload = async (e) => {
   });
 
   return (
-    <div className="flex text-white gap-2 bg-[#ffffff]" style={{height: '99vh'}}>
+    <div className="flex flex-col md:flex-row text-white gap-2 bg-[#ffffff]" style={{height: '99vh'}}>
       {/* Sidebar */}
-      <div className="w-1/3 max-w-xs bg-white p-4  rounded flex flex-col shadow-lg ">
+      <div className="w-full md:w-1/3 md:max-w-xs bg-white p-4 rounded flex flex-col shadow-lg overflow-hidden max-h-[45vh] md:max-h-none">
      {/* Brand */}
           <Link
             href="/auth/dashboard"
@@ -166,7 +166,7 @@ const handleImageUpload = async (e) => {
 
       {/* Chat Window */}
       {conversationID?
-      <div className="flex-1 flex flex-col justify-between bg-[#ffffff] rounded shadow-lg">
+      <div className="flex-1 min-h-0 flex flex-col justify-between bg-[#ffffff] rounded shadow-lg">
         <div className="flex justify-between items-center p-4 border-b border-[#ada4a4]">
           <div className="flex items-center gap-3">
             <img src={`${partner?.avatar}`} className="w-10 h-10 rounded-full" alt="avatar" />
@@ -189,7 +189,7 @@ const handleImageUpload = async (e) => {
                       className={`flex ${fromPartner ? "justify-start" : "justify-end"}`}
                     >
                       <div
-                        className={`px-4 py-2 text-sm rounded-xl max-w-xs ${
+                        className={`px-4 py-2 text-sm rounded-xl max-w-[75%] sm:max-w-xs ${
                           fromPartner
                             ? "bg-gray-700 text-white"
                             : "bg-gradient-to-r from-purple-500 to-pink-500 text-white"
