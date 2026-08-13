@@ -91,8 +91,8 @@ export default function AllManufacturers() {
 
   return (
     <div className="relative md:ml-64 bg-blueGray-100 mt-[40px]">
-      <div className="bg-white p-6 rounded shadow">
-        <h2 className="text-2xl font-light text-[#0eadef] mb-6">
+      <div className="bg-white p-4 sm:p-6 rounded shadow">
+        <h2 className="text-xl sm:text-2xl font-light text-[#0eadef] mb-6">
           All Manufacturers
         </h2>
 

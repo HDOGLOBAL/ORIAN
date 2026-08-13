@@ -183,16 +183,16 @@ export default function PendingOrderDetails() {
 
   return (
     <div className="relative md:ml-64 bg-blueGray-100 mt-[40px]">
-      <div className="bg-white p-6 rounded shadow">
-        <div className="flex justify-between items-center mb-6">
+      <div className="bg-white p-4 sm:p-6 rounded shadow">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
           <div className="flex items-center gap-3">
-            <h2 className="text-2xl font-light text-[#0eadef]">
+            <h2 className="text-xl sm:text-2xl font-light text-[#0eadef]">
               Pending Order — {order.firstName} {order.lastName}
             </h2>
           </div>
           <Link
             href="/auth/dashboard/pending-orders"
-            className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
+            className="inline-flex items-center justify-center px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors text-center"
           >
             ← Back to Pending Orders
           </Link>

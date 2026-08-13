@@ -152,8 +152,8 @@ const SubcategoryPage = () => {
     
 
       {/* Add Subcategory Form */}
-      <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-        <h2 className="text-xl mb-4">Add New Subcategory</h2>
+      <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md mb-8">
+        <h2 className="text-lg sm:text-xl mb-4">Add New Subcategory</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -222,8 +222,8 @@ const SubcategoryPage = () => {
       </div>
 
       {/* Subcategories List */}
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-xl mb-4">All Subcategories</h2>
+      <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+        <h2 className="text-lg sm:text-xl mb-4">All Subcategories</h2>
 
         {subcategories.length === 0 ? (
           <p className="text-gray-500 py-4 text-center">
@@ -236,8 +236,8 @@ const SubcategoryPage = () => {
                 <tr className="bg-gray-100">
                   <th className="p-3 text-left">Name</th>
                   <th className="p-3 text-left">Slug</th>
-                  <th className="p-3 text-left">Category</th>
-                  <th className="p-3 text-left">Created Date</th>
+                  <th className="hidden lg:table-cell p-3 text-left">Category</th>
+                  <th className="hidden lg:table-cell p-3 text-left">Created Date</th>
                   <th className="p-3 text-left">Actions</th>
                 </tr>
               </thead>
@@ -249,10 +249,10 @@ const SubcategoryPage = () => {
                   >
                     <td className="p-3">{subcategory.name}</td>
                     <td className="p-3">{subcategory.slug}</td>
-                    <td className="p-3">
+                    <td className="hidden lg:table-cell p-3">
                       {subcategory.categoryId?.name || "Unknown Category"}
                     </td>
-                    <td className="p-3">
+                    <td className="hidden lg:table-cell p-3">
                       {new Date(subcategory.createdAt).toLocaleDateString()}
                     </td>
                     <td className="p-3">

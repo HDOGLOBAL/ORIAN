@@ -81,9 +81,9 @@ export default function AddAdminForm() {
   };
 
   return (
-    <div className="w-full md:w-[600px] bg-white rounded shadow p-6">
-      <div className="min-h-screen flex  justify-center px-4">
-        <div className="w-full bg-white rounded-lg  p-8">
+    <div className="w-full md:w-[600px] bg-white rounded shadow p-4 sm:p-6">
+      <div className="w-full">
+        <div className="w-full p-4 sm:p-8">
           <h2 className="text-xl  text-center mb-2">Create An Admin</h2>
           <p className="text-sm text-center text-blue-500 font-medium mb-6">
             You are creating an <span className="font-semibold">Admin</span>

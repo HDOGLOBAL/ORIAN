@@ -200,11 +200,11 @@ export default function OrderDetails() {
 
   return (
     <div className="relative md:ml-64 bg-blueGray-100 mt-[40px]">
-      <div className="bg-white p-4 rounded shadow">
+      <div className="bg-white p-4 sm:p-6 rounded shadow">
         {/* Header */}
         <div className="flex flex-wrap justify-between items-center gap-4 mb-4">
           <div className="flex flex-wrap items-center gap-3">
-            <h2 className="text-2xl font-light text-[#0eadef]">
+            <h2 className="text-xl sm:text-2xl font-light text-[#0eadef]">
               Order nº{order.orderNumber || "-"} — {order.trackingId || "-"}
             </h2>
             {isCompanyOrder && (

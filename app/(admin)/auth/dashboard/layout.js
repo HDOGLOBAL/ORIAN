@@ -10,7 +10,7 @@ export default async function Layout({ children }) {
   }
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen bg-slate-100">
       <AdminSidebar />
       <main className="flex-1 p-4">{children}</main>
     </div>
