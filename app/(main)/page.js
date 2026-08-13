@@ -29,7 +29,7 @@ export default async function Home() {
   const categories = await getFeaturedCategories().catch(() => []);
   return (
     <>
-      <FAQSchema lang={lang} />
+      <FAQSchema lang={lang} featured />
       <div className="w-full max-w-[1440px] mx-auto bg-[#ffffff] px-4">
         <FilterC />
         <Banner />
