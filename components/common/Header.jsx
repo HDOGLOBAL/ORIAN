@@ -143,16 +143,18 @@ export default function Header() {
 
             <div className="flex items-center gap-3" dir="ltr">
               <LanguageSwitcher />
-              <Link href="/add-card" className="flex items-center gap-2 text-gray-800 hover:text-[#fd3d57] transition-colors relative">
-                <CartIcon />
+              <Link href="/add-card" className="flex items-center gap-2 text-gray-800 hover:text-[#fd3d57] transition-colors">
+                <span className="relative inline-flex">
+                  <CartIcon />
+                  {cartLength > 0 && (
+                    <span className="absolute -top-2.5 -right-2.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#fd3d57] px-1 text-[10px] font-semibold leading-none text-white ring-2 ring-white">
+                      {cartLength}
+                    </span>
+                  )}
+                </span>
                 <div className="block">
                   <div className="text-base font-bold">€ {cartTotal.toFixed(2)}</div>
                 </div>
-                {cartLength >= 0 && (
-                  <div className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#fd3d57] text-xs text-white">
-                    {cartLength}
-                  </div>
-                )}
               </Link>
             </div>
 
