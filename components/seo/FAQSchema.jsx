@@ -206,10 +206,54 @@ export const FAQS = {
     { q: "האם אתם שולחים לאוסטריה, גרמניה ומדינות דוברות גרמנית?",
       a: "כן, אנחנו שולחים לכל רחבי אירופה כולל אוסטריה, גרמניה, שוויץ וכל מדינות האיחוד האירופי. משלוחים לאוסטריה ולגרמניה מגיעים בדרך כלל תוך 3–5 ימי עסקים. לקוחות עסקיים מהאיחוד האירופי עם מספר מע\"מ תקף יכולים ליהנות מפטור ממע\"מ תוך-קהילתי." },
   ],
+  it: [
+    { q: "Spedite i ricambi in tutto il mondo?",
+      a: "Sì, HDO Trade spedisce ricambi testati in tutto il mondo con consegna rapida e tracciamento completo dalla spedizione alla consegna." },
+    { q: "Tutti i ricambi vengono testati prima della spedizione?",
+      a: "Ogni ricambio venduto con il marchio HDO TRADE viene testato singolarmente dal nostro team tecnico certificato e sottoposto a uno stretto controllo qualità prima di lasciare il nostro magazzino." },
+    { q: "Come trovo il ricambio giusto per la mia macchina?",
+      a: "Cerca per produttore, categoria o riferimento nel nostro negozio. Puoi filtrare per tipo di apparecchiatura — lavastoviglie, impastatrice, spremiagrumi, taglialegumi o rubinetteria. Se non lo trovi, inviaci un messaggio su WhatsApp e lo individuiamo per te." },
+    { q: "I vostri ricambi sono originali OEM o compatibili?",
+      a: "Disponiamo sia di pezzi originali OEM sia di alternative compatibili di alta qualità. Ogni scheda prodotto indica chiaramente se si tratta di un pezzo originale o compatibile." },
+    { q: "Quanto tempo richiede la consegna?",
+      a: "Le consegne in Italia e nell'UE richiedono in genere 3–7 giorni lavorativi. La spedizione espressa è disponibile al checkout. Gli ordini internazionali fuori dall'UE arrivano in 7–14 giorni lavorativi." },
+    { q: "Fornite ricambi per attrezzature da cucina commerciale?",
+      a: "Sì. Siamo specializzati in ricambi per attrezzature da cucina professionale: lavastoviglie industriali, impastatrici planetarie, spremiagrumi, taglialegumi e rubinetteria da cucina professionale. Serviamo ristoranti, hotel, catering e tecnici di riparazione." },
+    { q: "Come trovo il numero di modello della mia macchina?",
+      a: "Il numero di modello si trova di solito su un'etichetta sul retro o sotto l'apparecchio, all'interno della porta o sul motore. Condividilo con noi via WhatsApp e confermiamo subito i ricambi compatibili." },
+    { q: "Qual è la vostra politica di reso?",
+      a: "Accettiamo resi entro 14 giorni dalla consegna per i pezzi non utilizzati nelle condizioni originali. Se un ricambio arriva danneggiato o non corrisponde alla descrizione, lo sostituiamo o rimborsiamo integralmente." },
+    { q: "Offrite prezzi all'ingrosso per le aziende?",
+      a: "Sì. Offriamo prezzi competitivi per ristoranti, officine di riparazione, catene alberghiere e team acquisti con volumi. Contattateci via WhatsApp o email per un preventivo personalizzato." },
+    { q: "Posso ricevere una fattura con IVA?",
+      a: "Sì. Tutti gli ordini generano automaticamente una fattura conforme all'IVA inviata via email. I clienti aziendali dell'UE con un numero di partita IVA valido possono beneficiare dell'esenzione intracomunitaria." },
+    { q: "Quali metodi di pagamento accettate?",
+      a: "Accettiamo tutte le principali carte di credito e debito (Visa, Mastercard, Amex), bonifici bancari e PayPal. Pagamenti protetti da Stripe. Valute: EUR, USD, GBP." },
+    { q: "Quanto tempo impiegate a rispondere?",
+      a: "Il nostro supporto WhatsApp è disponibile 24 ore su 24, 7 giorni su 7 per richieste urgenti. Le email ricevono una risposta dettagliata entro un giorno lavorativo." },
+    { q: "Per quali marche di attrezzature da cucina avete ricambi?",
+      a: "HDO Global Trade dispone di ricambi per tutte le principali marche di attrezzature da cucina commerciale, tra cui Electrolux Professional, Santos, Sirman, Dynamic, Robot-Coupe, Hobart, Rational, Winterhalter, Meiko, Sammic, Dito Sama e molte altre. Se non trovi la tua marca, contattaci — il nostro team di sourcing può individuare pezzi per praticamente qualsiasi produttore a livello mondiale." },
+    { q: "Offrite supporto tecnico per l'installazione dei ricambi?",
+      a: "Sì. Il nostro team tecnico è disponibile per l'identificazione dei pezzi, la verifica di compatibilità e le indicazioni di base per l'installazione. Contattateci via WhatsApp per assistenza immediata, oppure inviateci foto della vostra attrezzatura via email." },
+    { q: "Posso tracciare il mio ordine dopo la spedizione?",
+      a: "Certamente. Ogni ordine spedito da HDO Global Trade include un numero di tracciamento completo inviato alla vostra email registrata. Potete seguire l'avanzamento della spedizione in tempo reale dalla partenza alla consegna." },
+    { q: "Spedite in Austria, Germania e altri paesi di lingua tedesca?",
+      a: "Sì, spediamo in tutta Europa, inclusi Austria, Germania, Svizzera e tutti gli stati membri dell'UE. Le consegne in Austria e Germania arrivano di solito entro 3–5 giorni lavorativi. I clienti aziendali dell'UE con partita IVA valida possono beneficiare dell'esenzione IVA intracomunitaria." },
+  ],
 };
 
-export default function FAQSchema({ lang = "en" }) {
-  const faqs = FAQS[lang] || FAQS.en;
+// Questions that reduce purchase friction, shown on the home page:
+// 0 = international shipping, 1 = quality tested, 2 = find the right part,
+// 4 = delivery time, 7 = returns policy. The full list lives on /faq.
+export const FEATURED_FAQ_INDICES = [0, 1, 2, 4, 7];
+
+export function getFeaturedFaqs(faqs) {
+  return faqs.filter((_, idx) => FEATURED_FAQ_INDICES.includes(idx));
+}
+
+export default function FAQSchema({ lang = "en", featured = false }) {
+  const allFaqs = FAQS[lang] || FAQS.en;
+  const faqs = featured ? getFeaturedFaqs(allFaqs) : allFaqs;
 
   const schema = {
     "@context": "https://schema.org",

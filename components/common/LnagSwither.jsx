@@ -28,7 +28,7 @@ export default function LanguageSwitcher() {
       // UK → English + GBP (pound)
       code: "uk",
       countryCode: "GB",
-      language: "English (UK) — £ GBP",
+      language: "English (UK) -  £ GBP",
       title: "UK",
       link: "https://hdotrade.uk/",
       domainMatch: ".uk",
@@ -37,7 +37,7 @@ export default function LanguageSwitcher() {
       // AU → English + AUD
       code: "au",
       countryCode: "AU",
-      language: "English (AU) — $ AUD",
+      language: "English (AU) -  $ AUD",
       title: "AU",
       link: "https://hdotrade.com/",
       domainMatch: "hdotrade.com",
@@ -46,7 +46,7 @@ export default function LanguageSwitcher() {
       // COM → English + USD
       code: "com",
       countryCode: "US",
-      language: "English (USA) — $ USD",
+      language: "English (USA) -  $ USD",
       title: "USA",
       link: "https://hdotrade.com/",
       domainMatch: "hdotrade.com",
@@ -55,7 +55,7 @@ export default function LanguageSwitcher() {
       // PT → Portuguese + EUR
       code: "pt",
       countryCode: "PT",
-      language: "Português — € EUR",
+      language: "Português -  € EUR",
       title: "PT",
       link: "https://hdotrade.pt/",
       domainMatch: ".pt",
@@ -64,7 +64,7 @@ export default function LanguageSwitcher() {
       // DE → German + EUR
       code: "de",
       countryCode: "DE",
-      language: "Deutsch — € EUR",
+      language: "Deutsch -  € EUR",
       title: "DE",
       link: "https://hdotrade.de/",
       domainMatch: ".de",
@@ -73,7 +73,7 @@ export default function LanguageSwitcher() {
       // ES → Spanish + EUR
       code: "es",
       countryCode: "ES",
-      language: "Español — € EUR",
+      language: "Español -  € EUR",
       title: "ES",
       link: "https://hdotrade.es/",
       domainMatch: ".es",
@@ -82,7 +82,7 @@ export default function LanguageSwitcher() {
       // FR → French + EUR
       code: "fr",
       countryCode: "FR",
-      language: "Français — € EUR",
+      language: "Français -  € EUR",
       title: "FR",
       link: "https://hdotrade.fr/",
       domainMatch: ".fr",
@@ -91,7 +91,7 @@ export default function LanguageSwitcher() {
       // IT → Italian + EUR
       code: "it",
       countryCode: "IT",
-      language: "Italiano — € EUR",
+      language: "Italiano -  € EUR",
       title: "IT",
       link: "https://hdotrade.it/",
       domainMatch: ".it",
@@ -100,7 +100,7 @@ export default function LanguageSwitcher() {
       // EU → English + EUR
       code: "eu",
       countryCode: "EU",
-      language: "EU — € EUR",
+      language: "EU -  € EUR",
       title: "EU",
       link: "https://hdotrade.eu/",
       domainMatch: ".eu",

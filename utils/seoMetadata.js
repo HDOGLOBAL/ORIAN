@@ -11,6 +11,7 @@ const DOMAIN_MAP = [
   { domain: "https://hdotrade.de",     lang: "de",    hreflang: "de"    },
   { domain: "https://hdotrade.es",     lang: "es",    hreflang: "es"    },
   { domain: "https://hdotrade.fr",     lang: "fr",    hreflang: "fr"    },
+  { domain: "https://hdotrade.it",     lang: "it",    hreflang: "it"    },
   { domain: "https://hdotrade.eu",     lang: "en",    hreflang: "en"    },
   { domain: "https://hdotrade.co.il",  lang: "he",    hreflang: "he"    },
   { domain: "https://hdotrade.au", lang: "en",    hreflang: "en-AU" },
@@ -33,6 +34,7 @@ export function getDomainFromHost(hostname = "") {
   if (host.includes(".de"))     return "https://hdotrade.de";
   if (host.includes(".fr"))     return "https://hdotrade.fr";
   if (host.includes(".es"))     return "https://hdotrade.es";
+  if (host.includes(".it"))     return "https://hdotrade.it";
   if (host.includes(".pt"))     return "https://www.hdotrade.pt";
   if (host.includes(".eu"))     return "https://hdotrade.eu";
   // if (host.includes(".com.au")) return "https://hdotrade.au";
@@ -136,6 +138,25 @@ const seoMetadata = {
     },
     path: "/terms-conditions",
   },
+  faq: {
+    title: {
+      en: "FAQ | HDO Trade",
+      pt: "Perguntas Frequentes | HDO Trade",
+      fr: "Questions Fréquentes | HDO Trade",
+      es: "Preguntas Frecuentes | HDO Trade",
+      he: "שאלות נפוצות | HDO Trade",
+      de: "FAQ | HDO Trade",
+    },
+    description: {
+      en: "Answers to the most common questions about HDO Trade spare parts — shipping, delivery times, returns, VAT invoices, payments and more.",
+      pt: "Respostas às perguntas mais comuns sobre as peças HDO Trade — envio, prazos de entrega, devoluções, faturas com IVA, pagamentos e mais.",
+      fr: "Réponses aux questions les plus fréquentes sur les pièces HDO Trade — livraison, délais, retours, factures TVA, paiements et plus.",
+      es: "Respuestas a las preguntas más frecuentes sobre los repuestos HDO Trade — envío, plazos, devoluciones, facturas con IVA, pagos y más.",
+      he: "תשובות לשאלות הנפוצות ביותר על חלקי חילוף HDO Trade — משלוח, זמני אספקה, החזרות, חשבוניות מע\"מ, תשלומים ועוד.",
+      de: "Antworten auf die häufigsten Fragen zu HDO Trade Ersatzteilen — Versand, Lieferzeiten, Rückgaben, MwSt.-Rechnungen, Zahlungen und mehr.",
+    },
+    path: "/faq",
+  },
 };
 
 // Domain → language map (fixed .co.uk detection bug)
@@ -146,6 +167,7 @@ export function getLanguageFromHost(hostname = "") {
   if (host.includes(".de"))     return "de";
   if (host.includes(".fr"))     return "fr";
   if (host.includes(".es"))     return "es";
+  if (host.includes(".it"))     return "it";
   if (host.includes(".pt"))     return "pt";
   if (host.includes(".eu"))     return "en";
   return DEFAULT_LANG;
