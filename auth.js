@@ -49,16 +49,28 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
   callbacks: {
     async jwt({ token, user, trigger, session }) {
-      if (trigger === "update") {
-        return {
-          ...token,
-          ...session.user,
-        };
+      if (trigger === "update" && session?.user) {
+        if (session.user.name) token.name = session.user.name;
+        if (session.user.email) token.email = session.user.email;
+        return token;
       }
-      return { ...token, ...user };
+      if (user) {
+        // Only safe fields - never the password hash
+        token.id = user.id || (user._id ? user._id.toString() : token.id);
+        token.name = user.name || token.name;
+        token.email = user.email || token.email;
+        token.isAdmin = user.isAdmin === true;
+      }
+      return token;
     },
 
-    async session({ session }) {
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.user.isAdmin = token.isAdmin === true;
+      }
       return session;
     },
   },
