@@ -22,9 +22,36 @@ import { dbConnect } from "@/service/mongo";
 import { manufacturerModel } from "@/models/manufacture-model";
 import { categoryModel } from "@/models/category-models";
 import { subcategoryModel } from "@/models/sub-cat-models";
+import { europeanCountries } from "@/database/europe";
+import { asianCountries } from "@/database/asianCountry";
+import sanitizeHtml from "sanitize-html";
 import Stripe from "stripe";
 const { userModel } = require("@/models/users-model");
 import bcrypt from "bcryptjs";
+
+// Blocks any request that is not from a logged-in admin.
+// Throws so the surrounding try/catch returns a friendly error.
+export async function requireAdmin() {
+  const session = await auth();
+  // Fast path: isAdmin claim present in the JWT
+  if (session?.user?.isAdmin === true) {
+    return session.user;
+  }
+  // Fallback: verify against the database (source of truth).
+  // Covers tokens created before isAdmin was added to the session.
+  const email = session?.user?.email;
+  if (email) {
+    const dbUser = await getUserByMail(email);
+    if (dbUser?.isAdmin === true) {
+      return dbUser;
+    }
+  }
+  throw new Error("Unauthorized: admin access required");
+}
+
+// Escapes regex special characters so user input can't cause ReDoS or break queries
+const escapeRegex = (value = "") =>
+  String(value).replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 
 // manufacturer start ---------------------------------------------------------------
 
@@ -40,6 +67,7 @@ export async function getManufacturers() {
 }
 export async function addManufacturer(manufacturerData) {
   try {
+    await requireAdmin();
     // Validate required fields
     if (!manufacturerData.name) {
       throw new Error("Name is required");
@@ -87,6 +115,7 @@ export async function deleteManufacturerById(id) {
   let existProduct = false;
   let success = false;
   try {
+    await requireAdmin();
     // Prevent deletion if manufacturer has products
     const productCount = await productModel.countDocuments({
       manufacturerId: id,
@@ -319,6 +348,7 @@ export async function createSubcategory(formData) {
   const { name, slug, categoryId } = formData;
 
   try {
+    await requireAdmin();
     const newSubcategory = await subcategoryModel.create({
       name,
       slug,
@@ -341,6 +371,7 @@ export async function createSubcategory(formData) {
 export async function addCategory(categoryData) {
   await dbConnect();
   try {
+    await requireAdmin();
     if (!categoryData.name || !String(categoryData.name).trim()) {
       throw new Error("Name is required");
     }
@@ -424,6 +455,7 @@ export async function addCategory(categoryData) {
 export async function updateCategory(id, categoryData) {
   await dbConnect();
   try {
+    await requireAdmin();
     if (!id) {
       throw new Error("Category ID is required");
     }
@@ -517,6 +549,7 @@ export async function deleteSubcategory(id) {
   await dbConnect();
 
   try {
+    await requireAdmin();
     const deletedSubcategory = await subcategoryModel.findByIdAndDelete(id);
 
     if (!deletedSubcategory) {
@@ -554,7 +587,7 @@ export async function getSubcategoriesByCategory(categoryId) {
 export async function getUserByMail(email) {
   await dbConnect();
   try {
-    const user = await userModel.findOne({ email: email });
+    const user = await userModel.findOne({ email: email }).select("-password");
 
     if (!user) {
       // Handle case when no user is found
@@ -581,7 +614,7 @@ export async function getUserByMail(email) {
 export async function getUserById(id) {
   await dbConnect();
   try {
-    const user = await userModel.findById(id).lean();
+    const user = await userModel.findById(id).select("-password").lean();
     return replaceMongoIdInObject(user);
   } catch (err) {
     console.log(err);
@@ -735,8 +768,8 @@ export async function searchProducts(query) {
 
 //     if (hasSearch) {
 //       query.$or = [
-//         { name: { $regex: search, $options: "i" } },
-//         { description: { $regex: search, $options: "i" } },
+//         { name: { $regex: escapeRegex(search), $options: "i" } },
+//         { description: { $regex: escapeRegex(search), $options: "i" } },
 //       ];
 //     }
 
@@ -854,16 +887,16 @@ export async function getProducts(filters = {}) {
 
     if (hasSearch) {
       query.$or = [
-        { name: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" } },
-        { namePt: { $regex: search, $options: "i" } },
-        { nameFr: { $regex: search, $options: "i" } },
-        { nameEs: { $regex: search, $options: "i" } },
-        { nameHe: { $regex: search, $options: "i" } },
-        { descriptionPt: { $regex: search, $options: "i" } },
-        { descriptionFr: { $regex: search, $options: "i" } },
-        { descriptionEs: { $regex: search, $options: "i" } },
-        { descriptionHe: { $regex: search, $options: "i" } },
+        { name: { $regex: escapeRegex(search), $options: "i" } },
+        { description: { $regex: escapeRegex(search), $options: "i" } },
+        { namePt: { $regex: escapeRegex(search), $options: "i" } },
+        { nameFr: { $regex: escapeRegex(search), $options: "i" } },
+        { nameEs: { $regex: escapeRegex(search), $options: "i" } },
+        { nameHe: { $regex: escapeRegex(search), $options: "i" } },
+        { descriptionPt: { $regex: escapeRegex(search), $options: "i" } },
+        { descriptionFr: { $regex: escapeRegex(search), $options: "i" } },
+        { descriptionEs: { $regex: escapeRegex(search), $options: "i" } },
+        { descriptionHe: { $regex: escapeRegex(search), $options: "i" } },
       ];
     }
     
@@ -1154,6 +1187,7 @@ export async function getProductById(productId) {
 
 export async function deleteProductById(productId) {
   try {
+    await requireAdmin();
     await dbConnect();
 
     // Find and delete the product
@@ -1605,6 +1639,7 @@ export async function deleteCategoryById(id) {
   let existProduct = false;
   let success = false;
   try {
+    await requireAdmin();
     // Prevent deletion if category has products
     const productCount = await productModel.countDocuments({ categoryId: id });
     if (productCount > 0) {
@@ -1635,6 +1670,7 @@ export async function deleteCategoryById(id) {
 
 export async function getAllUsers({ isAdmin = null, lean = true } = {}) {
   try {
+    await requireAdmin();
     // Build the query conditionally
     const query = {};
 
@@ -1643,7 +1679,7 @@ export async function getAllUsers({ isAdmin = null, lean = true } = {}) {
     }
 
     // Execute the query
-    const users = await userModel.find(query).lean(lean);
+    const users = await userModel.find(query).select("-password").lean(lean);
     return replaceMongoIdInArray(users);
   } catch (error) {
     console.error("Error fetching all users:", error);
@@ -1653,6 +1689,7 @@ export async function getAllUsers({ isAdmin = null, lean = true } = {}) {
 
 export async function deleteUserById(userId) {
   try {
+    await requireAdmin();
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       throw new Error("Invalid user ID format");
     }
@@ -1695,15 +1732,112 @@ export const placeOrder = async (formData) => {
   try {
     await dbConnect();
 
-    const productIds = formData.cartItems.map((item) => item.id);
+    // Load the real cart from the database - never trust client quantities/prices
+    const cart = await cartModel
+      .findOne({ trackingId: formData.trackingId, isOrdered: false })
+      .lean();
+
+    if (!cart || !Array.isArray(cart.items) || cart.items.length === 0) {
+      throw new Error("Cart is empty");
+    }
+
+    const productIds = cart.items.map((item) => item.productId);
     const orderedProducts = await productModel
       .find({ _id: { $in: productIds } })
-      .select("_id sku")
+      .select(
+        "_id sku name price discountCodes shippingEu shippingAsia shippingPt shippingFr shippingSp shippingWorld"
+      )
       .lean();
-    const skuMap = {};
+    const productsById = {};
     for (const p of orderedProducts) {
-      skuMap[p._id.toString()] = p.sku || "";
+      productsById[p._id.toString()] = p;
     }
+
+    // Build order items and compute subtotal from DB prices + cart quantities
+    const clientItems = Array.isArray(formData.cartItems)
+      ? formData.cartItems
+      : [];
+    const orderItems = [];
+    let subtotal = 0;
+    for (const item of cart.items) {
+      const product = productsById[item.productId?.toString?.() || ""];
+      if (!product) continue;
+      const qty = Math.max(1, Math.floor(Number(item.quantity) || 1));
+      const unitPrice = Number(product.price?.eur || 0);
+      subtotal += qty * unitPrice;
+      const clientItem = clientItems.find(
+        (ci) => ci.id === product._id.toString()
+      );
+      orderItems.push({
+        id: product._id.toString(),
+        name: clientItem?.name || product.name || "",
+        qty,
+        price: unitPrice,
+        sku: product.sku || "",
+      });
+    }
+
+    if (orderItems.length === 0) {
+      throw new Error("Cart is empty");
+    }
+
+    subtotal = Number(subtotal.toFixed(2));
+
+    // Discount only if the coupon is active on one of the products in the cart
+    const couponInput = String(
+      formData.appliedCoupon || formData.coupon || ""
+    )
+      .trim()
+      .toLowerCase();
+    let discount = 0;
+    if (couponInput) {
+      for (const p of orderedProducts) {
+        const codes = Array.isArray(p.discountCodes) ? p.discountCodes : [];
+        const found = codes.find(
+          (c) =>
+            c.isActive &&
+            String(c.code || "").toLowerCase() === couponInput
+        );
+        if (found) {
+          discount = Number(found.value || 0);
+          break;
+        }
+      }
+    }
+
+    // Shipping - same rules as the checkout form (per product, not per qty)
+    const state = formData.state || "";
+    const shippingFieldFor = (field) =>
+      orderedProducts.reduce(
+        (total, p) => total + (Number(p[field]) || 0),
+        0
+      );
+    let shipping = 0;
+    if (state === "Spain") {
+      shipping = shippingFieldFor("shippingSp");
+    } else if (state === "Portugal") {
+      shipping = shippingFieldFor("shippingPt");
+    } else if (state === "France") {
+      shipping = shippingFieldFor("shippingFr");
+    } else if (europeanCountries.includes(state)) {
+      shipping = shippingFieldFor("shippingEu");
+    } else if (asianCountries.includes(state)) {
+      shipping = shippingFieldFor("shippingAsia");
+    } else {
+      shipping = shippingFieldFor("shippingWorld");
+    }
+    shipping = Number(shipping.toFixed(2));
+
+    // VAT - only Portuguese customers pay 23% (unless a valid EU VAT number)
+    const isPortugueseCustomer = state === "Portugal";
+    const isVatExempt = formData.vatValid === true;
+    const taxRate = isPortugueseCustomer && !isVatExempt ? 0.23 : 0;
+    const subtotalAfterDiscount = Math.max(0, subtotal - discount);
+    const taxAmount = Number((subtotalAfterDiscount * taxRate).toFixed(2));
+
+    const grandTotal = Number(
+      (subtotalAfterDiscount + shipping + taxAmount).toFixed(2)
+    );
 
     const order = {
       firstName: formData.firstName,
@@ -1711,7 +1845,7 @@ export const placeOrder = async (formData) => {
       lastName: formData.lastName,
       email: formData.email,
       streetAddress: formData.streetAddress,
-      state: formData.state,
+      state,
       city: formData.city,
       zip: formData.zip,
       phone: formData.phone,
@@ -1721,22 +1855,16 @@ export const placeOrder = async (formData) => {
       orderComment: formData.orderComment || "",
       agreeTerms: true, // Should be true if form submitted
       trackingId: formData.trackingId,
-      vatValid: formData.vatValid || false,
+      vatValid: isVatExempt,
       vatNumber: formData.vatNumber || 0,
-      cartItems: formData.cartItems.map((item) => ({
-        id: item.id,
-        name: item.name,
-        qty: item.qty,
-        price: item.price,
-        sku: skuMap[item.id] || "",
-      })),
+      cartItems: orderItems,
       totals: {
-        subtotal: formData.totals.subtotal.toString(),
-        discount: formData.totals.discount,
-        shipping: formData.totals.shipping,
-        tax: formData.totals.tax,
-        grandTotal: formData.totals.grandTotal,
-        currency: formData.totals.currency,
+        subtotal: subtotal.toString(),
+        discount,
+        shipping,
+        tax: taxAmount,
+        grandTotal,
+        currency: "euro", // always charge EUR via Stripe
       },
     };
 
@@ -1922,6 +2050,7 @@ export const getOrderByTrackingId = async (trackingId) => {
 
 export async function getTopSellingProducts() {
   try {
+    await requireAdmin();
     await dbConnect();
     const topProducts = await productModel
       .find({})
@@ -1946,6 +2075,7 @@ export async function getTopSellingProducts() {
 
 export async function getToRefillProducts() {
   try {
+    await requireAdmin();
     await dbConnect();
     // Get all manufacturers for id-name mapping
     const manufacturers = await manufacturerModel.find().lean();
@@ -1981,6 +2111,7 @@ export async function getToRefillProducts() {
 
 export async function getTotalCarts() {
   try {
+    await requireAdmin();
     await dbConnect();
     const carts = await cartModel.find().lean();
 
@@ -1992,6 +2123,7 @@ export async function getTotalCarts() {
 }
 
 export async function deleteCartById(cartId) {
+  await requireAdmin();
   await dbConnect();
 
   await cartModel.findByIdAndDelete(cartId);
@@ -2062,9 +2194,20 @@ function productStrTrim(value) {
   return String(value).trim();
 }
 
+// Removes dangerous HTML (scripts, event handlers, javascript: URLs)
+// while keeping the rich-text formatting produced by the Jodit editor.
+function sanitizeDescription(value) {
+  const trimmed = productStrTrim(value);
+  if (!trimmed) return "";
+  return sanitizeHtml(trimmed, {
+    allowedSchemes: ["http", "https", "mailto", "data"],
+  });
+}
+
 export async function createProduct(data) {
   await dbConnect();
   try {
+    await requireAdmin();
     const requiredFields = [
       "name",
       "description",
@@ -2153,13 +2296,13 @@ export async function createProduct(data) {
       categoryIds: Array.isArray(data.categoryIds) ? data.categoryIds.filter(Boolean) : (data.categoryId ? [data.categoryId] : []),
       subcategoryId: data.subcategoryId || (Array.isArray(data.subcategoryIds) && data.subcategoryIds[0]) || undefined,
       subcategoryIds: Array.isArray(data.subcategoryIds) ? data.subcategoryIds.filter(Boolean) : (data.subcategoryId ? [data.subcategoryId] : []),
-      description: productStrTrim(data.description),
-      descriptionPt: productStrTrim(data.descriptionPt),
-      descriptionFr: productStrTrim(data.descriptionFr),
-      descriptionEs: productStrTrim(data.descriptionEs),
-      descriptionHe: productStrTrim(data.descriptionHe),
-      descriptionDe: productStrTrim(data.descriptionDe),
-      descriptionIt: productStrTrim(data.descriptionIt),
+      description: sanitizeDescription(data.description),
+      descriptionPt: sanitizeDescription(data.descriptionPt),
+      descriptionFr: sanitizeDescription(data.descriptionFr),
+      descriptionEs: sanitizeDescription(data.descriptionEs),
+      descriptionHe: sanitizeDescription(data.descriptionHe),
+      descriptionDe: sanitizeDescription(data.descriptionDe),
+      descriptionIt: sanitizeDescription(data.descriptionIt),
       isActive: data?.visibility === "public" ? true : false,
       quantity: parseInt(data.quantity),
       minStock: parseInt(data.minStock),
@@ -2248,6 +2391,7 @@ export async function updateProduct(productId, data) {
   await dbConnect();
 
   try {
+    await requireAdmin();
     if (!productId) {
       return {
         success: false,
@@ -2364,13 +2508,13 @@ export async function updateProduct(productId, data) {
       categoryIds: Array.isArray(data.categoryIds) && data.categoryIds.length > 0 ? data.categoryIds.filter(Boolean) : (existingProduct.categoryIds?.length > 0 ? existingProduct.categoryIds : (existingProduct.categoryId ? [existingProduct.categoryId] : [])),
       subcategoryId: data.subcategoryId || (Array.isArray(data.subcategoryIds) && data.subcategoryIds[0]) || existingProduct.subcategoryId,
       subcategoryIds: Array.isArray(data.subcategoryIds) && data.subcategoryIds.length > 0 ? data.subcategoryIds.filter(Boolean) : (existingProduct.subcategoryIds?.length > 0 ? existingProduct.subcategoryIds : (existingProduct.subcategoryId ? [existingProduct.subcategoryId] : [])),
-      description: productStrTrim(data.description),
-      descriptionPt: productStrTrim(data.descriptionPt),
-      descriptionFr: productStrTrim(data.descriptionFr),
-      descriptionEs: productStrTrim(data.descriptionEs),
-      descriptionHe: productStrTrim(data.descriptionHe),
-      descriptionDe: productStrTrim(data.descriptionDe),
-      descriptionIt: productStrTrim(data.descriptionIt),
+      description: sanitizeDescription(data.description),
+      descriptionPt: sanitizeDescription(data.descriptionPt),
+      descriptionFr: sanitizeDescription(data.descriptionFr),
+      descriptionEs: sanitizeDescription(data.descriptionEs),
+      descriptionHe: sanitizeDescription(data.descriptionHe),
+      descriptionDe: sanitizeDescription(data.descriptionDe),
+      descriptionIt: sanitizeDescription(data.descriptionIt),
       isActive: data?.visibility === "public" ? true : false,
       quantity: parseInt(data.quantity),
       minStock: parseInt(data.minStock),
@@ -2502,7 +2646,7 @@ export async function getPaginatedProducts({
     if (searchQuery && searchQuery.trim() !== "") {
       const trimmedQuery = searchQuery.trim();
       const isObjectId = /^[0-9a-fA-F]{24}$/.test(trimmedQuery);
-      const searchConditionsArray = [{ name: new RegExp(trimmedQuery, "i") }, { sku: new RegExp(trimmedQuery, "i") }];
+      const searchConditionsArray = [{ name: new RegExp(escapeRegex(trimmedQuery), "i") }, { sku: new RegExp(escapeRegex(trimmedQuery), "i") }];
       if (isObjectId) {
         searchConditionsArray.push({ _id: trimmedQuery });
       }
@@ -2635,6 +2779,7 @@ export async function getPaginatedOrders({
   orderChannel = "website",
 }) {
   try {
+    await requireAdmin();
     await dbConnect();
     let query = { archived: { $ne: true } };
 
@@ -2644,10 +2789,10 @@ export async function getPaginatedOrders({
     const searchFilter = searchQuery
       ? {
           $or: [
-            { firstName: { $regex: searchQuery, $options: "i" } },
-            { lastName: { $regex: searchQuery, $options: "i" } },
-            { email: { $regex: searchQuery, $options: "i" } },
-            { transactionId: { $regex: searchQuery, $options: "i" } },
+            { firstName: { $regex: escapeRegex(searchQuery), $options: "i" } },
+            { lastName: { $regex: escapeRegex(searchQuery), $options: "i" } },
+            { email: { $regex: escapeRegex(searchQuery), $options: "i" } },
+            { transactionId: { $regex: escapeRegex(searchQuery), $options: "i" } },
             { orderNumber: parseInt(searchQuery.match(/\d+/)?.[0]) || -1 },
           ],
         }
@@ -2693,6 +2838,7 @@ export async function getPaginatedOrders({
 
 export async function deleteOrderById(id) {
   try {
+    await requireAdmin();
     await dbConnect();
     await OrderModel.findByIdAndUpdate(id, { archived: true });
   } catch (error) {
@@ -2703,6 +2849,7 @@ export async function deleteOrderById(id) {
 
 export async function updateOrderStatusById(id, status) {
   try {
+    await requireAdmin();
     await dbConnect();
     const order = await OrderModel.findById(id);
     if (!order) {
@@ -2728,6 +2875,7 @@ export async function updateOrderStatusById(id, status) {
 
 export async function getOrderById(id) {
   try {
+    await requireAdmin();
     await dbConnect();
 
     const order = await OrderModel.findById(id).lean();
@@ -2749,6 +2897,7 @@ export async function updateOrderPaymentStatus(
   transactionId = null
 ) {
   try {
+    await requireAdmin();
     // await dbConnect(); // Uncomment if you need to connect to DB
 
     const existingOrder = await OrderModel.findById(id);
@@ -2792,6 +2941,7 @@ export async function updateOrderPaymentStatus(
 
 export async function updateOrderInfoById(id, info = {}) {
   try {
+    await requireAdmin();
     await dbConnect();
     const updateData = {};
 
@@ -2833,6 +2983,7 @@ export async function updateOrderInfoById(id, info = {}) {
 
 export async function createManualOrder(data) {
   try {
+    await requireAdmin();
     await dbConnect();
 
     const {
@@ -2966,6 +3117,7 @@ export async function getTotalOrdersCount({ channel = "website" } = {}) {
 
 export async function createUser(data) {
   try {
+    await requireAdmin();
     await dbConnect();
     const { name, email, password, isAdmin = false } = data;
 
@@ -2995,6 +3147,7 @@ export async function createUser(data) {
 
 export async function createPendingOrder(data) {
   try {
+    await requireAdmin();
     await dbConnect();
 
     const {
@@ -3038,16 +3191,17 @@ export async function getPendingOrders({
   statusFilter,
 }) {
   try {
+    await requireAdmin();
     await dbConnect();
     let query = {};
 
     const searchFilter = searchQuery
       ? {
           $or: [
-            { firstName: { $regex: searchQuery, $options: "i" } },
-            { lastName: { $regex: searchQuery, $options: "i" } },
-            { email: { $regex: searchQuery, $options: "i" } },
-            { "parts.partsNumber": { $regex: searchQuery, $options: "i" } },
+            { firstName: { $regex: escapeRegex(searchQuery), $options: "i" } },
+            { lastName: { $regex: escapeRegex(searchQuery), $options: "i" } },
+            { email: { $regex: escapeRegex(searchQuery), $options: "i" } },
+            { "parts.partsNumber": { $regex: escapeRegex(searchQuery), $options: "i" } },
           ],
         }
       : null;
@@ -3094,6 +3248,7 @@ export async function getPendingOrderById(id) {
 
 export async function updatePendingOrderById(id, data = {}) {
   try {
+    await requireAdmin();
     await dbConnect();
 
     const updateData = {};
@@ -3138,6 +3293,7 @@ export async function updatePendingOrderById(id, data = {}) {
 
 export async function updatePendingOrderStatusById(id, status) {
   try {
+    await requireAdmin();
     await dbConnect();
     const updatedPendingOrder = await PendingOrderModel.findByIdAndUpdate(
       id,
@@ -3158,6 +3314,7 @@ export async function updatePendingOrderStatusById(id, status) {
 
 export async function deletePendingOrder(id) {
   try {
+    await requireAdmin();
     await dbConnect();
     await PendingOrderModel.findByIdAndDelete(id);
   } catch (error) {

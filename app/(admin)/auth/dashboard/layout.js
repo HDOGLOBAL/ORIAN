@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
 import AdminSidebar from "./component/AdminSidebar";
-import { auth } from "@/auth"; 
+import { requireAdmin } from "@/database/queries";
 
 export default async function Layout({ children }) {
-  const session = await auth();
-
-  if (!session) {
+  try {
+    await requireAdmin();
+  } catch {
     redirect("/auth/login");
   }
 
