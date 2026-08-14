@@ -96,7 +96,7 @@ export default function Banner2() {
       {/* Three Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Col 1: How to Find */}
-        <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-100 p-5 flex flex-col items-center text-center">
+        <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-100 p-5 flex flex-col items-center text-center min-h-[280px]">
           <div className="w-14 h-14 rounded-full bg-[#c41e3a]/10 flex items-center justify-center mb-3">
             <FaSearch className="text-xl text-[#c41e3a]" />
           </div>
@@ -111,7 +111,7 @@ export default function Banner2() {
         </div>
 
         {/* Col 2: Why Choose HDO Trade */}
-        <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-100 p-5 flex flex-col items-center text-center">
+        <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-100 p-5 flex flex-col items-center text-center min-h-[280px]">
           <Image
             src={logo}
             alt="HDO Global Trade Logo"
@@ -131,7 +131,7 @@ export default function Banner2() {
         </div>
 
         {/* Col 3: Need Help */}
-        <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-100 p-5 flex flex-col">
+        <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-100 p-5 flex flex-col min-h-[280px]">
           <h3 className="text-base font-bold text-gray-900 mb-1.5 text-center">{t.col3.title}</h3>
           <p className="text-gray-500 text-sm mb-4 leading-relaxed text-center flex-1">{t.col3.desc}</p>
           <div className="flex flex-col gap-2">
@@ -171,7 +171,7 @@ export default function Banner2() {
           return (
             <div
               key={title}
-              className="flex items-center gap-3 p-3 bg-white rounded-xl border border-gray-100"
+              className="flex items-center gap-3 p-3 min-h-[72px] bg-white rounded-xl border border-gray-100"
             >
               <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center flex-shrink-0 border border-gray-100">
                 <Icon className="text-gray-600 text-lg" />

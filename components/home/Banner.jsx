@@ -153,7 +153,7 @@ export default function Banner() {
               />
               <div className="absolute inset-0 bg-opacity-40 sm:bg-opacity-50 z-10" />
               <div className="absolute inset-0 z-20 hidden sm:block">
-                <div className={`absolute top-1/2 max-w-lg -translate-y-1/2 text-white ${isRtl ? "right-[12%] text-right" : "right-[18%] text-right"}`}>
+                <div className={`absolute top-1/2 max-w-lg -translate-y-1/2 text-white right-[18%] text-right`}>
                   <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
                     {getSlideTitle(slide.titleKey)}
                   </h2>

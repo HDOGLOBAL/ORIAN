@@ -71,10 +71,10 @@ export default async function FaqPage() {
     <>
       <FAQSchema lang={lang} />
       <section className="w-full max-w-[1280px] mx-auto px-4 py-10" dir={isRtl ? "rtl" : "ltr"}>
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 leading-snug">
           {t.title}
         </h1>
-        <p className="text-gray-600 text-sm md:text-base mb-8">{t.subtitle}</p>
+        <p className="text-gray-600 text-sm md:text-base mb-8 leading-relaxed">{t.subtitle}</p>
         <FaqAccordion faqs={faqs} />
         <div className="mt-10 rounded-xl border border-gray-100 bg-gray-50 p-6 text-center">
           <p className="text-gray-700 text-sm md:text-base mb-3">{t.contact}</p>
