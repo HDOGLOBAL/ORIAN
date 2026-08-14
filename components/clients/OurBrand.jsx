@@ -165,7 +165,7 @@ export default function OurBrand() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* LEFT: FAQ Accordion */}
         <div>
-          <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 leading-snug">
             {t.faqTitle}
           </h2>
           <FaqAccordion faqs={faqs} />
