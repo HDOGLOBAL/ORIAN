@@ -27,6 +27,7 @@ const OG_LOCALE_MAP = {
   es: "es_ES",
   fr: "fr_FR",
   he: "he_IL",
+  it: "it_IT",
 };
 
 // Required as a separate export in Next.js 14+
@@ -55,6 +56,7 @@ export const metadata = {
     "HDO Trade", "Ersatzteile Gewerbeküche", "pièces détachées cuisine",
     "repuestos cocina industrial", "peças de cozinha industrial",
     "Hobart parts", "Robot Coupe parts", "Vitamix parts",
+    "ricambi cucina industriale", "peças de cozinha industrial",
   ],
   authors: [{ name: "HDO Trade", url: "https://hdotrade.pt" }],
   creator: "HDO Trade",
@@ -84,7 +86,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    alternateLocale: ["pt_PT", "de_DE", "es_ES", "fr_FR", "he_IL"],
+    alternateLocale: ["pt_PT", "de_DE", "es_ES", "fr_FR", "he_IL", "it_IT"],
     siteName: "HDO Trade",
     title: "HDO Trade | Tested Spare Parts Worldwide",
     description: "Tested spare parts for commercial kitchen equipment. Fast global shipping.",
@@ -108,6 +110,7 @@ export const metadata = {
       "es": "https://hdotrade.es",
       "fr": "https://hdotrade.fr",
       "he": "https://hdotrade.co.il",
+      "it": "https://hdotrade.it",
       // "en-AU":     "https://hdotrade.au",
     },
   },
@@ -139,7 +142,7 @@ const organizationSchema = {
       "@type": "ContactPoint",
       telephone: "+351935210099",
       contactType: "customer service",
-      availableLanguage: ["English", "Portuguese", "German", "French", "Spanish", "Hebrew"],
+      availableLanguage: ["English", "Portuguese", "German", "French", "Spanish", "Hebrew", "Italian"],
       areaServed: "Worldwide",
     },
   ],
@@ -151,6 +154,7 @@ const organizationSchema = {
     "https://hdotrade.fr",
     "https://hdotrade.eu",
     "https://hdotrade.co.il",
+    "https://hdotrade.it",
     // "https://hdotrade.au",
   ],
 };
@@ -163,7 +167,7 @@ const websiteSchema = {
   name: "HDO Trade",
   url: "https://hdotrade.pt",
   publisher: { "@id": "https://hdotrade.pt/#organization" },
-  inLanguage: ["en", "pt", "de", "es", "fr", "he"],
+  inLanguage: ["en", "pt", "de", "es", "fr", "he", "it"],
   potentialAction: {
     "@type": "SearchAction",
     target: {

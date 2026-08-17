@@ -6,26 +6,8 @@ import {
   getRequestLanguage,
   getRequestHost,
   getDomainFromHost,
+  buildHreflangAlternates,
 } from "@/utils/seoMetadata";
-
-const DOMAIN_MAP = [
-  { domain: "https://hdotrade.pt",     hreflang: "pt"    },
-  { domain: "https://hdotrade.com",    hreflang: "en-US" },
-  { domain: "https://hdotrade.uk",  hreflang: "en-GB" },
-  { domain: "https://hdotrade.de",     hreflang: "de"    },
-  { domain: "https://hdotrade.es",     hreflang: "es"    },
-  { domain: "https://hdotrade.fr",     hreflang: "fr"    },
-  { domain: "https://hdotrade.eu",     hreflang: "en"    },
-  { domain: "https://hdotrade.co.il",  hreflang: "he"    },
-];
-
-function buildHreflangAlternates(path) {
-  const languages = { "x-default": `https://hdotrade.pt${path}` };
-  for (const { domain, hreflang } of DOMAIN_MAP) {
-    languages[hreflang] = `${domain}${path}`;
-  }
-  return languages;
-}
 
 export async function generateMetadata(props) {
   const params = await props.params;
@@ -42,6 +24,7 @@ export async function generateMetadata(props) {
     es: `Repuestos ${decodedCategory} | HDO Trade`,
     de: `${decodedCategory} Ersatzteile | HDO Trade`,
     he: `חלקי חילוף ${decodedCategory} | HDO Trade`,
+    it: `Ricambi ${decodedCategory} | HDO Trade`,
   };
 
   const descMap = {
@@ -51,6 +34,7 @@ export async function generateMetadata(props) {
     es: `Explore repuestos testados para ${decodedCategory}. Envío mundial rápido de HDO Trade.`,
     de: `Geprüfte Ersatzteile für ${decodedCategory}. Schneller weltweiter Versand von HDO Trade.`,
     he: `עיינו בחלקי חילוף מבוקרים עבור ${decodedCategory}. משלוח מהיר לכל העולם מ-HDO Trade.`,
+    it: `Sfoglia ricambi testati per ${decodedCategory}. Spedizione rapida mondiale da HDO Trade.`,
   };
 
   const title = titleMap[lang] || titleMap.en;
