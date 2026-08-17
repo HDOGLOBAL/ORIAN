@@ -18,7 +18,7 @@ const DOMAIN_MAP = [
 ];
 
 // Build full hreflang alternates for any page path
-function buildHreflangAlternates(path = "") {
+export function buildHreflangAlternates(path = "") {
   const languages = { "x-default": `https://www.hdotrade.pt${path}` };
   for (const { domain, hreflang } of DOMAIN_MAP) {
     languages[hreflang] = `${domain}${path}`;
@@ -51,6 +51,7 @@ const seoMetadata = {
       es: "Equipos y Repuestos de Cocina Industrial | HDO Trade",
       he: "ציוד ואביזרי מטבח תעשייתי | HDO Trade",
       de: "Gewerbeküchen Ersatzteile & Ausrüstung | HDO Trade",
+      it: "Attrezzi e Ricambi per Cucina Industriale | HDO Trade",
     },
     description: {
       en: "Shop tested spare parts for commercial kitchen equipment — dishwashers, mixers, juicers & more. Santos, Electrolux, Sirman, Dynamic and 50+ brands. Fast worldwide shipping.",
@@ -59,6 +60,7 @@ const seoMetadata = {
       es: "Repuestos testados para equipos de cocina comercial — lavavajillas, batidoras, exprimidores y más. Santos, Electrolux, Sirman, Dynamic y +50 marcas. Envío mundial rápido.",
       he: "חלקי חילוף מבוקרים לציוד מטבח מסחרי — מדיח כלים, מיקסר, מסחטה ועוד. Santos, Electrolux, Sirman, Dynamic ו-50+ מותגים. משלוח מהיר לכל העולם.",
       de: "Geprüfte Ersatzteile für Gewerbeküchen — Spülmaschinen, Mixer, Entsafter und mehr. Santos, Electrolux, Sirman, Dynamic und 50+ Marken. Schneller weltweiter Versand.",
+      it: "Ricambi testati per attrezzature professionali — lavastoviglie, frullatori, spremiagrumi e altro. Santos, Electrolux, Sirman, Dynamic e 50+ marchi. Spedizione rapida mondiale.",
     },
     path: "",
   },
@@ -70,6 +72,7 @@ const seoMetadata = {
       es: "Tienda Repuestos | HDO Trade",
       he: "חנות חלקי חילוף | HDO Trade",
       de: "Ersatzteile Shop | HDO Trade",
+      it: "Shop Ricambi | HDO Trade",
     },
     description: {
       en: "Browse thousands of tested spare parts by manufacturer, category or search. Dishwasher, mixer, juicer, food processor parts and more.",
@@ -78,6 +81,7 @@ const seoMetadata = {
       es: "Busque miles de repuestos testados por fabricante, categoría o búsqueda. Lavavajillas, batidora, exprimidor y más.",
       he: "עיינו באלפי חלקי חילוף מבוקרים לפי יצרן, קטגוריה או חיפוש. מדיח כלים, מיקסר, מסחטה ועוד.",
       de: "Tausende geprüfte Ersatzteile nach Hersteller, Kategorie oder Suche. Spülmaschine, Mixer, Entsafter, Küchenmaschine und mehr.",
+      it: "Sfoglia migliaia di ricambi testati per produttore, categoria o ricerca. Lavastoviglie, frullatori, spremiagrumi e altro.",
     },
     path: "/shop",
   },
@@ -89,6 +93,7 @@ const seoMetadata = {
       es: "Sobre Nosotros | HDO Trade",
       he: "אודותינו | HDO Trade",
       de: "Über uns | HDO Trade",
+      it: "Chi Siamo | HDO Trade",
     },
     description: {
       en: "Learn about HDO Trade — our mission, expertise in spare parts, quality standards, and worldwide customer support since day one.",
@@ -97,6 +102,7 @@ const seoMetadata = {
       es: "Conozca HDO Trade — nuestra misión, experiencia en repuestos, estándares de calidad y soporte global.",
       he: "גלו על HDO Trade — המשימה שלנו, המומחיות בחלקי חילוף, תקני האיכות ותמיכת לקוחות עולמית.",
       de: "Erfahren Sie mehr über HDO Trade — unsere Mission, Ersatzteil-Expertise, Qualitätsstandards und weltweiten Kundensupport.",
+      it: "Scopri HDO Trade — la nostra mission, l'esperienza nei ricambi, gli standard di qualità e il supporto clienti a livello mondiale.",
     },
     path: "/about",
   },
@@ -108,6 +114,7 @@ const seoMetadata = {
       es: "Contáctenos | HDO Trade",
       he: "צרו קשר | HDO Trade",
       de: "Kontakt | HDO Trade",
+      it: "Contattaci | HDO Trade",
     },
     description: {
       en: "Contact HDO Trade for spare parts enquiries, orders, and support. Phone, email, WhatsApp — we respond fast.",
@@ -116,6 +123,7 @@ const seoMetadata = {
       es: "Contacte HDO Trade para consultas de repuestos, pedidos y soporte. Teléfono, email, WhatsApp — respuesta rápida.",
       he: "צרו קשר עם HDO Trade לשאלות על חלקי חילוף, הזמנות ותמיכה. טלפון, אימייל, וואטסאפ — אנחנו מגיבים מהר.",
       de: "Kontaktieren Sie HDO Trade für Ersatzteil-Anfragen, Bestellungen und Support. Telefon, E-Mail, WhatsApp — schnelle Antwort.",
+      it: "Contatta HDO Trade per richieste di ricambi, ordini e supporto. Telefono, email, WhatsApp — risposta rapida.",
     },
     path: "/contact",
   },
@@ -127,6 +135,7 @@ const seoMetadata = {
       es: "Términos y Condiciones | HDO Trade",
       he: "תנאים והגבלות | HDO Trade",
       de: "AGB | HDO Trade",
+      it: "Termini e Condizioni | HDO Trade",
     },
     description: {
       en: "Read the HDO Trade terms and conditions covering purchases, payments, returns, liability and dispute resolution.",
@@ -135,6 +144,7 @@ const seoMetadata = {
       es: "Lea los términos y condiciones de HDO Trade sobre compras, pagos, devoluciones y resolución de disputas.",
       he: "קראו את התנאים וההגבלות של HDO Trade בנושאי רכישות, תשלומים, החזרות ויישוב סכסוכים.",
       de: "Lesen Sie die AGB von HDO Trade zu Käufen, Zahlungen, Rücksendungen und Streitbeilegung.",
+      it: "Leggi i termini e le condizioni di HDO Trade su acquisti, pagamenti, resi e risoluzione delle controversie.",
     },
     path: "/terms-conditions",
   },
@@ -146,6 +156,7 @@ const seoMetadata = {
       es: "Preguntas Frecuentes | HDO Trade",
       he: "שאלות נפוצות | HDO Trade",
       de: "FAQ | HDO Trade",
+      it: "FAQ | HDO Trade",
     },
     description: {
       en: "Answers to the most common questions about HDO Trade spare parts — shipping, delivery times, returns, VAT invoices, payments and more.",
@@ -154,6 +165,7 @@ const seoMetadata = {
       es: "Respuestas a las preguntas más frecuentes sobre los repuestos HDO Trade — envío, plazos, devoluciones, facturas con IVA, pagos y más.",
       he: "תשובות לשאלות הנפוצות ביותר על חלקי חילוף HDO Trade — משלוח, זמני אספקה, החזרות, חשבוניות מע\"מ, תשלומים ועוד.",
       de: "Antworten auf die häufigsten Fragen zu HDO Trade Ersatzteilen — Versand, Lieferzeiten, Rückgaben, MwSt.-Rechnungen, Zahlungen und mehr.",
+      it: "Risposte alle domande più comuni sui ricambi HDO Trade — spedizioni, tempi di consegna, resi, fatture IVA, pagamenti e altro.",
     },
     path: "/faq",
   },
@@ -235,6 +247,7 @@ export function getLocalizedProductSeo(product, lang = DEFAULT_LANG, currentDoma
     es: product?.nameEs,
     he: product?.nameHe,
     de: product?.nameDe,
+    it: product?.nameIt,
   };
 
   const descriptionMap = {
@@ -244,6 +257,7 @@ export function getLocalizedProductSeo(product, lang = DEFAULT_LANG, currentDoma
     es: product?.descriptionEs,
     he: product?.descriptionHe,
     de: product?.descriptionDe,
+    it: product?.descriptionIt,
   };
 
   const title = titleMap[lang] || titleMap.en || "HDO Trade";

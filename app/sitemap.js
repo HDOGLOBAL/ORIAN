@@ -8,6 +8,7 @@ const domainLangMap = [
   { domain: "https://hdotrade.de",     lang: "de"    },
   { domain: "https://hdotrade.es",     lang: "es"    },
   { domain: "https://hdotrade.fr",     lang: "fr"    },
+  { domain: "https://hdotrade.it",     lang: "it"    },
   { domain: "https://hdotrade.eu",     lang: "en"    },
   { domain: "https://hdotrade.co.il",  lang: "he"    },
 ];
