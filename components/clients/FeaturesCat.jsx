@@ -93,7 +93,7 @@ const STATIC_CATEGORIES = [
       "/client/categories/dishwasher/4.jpg",
       "/client/categories/dishwasher/5.jpg",
     ],
-    names: { en: "Dishwasher Spare Parts", pt: "Peças para Máquinas de Lavar", fr: "Pièces Lave-vaisselle", es: "Repuestos Lavavajillas", de: "Geschirrspüler-Ersatzteile" },
+    names: { en: "Dishwasher Spare Parts", pt: "Peças para Máquinas de Lavar", fr: "Pièces Lave-vaisselle", es: "Repuestos Lavavajillas", de: "Geschirrspüler-Ersatzteile", it: "Ricambi Lavastoviglie" },
   },
   {
     id: "mixer",
@@ -105,7 +105,7 @@ const STATIC_CATEGORIES = [
       "/client/categories/mixer/3.jpg",
       "/client/categories/mixer/4.jpg",
     ],
-    names: { en: "Hand Mixer Accessories", pt: "Acessórios para Misturadoras", fr: "Accessoires Batteur", es: "Accesorios para Batidora", de: "Handmixer-Zubehör" },
+    names: { en: "Hand Mixer Accessories", pt: "Acessórios para Misturadoras", fr: "Accessoires Batteur", es: "Accesorios para Batidora", de: "Handmixer-Zubehör", it: "Accessori per Mixer" },
   },
   {
     id: "juicer",
@@ -118,7 +118,7 @@ const STATIC_CATEGORIES = [
       "/client/categories/juicer/4.jpg",
       "/client/categories/juicer/5.jpg",
     ],
-    names: { en: "Juicer Spare Parts", pt: "Peças para Espremidores", fr: "Pièces Presse-agrumes", es: "Repuestos Exprimidora", de: "Entsafter-Ersatzteile" },
+    names: { en: "Juicer Spare Parts", pt: "Peças para Espremidores", fr: "Pièces Presse-agrumes", es: "Repuestos Exprimidora", de: "Entsafter-Ersatzteile", it: "Ricambi Spremiagrumi" },
   },
   {
     id: "vegetable-cutter",
@@ -131,7 +131,7 @@ const STATIC_CATEGORIES = [
       "/client/categories/vegetable-cutter/4.jpg",
       "/client/categories/vegetable-cutter/5.jpg",
     ],
-    names: { en: "Vegetable Cutter Parts", pt: "Peças para Cortadores", fr: "Pièces Coupe-légumes", es: "Repuestos Cortaverduras", de: "Gemüseschneider-Teile" },
+    names: { en: "Vegetable Cutter Parts", pt: "Peças para Cortadores", fr: "Pièces Coupe-légumes", es: "Repuestos Cortaverduras", de: "Gemüseschneider-Teile", it: "Ricambi Tagliaverdure" },
   },
   {
     id: "kitchen-tap",
@@ -143,7 +143,7 @@ const STATIC_CATEGORIES = [
       "/client/categories/kitchen-tap/3.jpg",
       "/client/categories/kitchen-tap/4.jpg",
     ],
-    names: { en: "Commercial Kitchen Taps", pt: "Torneiras para Cozinha", fr: "Robinets Cuisine Pro", es: "Grifos Cocina Profesional", de: "Gastro-Küchenarmaturen" },
+    names: { en: "Commercial Kitchen Taps", pt: "Torneiras para Cozinha", fr: "Robinets Cuisine Pro", es: "Grifos Cocina Profesional", de: "Gastro-Küchenarmaturen", it: "Rubinetteria per Cucina Professionale" },
   },
   {
     id: "replacement-parts",
@@ -156,7 +156,7 @@ const STATIC_CATEGORIES = [
       "/client/categories/replacement-parts/4.jpg",
       "/client/categories/replacement-parts/5.jpg",
     ],
-    names: { en: "HDO Replacement Parts", pt: "Peças de Substituição HDO", fr: "Pièces de Rechange HDO", es: "Repuestos HDO", de: "HDO-Ersatzteile" },
+    names: { en: "HDO Replacement Parts", pt: "Peças de Substituição HDO", fr: "Pièces de Rechange HDO", es: "Repuestos HDO", de: "HDO-Ersatzteile", it: "Ricambi HDO" },
   },
 ];
 
@@ -263,6 +263,7 @@ export default function FeaturedCategories({ initialCategories = null }) {
     es: "Comprar por Categoría",
     he: "קנה לפי קטגוריה",
     de: "Nach Kategorie kaufen",
+    it: "Compra per Categoria",
   };
 
   const subtitleMap = {
@@ -272,6 +273,7 @@ export default function FeaturedCategories({ initialCategories = null }) {
     es: "Explore nuestra amplia gama de repuestos para equipos de cocina industrial",
     he: "עיינו במגוון הרחב של חלקי החילוף שלנו לציוד מטבח תעשייתי",
     de: "Entdecken Sie unser breites Sortiment an Ersatzteilen für Industrieküchen",
+    it: "Scopri la nostra ampia gamma di ricambi per attrezzature per cucina professionale",
   };
 
   const viewAllMap = {
@@ -281,6 +283,7 @@ export default function FeaturedCategories({ initialCategories = null }) {
     es: "Ver Todas las Categorías",
     he: "ראה את כל הקטגוריות",
     de: "Alle Kategorien anzeigen",
+    it: "Vedi Tutte le Categorie",
   };
 
   const sectionTitle = titleMap[uiLang] || "Shop by Category";

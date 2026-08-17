@@ -179,6 +179,7 @@ export default function Footer() {
       en: "Loading products...",
       he: "טוען מוצרים...",
       de: "Produkte werden geladen...",
+      it: "Caricamento prodotti...",
     },
     catDishwasher: {
       pt: "Peças para máquinas de lavar louça",
@@ -187,6 +188,7 @@ export default function Footer() {
       en: "Dishwasher spare parts",
       he: "חלקי חילוף למדיחי כלים",
       de: "Spülmaschinen-Ersatzteile",
+      it: "Ricambi lavastoviglie",
     },
     catVegCutter: {
       pt: "Peças para cortadores de legumes",
@@ -195,6 +197,7 @@ export default function Footer() {
       en: "Vegetable cutter spare parts",
       he: "חלקי חילוף לקוצצי ירקות",
       de: "Gemüseschneider-Ersatzteile",
+      it: "Ricambi tagliaverdure",
     },
     catJuicer: {
       pt: "Peças para espremidores",
@@ -203,6 +206,7 @@ export default function Footer() {
       en: "Juicer spare parts",
       he: "חלקי חילוף למסחטות",
       de: "Entsafter-Ersatzteile",
+      it: "Ricambi spremiagrumi",
     },
     catMixer: {
       pt: "Peças para misturadoras",
@@ -211,6 +215,7 @@ export default function Footer() {
       en: "Hand mixer spare parts",
       he: "חלקי חילוף למיקסרים",
       de: "Handmixer-Ersatzteile",
+      it: "Ricambi mixer",
     },
     catKitchenTap: {
       pt: "Torneiras de cozinha comerciais",
@@ -219,6 +224,7 @@ export default function Footer() {
       en: "Commercial kitchen taps",
       he: "ברזי מטבח מסחריים",
       de: "Gastro-Küchenarmaturen",
+      it: "Rubinetteria cucina professionale",
     },
     catReplacement: {
       pt: "Peças de substituição HDO",
@@ -227,6 +233,7 @@ export default function Footer() {
       en: "HDO replacement parts",
       he: "חלקי חילוף HDO",
       de: "HDO-Ersatzteile",
+      it: "Ricambi HDO",
     },
   };
 

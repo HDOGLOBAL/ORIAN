@@ -38,6 +38,11 @@ const TEXT = {
     col2: { title: "Warum HDO Trade?", items: ["Hochwertige und langlebige Teile", "Breites Sortiment für Top-Marken", "Fachkundiger Support", "Sicheres Online-Shopping"] },
     col3: { title: "Brauchen Sie Hilfe?", desc: "Unser Team ist bereit, Ihnen zu helfen, genau das zu finden, was Sie benötigen.", whatsapp: "WhatsApp", email: "E-Mail", btn: "Kontaktieren" },
   },
+  it: {
+    col1: { title: "Come Trovare il Ricambio Giusto", desc: "Usa il numero del modello o la descrizione del pezzo per trovare rapidamente il ricambio di cui hai bisogno.", btn: "Cerca Ricambi" },
+    col2: { title: "Perché Scegliere HDO Trade?", items: ["Ricambi di alta qualità e duraturi", "Ampia gamma per i marchi principali", "Supporto e consulenza esperti", "Acquisti online sicuri"] },
+    col3: { title: "Hai Bisogno di Aiuto?", desc: "Il nostro team è pronto ad aiutarti a trovare esattamente quello di cui hai bisogno.", whatsapp: "WhatsApp", email: "Email", btn: "Contattaci" },
+  },
 };
 
 const BADGES = {
@@ -76,6 +81,12 @@ const BADGES = {
     { title: "Weltweiter Versand", desc: "Schnelle & zuverlässige Lieferung" },
     { title: "Einfache Rückgabe", desc: "Unkomplizierte Rückgaben" },
     { title: "100% Zufriedenheit", desc: "Wir garantieren Qualität" },
+  ],
+  it: [
+    { title: "Pagamento Sicuro", desc: "Checkout 100% sicuro" },
+    { title: "Spedizione Mondiale", desc: "Consegna rapida e affidabile" },
+    { title: "Resi Facili", desc: "Resi senza problemi" },
+    { title: "100% Soddisfazione", desc: "Garantiamo la qualità" },
   ],
 };
 

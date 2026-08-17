@@ -158,6 +158,7 @@ export default function ProductCard({
       es: "Ver Detalles",
       he: "צפה בפרטים",
       de: "Details anzeigen",
+      it: "Vedi Dettagli",
     },
     outOfStock: {
       en: "Out of Stock",
@@ -166,6 +167,7 @@ export default function ProductCard({
       es: "Agotado",
       he: "אזל מהמלאי",
       de: "Nicht auf Lager",
+      it: "Esaurito",
     },
   };
 
@@ -177,6 +179,7 @@ export default function ProductCard({
     es: product?.nameEs,
     he: product?.nameHe,
     de: product?.nameDe,
+    it: product?.nameIt,
   };
   const productName = nameMap[lang] || product?.name;
 

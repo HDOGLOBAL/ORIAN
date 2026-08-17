@@ -15,6 +15,16 @@ export default function CountrySelector() {
   const [error, setError] = useState("");
   const searchInputRef = useRef(null);
 
+  const textMap = {
+    en: { title: "Select Your Country", desc: "Please help us to show you correct prices and currency.", search: "Search countries...", noMatch: "No matching countries found", saved: "Your selection will be saved for future visits" },
+    pt: { title: "Selecione o Seu País", desc: "Ajude-nos a mostrar-lhe os preços e moeda corretos.", search: "Pesquisar países...", noMatch: "Nenhum país encontrado", saved: "A sua seleção será guardada para futuras visitas" },
+    fr: { title: "Sélectionnez Votre Pays", desc: "Aidez-nous à vous afficher les prix et la devise corrects.", search: "Rechercher des pays...", noMatch: "Aucun pays correspondant trouvé", saved: "Votre sélection sera enregistrée pour les visites futures" },
+    es: { title: "Seleccione Su País", desc: "Ayúdenos a mostrarle los precios y la moneda correctos.", search: "Buscar países...", noMatch: "No se encontraron países coincidentes", saved: "Su selección se guardará para futuras visitas" },
+    he: { title: "בחרו את המדינה שלכם", desc: "עזור לנו להציג לכם מחירים ומטבע נכונים.", search: "חפש מדינות...", noMatch: "לא נמצאו מדינות מתאימות", saved: "הבחירה שלכם תישמר לביקורים עתידיים" },
+    de: { title: "Wählen Sie Ihr Land", desc: "Helfen Sie uns, Ihnen die richtigen Preise und Währungen anzuzeigen.", search: "Länder suchen...", noMatch: "Keine passenden Länder gefunden", saved: "Ihre Auswahl wird für zukünftige Besuche gespeichert" },
+    it: { title: "Seleziona il Tuo Paese", desc: "Aiutaci a mostrarti i prezzi e la valuta corretti.", search: "Cerca paesi...", noMatch: "Nessun paese corrispondente trovato", saved: "La tua selezione verrà salvata per visite future" },
+  };
+
   // Load saved country from cookies
   useEffect(() => {
     // Only show currency selector on .com domain
@@ -26,7 +36,8 @@ export default function CountrySelector() {
       !hostname.includes(".fr") &&
       !hostname.includes(".es") &&
       !hostname.includes(".pt") &&
-      !hostname.includes(".uk");
+      !hostname.includes(".uk") &&
+      !hostname.includes(".it");
 
     if (!isComDomain) return; // Skip modal entirely on non-.com domains
 
@@ -118,10 +129,10 @@ export default function CountrySelector() {
                 {/* Header */}
                 <div className="p-5 border-b border-gray-200">
                   <Dialog.Title className="text-xl font-bold text-gray-900">
-                    Select Your Country
+                    {(() => { const h = typeof window !== "undefined" ? window.location.hostname : ""; const l = h.includes(".it") ? "it" : h.includes(".de") ? "de" : h.includes(".fr") ? "fr" : h.includes(".es") ? "es" : h.includes(".pt") ? "pt" : "en"; return textMap[l]?.title || textMap.en.title; })()}
                   </Dialog.Title>
                   <Dialog.Description className="text-sm text-gray-500 mt-1">
-                    Please help us to show you correct prices and currency.
+                    {(() => { const h = typeof window !== "undefined" ? window.location.hostname : ""; const l = h.includes(".it") ? "it" : h.includes(".de") ? "de" : h.includes(".fr") ? "fr" : h.includes(".es") ? "es" : h.includes(".pt") ? "pt" : "en"; return textMap[l]?.desc || textMap.en.desc; })()}
                   </Dialog.Description>
                 </div>
 
