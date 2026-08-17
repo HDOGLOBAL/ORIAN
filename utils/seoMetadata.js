@@ -169,6 +169,48 @@ const seoMetadata = {
     },
     path: "/faq",
   },
+  privacy: {
+    title: {
+      en: "Privacy Policy | HDO Trade",
+      pt: "Política de Privacidade | HDO Trade",
+      fr: "Politique de Confidentialité | HDO Trade",
+      es: "Política de Privacidad | HDO Trade",
+      he: "מדיניות פרטיות | HDO Trade",
+      de: "Datenschutzrichtlinie | HDO Trade",
+      it: "Privacy Policy | HDO Trade",
+    },
+    description: {
+      en: "Learn how HDO Trade collects, uses, and protects your personal information. Read our full privacy policy.",
+      pt: "Saiba como a HDO Trade coleta, usa e protege suas informações pessoais. Leia nossa política de privacidade completa.",
+      fr: "Découvrez comment HDO Trade collecte, utilise et protège vos informations personnelles. Lisez notre politique de confidentialité complète.",
+      es: "Descubra cómo HDO Trade recopila, usa y protege su información personal. Lea nuestra política de privacidad completa.",
+      he: "גלו כיצד HDO Trade אוספת, משתמשת ומגנה על המידע האישי שלכם. קראו את מדיניות הפרטיות המלאה שלנו.",
+      de: "Erfahren Sie, wie HDO Trade Ihre persönlichen Daten erhebt, verwendet und schützt. Lesen Sie unsere vollständige Datenschutzrichtlinie.",
+      it: "Scopri come HDO Trade raccoglie, utilizza e protegge le tue informazioni personali. Leggi la nostra completa Informativa sulla Privacy.",
+    },
+    path: "/privacy-policy",
+  },
+  refunds: {
+    title: {
+      en: "Refunds & Returns | HDO Trade",
+      pt: "Reembolsos e Devoluções | HDO Trade",
+      fr: "Remboursements et Retours | HDO Trade",
+      es: "Reembolsos y Devoluciones | HDO Trade",
+      he: "החזרות והחלפות | HDO Trade",
+      de: "Rückerstattungen & Rücksendungen | HDO Trade",
+      it: "Rimborsi e Resi | HDO Trade",
+    },
+    description: {
+      en: "Read the HDO Trade refunds and returns policy — eligibility, process, and timelines for returning spare parts.",
+      pt: "Leia a política de reembolsos e devoluções da HDO Trade — elegibilidade, processo e prazos para devolução de peças.",
+      fr: "Consultez la politique de remboursements et retours HDO Trade — éligibilité, processus et délais pour retourner des pièces.",
+      es: "Lea la política de reembolsos y devoluciones de HDO Trade — elegibilidad, proceso y plazos para devolver repuestos.",
+      he: "קראו את מדיניות ההחזרות וההחלפות של HDO Trade — זכאות, תהליך ולוחות זמנים להחזרת חלקי חילוף.",
+      de: "Lesen Sie die Rückerstattungs- und Rücksenderichtlinie von HDO Trade — Berechtigung, Prozess und Zeitrahmen für die Rücksendung von Ersatzteilen.",
+      it: "Leggi la politica di rimborsi e resi di HDO Trade — idoneità, processo e tempistiche per restituire i ricambi.",
+    },
+    path: "/refunds-returns",
+  },
 };
 
 // Domain → language map (fixed .co.uk detection bug)
