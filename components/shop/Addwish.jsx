@@ -4,22 +4,33 @@ import { AddToWishlist } from "@/database/queries";
 import { serverRevalidate } from "@/utils/serverRev";
 import { toast } from "react-toastify";
 
+const wishlistTexts = {
+  en: { added: "Added to the wishlist", already: "Already in wishlist", login: "Login please" },
+  pt: { added: "Adicionado à lista de desejos", already: "Já está na lista de desejos", login: "Faça login por favor" },
+  fr: { added: "Ajouté à la liste de souhaits", already: "Déjà dans la liste de souhaits", login: "Veuillez vous connecter" },
+  es: { added: "Añadido a la lista de deseos", already: "Ya está en la lista de deseos", login: "Por favor, inicie sesión" },
+  he: { added: " נוסף לרשימת המשאלות", already: "כבר ברשימת המשאלות", login: "אנא התחבר" },
+  de: { added: "Zur Wunschliste hinzugefügt", already: "Bereits auf der Wunschliste", login: "Bitte anmelden" },
+  it: { added: "Aggiunto ai preferiti", already: "Già nei preferiti", login: "Accedi per favore" },
+};
+
 export default function Addwish({ productId, userId, fromDetail, lan }) {
+  const t = wishlistTexts[lan] || wishlistTexts.en;
   const handleClick = async () => {
     if (userId) {
       const mess = await AddToWishlist(userId, productId);
       if (mess) {
-        toast.success("Added to the wishlist", {
+        toast.success(t.added, {
           position: "bottom-right",
         });
       } else {
-        toast.info(" Already in wishlist", {
+        toast.info(t.already, {
           position: "bottom-right",
         });
       }
       await serverRevalidate();
     } else {
-      toast.error("Login please", {
+      toast.error(t.login, {
         position: "bottom-right",
       });
     }

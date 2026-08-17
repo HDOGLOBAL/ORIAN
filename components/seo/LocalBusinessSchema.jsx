@@ -1,7 +1,7 @@
 // LocalBusiness JSON-LD — boosts local search ("spare parts Portugal", "Covilha spare parts")
 // and ties your website to Google Maps / Google Business Profile
 
-export default function LocalBusinessSchema({ domain = "https://hdotrade.pt" }) {
+export default function LocalBusinessSchema({ domain = "https://www.hdotrade.pt" }) {
   const schema = {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "Store"],

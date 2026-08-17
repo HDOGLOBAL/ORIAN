@@ -32,6 +32,7 @@ export default async function About() {
       en: "Who We Are",
       he: "מי אנחנו",
       de: "Wer Wir Sind",
+      it: "Chi Siamo",
     },
     paragraph1: {
       pt: "Com o conhecimento que adquirimos ao longo dos anos, nossa empresa projeta, fabrica e comercializa peças sob nossa própria marca HDO TRADE.",
@@ -40,6 +41,7 @@ export default async function About() {
       en: "With the knowledge we have acquired over the years, our company designs, manufactures and markets spare parts under our own brand HDO TRADE.",
       he: "עם הידע שצברנו לאורך השנים, החברה שלנו מתכננת, מייצרת ומשווקת חלקי חילוף תחת המותג שלנו HDO TRADE.",
       de: "Mit dem Wissen, das wir im Laufe der Jahre gesammelt haben, entwirft, produziert und vermarktet unser Unternehmen Ersatzteile unter unserer eigenen Marke HDO TRADE.",
+      it: "Con le conoscenze acquisite nel corso degli anni, la nostra azienda progetta, produce e commercializza ricambi sotto il nostro marchio HDO TRADE.",
     },
     paragraph2: {
       pt: "Isso é feito para ajudar nossos clientes, pois em muitos casos vemos que nossos clientes tiveram dificuldade em encontrar as peças de reposição de que precisam para sua máquina.",
@@ -48,6 +50,7 @@ export default async function About() {
       en: "This is done to help our customers, as in many cases we see that our customers had difficulty finding the spare parts they need for their machine.",
       he: "אנו עושים זאת כדי לעזור ללקוחותינו, משום שבמקרים רבים ראינו שלקוחותינו התקשו למצוא את חלקי החילוף הדרושים למכונה שלהם.",
       de: "Dies geschieht, um unseren Kunden zu helfen, da wir in vielen Fällen sehen, dass unsere Kunden Schwierigkeiten hatten, die Ersatzteile zu finden, die sie für ihre Maschine benötigen.",
+      it: "Questo è fatto per aiutare i nostri clienti, poiché in molti casi vediamo che i nostri clienti hanno avuto difficoltà a trovare i ricambi di cui hanno bisogno per la loro macchina.",
     },
     paragraph3: {
       pt: "Fabricamos nossas peças de reposição em todo o mundo e nossa equipe técnica trabalha arduamente diariamente para fornecer ao nosso cliente a melhor qualidade ao melhor preço.",
@@ -56,6 +59,7 @@ export default async function About() {
       en: "We manufacture our spare parts all over the world and our technical team works hard daily to provide to our customer the best quality at the best price.",
       he: "אנו מייצרים את חלקי החילוף שלנו ברחבי העולם, והצוות הטכני שלנו עובד מדי יום כדי להעניק ללקוחותינו את האיכות הטובה ביותר במחיר הטוב ביותר.",
       de: "Wir produzieren unsere Ersatzteile weltweit und unser technisches Team arbeitet täglich hart daran, unseren Kunden die beste Qualität zum besten Preis zu bieten.",
+      it: "Produciamo i nostri ricambi in tutto il mondo e il nostro team tecnico lavora ogni giorno per offrire ai nostri clienti la migliore qualità al miglior prezzo.",
     },
     paragraph4: {
       pt: "Todas as peças de reposição que são vendidas sob nossa marca, HDO TRADE, foram testadas por nossa equipe técnica e por nossos clientes constantemente por muitos anos e também passaram pelo controle de qualidade.",
@@ -64,6 +68,7 @@ export default async function About() {
       en: "All the spare parts that are sold under our brand, HDO TRADE, have been tested by our technical team and by our constantly customers for many years and also passed quality control.",
       he: "כל חלקי החילוף הנמכרים תחת המותג שלנו, HDO TRADE, נבדקו במשך שנים רבות על ידי הצוות הטכני שלנו ועל ידי לקוחותינו, וגם עברו בקרת איכות.",
       de: "Alle Ersatzteile, die unter unserer Marke HDO TRADE verkauft werden, wurden über viele Jahre von unserem technischen Team und unseren Kunden getestet und haben auch die Qualitätskontrolle bestanden.",
+      it: "Tutti i ricambi venduti sotto il nostro marchio HDO TRADE sono stati testati dal nostro team tecnico e dai nostri clienti costantemente per molti anni e hanno superato il controllo qualità.",
     },
     paragraph5: {
       pt: "Em muitos casos, as peças que vendem sob nossa marca própria HDO TRADE são fabricadas na mesma fábrica que as peças originais e a única diferença entre as peças é a marca e o saco (se houver).",
@@ -72,6 +77,7 @@ export default async function About() {
       en: "In many cases the parts that sell under our home brand HDO TRADE are manufactured in the same factory as the original parts and the only difference between the parts is the brand and the bag (if any).",
       he: "במקרים רבים, החלקים הנמכרים תחת המותג הפרטי שלנו HDO TRADE מיוצרים באותו מפעל כמו החלקים המקוריים, וההבדל היחיד ביניהם הוא המותג והאריזה, אם קיימת.",
       de: "In vielen Fällen werden die Teile, die unter unserer Eigenmarke HDO TRADE verkauft werden, in derselben Fabrik wie die Originalteile hergestellt, und der einzige Unterschied zwischen den Teilen ist die Marke und die Verpackung (falls vorhanden).",
+      it: "In molti casi i pezzi venduti sotto il nostro marchio HDO TRADE sono fabbricati nella stessa fabbrica delle parti originali e l'unica differenza è il marchio e la confezione (se presente).",
     },
     paragraph6: {
       pt: "Portanto, se você tiver dificuldade em encontrar as peças de que precisa, não hesite em entrar em contato conosco sobre seu requisito para saber se as peças de reposição sob nossa marca HDO TRADE estão disponíveis.",
@@ -80,6 +86,7 @@ export default async function About() {
       en: "Therefore, if you face difficulty finding the parts you need, do not hesitate to contact us about your requirement to know if replacement parts under our brand HDO TRADE are available.",
       he: "לכן, אם אתה מתקשה למצוא את החלקים הדרושים לך, אל תהסס ליצור איתנו קשר כדי לבדוק אם חלקי חילוף תחת המותג HDO TRADE זמינים עבורך.",
       de: "Wenn Sie daher Schwierigkeiten haben, die benötigten Teile zu finden, zögern Sie nicht, uns bezüglich Ihrer Anforderung zu kontaktieren, um zu erfahren, ob Ersatzteile unter unserer Marke HDO TRADE verfügbar sind.",
+      it: "Pertanto, se hai difficoltà a trovare le parti di cui hai bisogno, non esitare a contattarci per sapere se i ricambi sotto il nostro marchio HDO TRADE sono disponibili.",
     },
     brandName: {
       pt: "HDO GLOBAL TRADE",
@@ -88,6 +95,7 @@ export default async function About() {
       en: "HDO GLOBAL TRADE",
       he: "HDO GLOBAL TRADE",
       de: "HDO GLOBAL TRADE",
+      it: "HDO GLOBAL TRADE",
     },
     slogan: {
       pt: "QUALIDADE IGUAL AO MELHOR PREÇO",
@@ -96,6 +104,7 @@ export default async function About() {
       en: "EQUAL QUALITY AT THE BEST PRICE",
       he: "איכות שווה במחיר הטוב ביותר",
       de: "GLEICHE QUALITÄT ZUM BESTEN PREIS",
+      it: "QUALITÀ UGUALE AL MIGLIOR PREZZO",
     },
     whatWeDo: {
       pt: "O Que Fazemos",
@@ -104,6 +113,7 @@ export default async function About() {
       en: "What We Do",
       he: "מה אנחנו עושים",
       de: "Was Wir Tun",
+      it: "Cosa Facciamo",
     },
     whatWeDoParagraph1: {
       pt: "Com o objetivo de sempre agradar o cliente, faremos o melhor esforço para enviar o pedido em todo o mundo, em no máximo 24 horas a partir da confirmação do pedido e pagamento (desde que o produto esteja disponível em estoque).",
@@ -112,6 +122,7 @@ export default async function About() {
       en: "With the goal of always pleasing the customer, we will make the best effort to ship the order around the world, in a maximum time of 24 hours from the moment of the order confirmation and payment (as long as the product is available in stock).",
       he: "במטרה להעניק ללקוח את השירות הטוב ביותר, נעשה כל מאמץ לשלוח הזמנות לכל העולם בתוך עד 24 שעות מאישור ההזמנה והתשלום, כל עוד המוצר זמין במלאי.",
       de: "Mit dem Ziel, den Kunden stets zufriedenzustellen, werden wir unser Bestes tun, um die Bestellung weltweit innerhalb von maximal 24 Stunden nach Auftragsbestätigung und Zahlung zu versenden (sofern das Produkt vorrätig ist).",
+      it: "Con l'obiettivo di soddisfare sempre il cliente, faremo del nostro meglio per spedire l'ordine in tutto il mondo, entro un massimo di 24 ore dalla conferma dell'ordine e dal pagamento (purché il prodotto sia disponibile a magazzino).",
     },
     whatWeDoParagraph2: {
       pt: "Trabalhamos com as melhores empresas de courier na Europa para garantir que o produto chegue até você com segurança e no menor tempo possível.",
@@ -120,6 +131,7 @@ export default async function About() {
       en: "We work with the best couriers companies in Europe to ensure that the product reaches you safely and in the shortest time that possible.",
       he: "אנו עובדים עם חברות השילוח הטובות ביותר באירופה כדי להבטיח שהמוצר יגיע אליך בבטחה ובזמן הקצר ביותר האפשרי.",
       de: "Wir arbeiten mit den besten Kurierdiensten in Europa zusammen, um sicherzustellen, dass das Produkt sicher und so schnell wie möglich bei Ihnen ankommt.",
+      it: "Lavoriamo con le migliori società di corrieri in Europa per garantire che il prodotto ti arrivi in sicurezza e nel minor tempo possibile.",
     },
     whatWeDoParagraph3: {
       pt: "Nosso departamento de importação e compras está à sua disposição a qualquer momento e fará todo o esforço para ajudá-lo a encontrar o produto de que precisa, mesmo que esteja procurando um produto que não existe em nosso site.",
@@ -128,6 +140,7 @@ export default async function About() {
       en: "Our import and purchasing department are at your disposal anytime and will do all the effort to help you to find the product you need, even if you are looking for a product that does not exist on our site, just",
       he: "מחלקת היבוא והרכש שלנו זמינה עבורך בכל עת ותעשה כל מאמץ לעזור לך למצוא את המוצר שאתה צריך, גם אם אתה מחפש מוצר שאינו מופיע באתר שלנו.",
       de: "Unsere Import- und Einkaufsabteilung steht Ihnen jederzeit zur Verfügung und wird alles daran setzen, Ihnen bei der Suche nach dem benötigten Produkt zu helfen, auch wenn es nicht auf unserer Website vorhanden ist.",
+      it: "Il nostro dipartimento di importazione e acquisti è a tua disposizione in qualsiasi momento e farà del suo meglio per aiutarti a trovare il prodotto di cui hai bisogno, anche se stai cercando un prodotto che non esiste sul nostro sito.",
     },
     whatWeDoParagraph4: {
       pt: "Nosso atendimento ao cliente está sempre à sua disposição para qualquer dúvida e nosso serviço WhatsApp está disponível 24/7 para todos os nossos clientes para suporte técnico e para pedidos urgentes.",
@@ -136,6 +149,7 @@ export default async function About() {
       en: "Our customer service is always at your disposal for any question and you can Our WhatsApp service is available 24/7 for all our customers for technical support and for urgent orders.",
       he: "שירות הלקוחות שלנו תמיד עומד לרשותך לכל שאלה, ושירות ה-WhatsApp שלנו זמין 24/7 לכל לקוחותינו עבור תמיכה טכנית והזמנות דחופות.",
       de: "Unser Kundenservice steht Ihnen jederzeit für Fragen zur Verfügung, und unser WhatsApp-Service ist 24/7 für alle unsere Kunden für technischen Support und dringende Bestellungen verfügbar.",
+      it: "Il nostro servizio clienti è sempre a tua disposizione per qualsiasi domanda e il nostro servizio WhatsApp è disponibile 24/7 per tutti i nostri clienti per supporto tecnico e ordini urgenti.",
     },
     ourPopularBrand: {
       pt: "Nossa marca popular",
@@ -144,6 +158,7 @@ export default async function About() {
       en: "Our popular brand",
       he: "המותג הפופולרי שלנו",
       de: "Unsere beliebte Marke",
+      it: "Il nostro marchio popolare",
     },
   };
 

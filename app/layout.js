@@ -42,7 +42,7 @@ export const viewport = {
 };
 
 export const metadata = {
-  metadataBase: new URL("https://hdotrade.pt"),
+  metadataBase: new URL("https://www.hdotrade.pt"),
   title: {
     default: "HDO Trade | Tested Spare Parts Worldwide",
     template: "%s | HDO Trade",
@@ -58,7 +58,7 @@ export const metadata = {
     "Hobart parts", "Robot Coupe parts", "Vitamix parts",
     "ricambi cucina industriale", "peças de cozinha industrial",
   ],
-  authors: [{ name: "HDO Trade", url: "https://hdotrade.pt" }],
+  authors: [{ name: "HDO Trade", url: "https://www.hdotrade.pt" }],
   creator: "HDO Trade",
   publisher: "HDO Trade",
   category: "ecommerce",
@@ -90,23 +90,23 @@ export const metadata = {
     siteName: "HDO Trade",
     title: "HDO Trade | Tested Spare Parts Worldwide",
     description: "Tested spare parts for commercial kitchen equipment. Fast global shipping.",
-    images: [{ url: "https://hdotrade.pt/client/logo.png", width: 1200, height: 630, alt: "HDO Trade" }],
+    images: [{ url: "https://www.hdotrade.pt/client/logo.png", width: 1200, height: 630, alt: "HDO Trade" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "HDO Trade | Tested Spare Parts Worldwide",
     description: "Tested spare parts for commercial kitchen equipment.",
-    images: ["https://hdotrade.pt/client/logo.png"],
+    images: ["https://www.hdotrade.pt/client/logo.png"],
   },
   alternates: {
-    canonical: "https://hdotrade.pt",
+    canonical: "https://www.hdotrade.pt",
     languages: {
-      "x-default": "https://hdotrade.pt",
-      "en": "https://hdotrade.pt",
+      "x-default": "https://www.hdotrade.pt",
+      "en": "https://www.hdotrade.pt",
       "en-GB": "https://hdotrade.uk",
       "en-US": "https://hdotrade.com",
       "de": "https://hdotrade.de",
-      "pt": "https://hdotrade.pt",
+      "pt": "https://www.hdotrade.pt",
       "es": "https://hdotrade.es",
       "fr": "https://hdotrade.fr",
       "he": "https://hdotrade.co.il",
@@ -128,12 +128,12 @@ export const metadata = {
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "@id": "https://hdotrade.pt/#organization",
+  "@id": "https://www.hdotrade.pt/#organization",
   name: "HDO Trade",
-  url: "https://hdotrade.pt",
+  url: "https://www.hdotrade.pt",
   logo: {
     "@type": "ImageObject",
-    url: "https://hdotrade.pt/client/logo.png",
+    url: "https://www.hdotrade.pt/client/logo.png",
     width: 200,
     height: 200,
   },
@@ -163,16 +163,16 @@ const organizationSchema = {
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": "https://hdotrade.pt/#website",
+  "@id": "https://www.hdotrade.pt/#website",
   name: "HDO Trade",
-  url: "https://hdotrade.pt",
-  publisher: { "@id": "https://hdotrade.pt/#organization" },
+  url: "https://www.hdotrade.pt",
+  publisher: { "@id": "https://www.hdotrade.pt/#organization" },
   inLanguage: ["en", "pt", "de", "es", "fr", "he", "it"],
   potentialAction: {
     "@type": "SearchAction",
     target: {
       "@type": "EntryPoint",
-      urlTemplate: "https://hdotrade.pt/shop?search={search_term_string}",
+      urlTemplate: "https://www.hdotrade.pt/shop?search={search_term_string}",
     },
     "query-input": "required name=search_term_string",
   },

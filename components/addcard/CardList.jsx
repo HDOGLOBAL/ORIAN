@@ -22,6 +22,7 @@ const CardList = ({ products, trackingId, currency: currencyProp, rates = { usd:
       es: "Carrito de Compras",
       he: "עגלת קניות",
       de: "Warenkorb",
+      it: "Carrello",
     },
     subTotal: {
       en: "Sub-Total",
@@ -30,6 +31,7 @@ const CardList = ({ products, trackingId, currency: currencyProp, rates = { usd:
       es: "Subtotal",
       he: "סכום ביניים",
       de: "Zwischensumme",
+      it: "Subtotale",
     },
     items: {
       en: "items",
@@ -38,6 +40,7 @@ const CardList = ({ products, trackingId, currency: currencyProp, rates = { usd:
       es: "artículos",
       he: "פריטים",
       de: "Artikel",
+      it: "articoli",
     },
     checkout: {
       en: "Checkout",
@@ -46,6 +49,7 @@ const CardList = ({ products, trackingId, currency: currencyProp, rates = { usd:
       es: "Proceder al Pago",
       he: "לתשלום",
       de: "Zur Kasse",
+      it: "Cassa",
     },
   };
 

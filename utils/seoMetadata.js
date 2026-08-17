@@ -39,7 +39,7 @@ export function getDomainFromHost(hostname = "") {
   if (host.includes(".eu"))     return "https://hdotrade.eu";
   // if (host.includes(".com.au")) return "https://hdotrade.au";
   if (host.includes(".com"))    return "https://hdotrade.com";
-  return "https://hdotrade.pt";
+  return "https://www.hdotrade.pt";
 }
 
 const seoMetadata = {
@@ -239,7 +239,7 @@ export function getSeoMetadata(pageKey, lang = DEFAULT_LANG, currentDomain = "ht
   };
 }
 
-export function getLocalizedProductSeo(product, lang = DEFAULT_LANG, currentDomain = "https://hdotrade.pt") {
+export function getLocalizedProductSeo(product, lang = DEFAULT_LANG, currentDomain = "https://www.hdotrade.pt") {
   const titleMap = {
     en: product?.name,
     pt: product?.namePt,

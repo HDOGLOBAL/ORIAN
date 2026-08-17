@@ -37,6 +37,7 @@ export default async function ContactPage() {
       en: "If you need help, don't hesitate to contact our support team!",
       he: "אם אתה זקוק לעזרה, אל תהסס לפנות לצוות התמיכה שלנו!",
       de: "Wenn Sie Hilfe benötigen, zögern Sie nicht, unser Support-Team zu kontaktieren!",
+      it: "Se hai bisogno di aiuto, non esitare a contattare il nostro team di supporto!",
     },
     number: {
       pt: "Número",
@@ -45,6 +46,7 @@ export default async function ContactPage() {
       en: "Number",
       he: "מספר",
       de: "Nummer",
+      it: "Numero",
     },
     whatsapp: {
       pt: "WhatsApp",
@@ -53,6 +55,7 @@ export default async function ContactPage() {
       en: "WhatsApp",
       he: "וואטסאפ",
       de: "WhatsApp",
+      it: "WhatsApp",
     },
     officeNumber: {
       pt: "Número da escritório",
@@ -61,6 +64,7 @@ export default async function ContactPage() {
       en: "Office number",
       he: "מספר משרד",
       de: "Büronummer",
+      it: "Numero ufficio",
     },
     mobileOffice: {
       pt: "Telemóvel escritório",
@@ -69,6 +73,7 @@ export default async function ContactPage() {
       en: "Mob office",
       he: "טלפון נייד של המשרד",
       de: "Büro-Mobiltelefon",
+      it: "Cellulare ufficio",
     },
     emailUs: {
       pt: "Envie-nos um Email",
@@ -77,6 +82,7 @@ export default async function ContactPage() {
       en: "Email Us",
       he: "שלחו לנו אימייל",
       de: "E-Mail senden",
+      it: "Inviaci una Email",
     },
     importDepartment: {
       pt: "Departamento de Importação",
@@ -85,6 +91,7 @@ export default async function ContactPage() {
       en: "Import Department",
       he: "מחלקת יבוא",
       de: "Importabteilung",
+      it: "Dipartimento Importazioni",
     },
     salesDepartmentGlobal: {
       pt: "Departamento de Vendas Global",
@@ -93,6 +100,7 @@ export default async function ContactPage() {
       en: "Sales Department Global",
       he: "מחלקת מכירות גלובלית",
       de: "Globale Vertriebsabteilung",
+      it: "Dipartimento Vendite Global",
     },
     salesDepartmentEurope: {
       pt: "Departamento de Vendas Europa",
@@ -101,6 +109,7 @@ export default async function ContactPage() {
       en: "Sales Department Europ",
       he: "מחלקת מכירות אירופה",
       de: "Vertriebsabteilung Europa",
+      it: "Dipartimento Vendite Europa",
     },
     accountancyDepartmentGlobal: {
       pt: "Departamento de Contabilidade Global",
@@ -109,6 +118,7 @@ export default async function ContactPage() {
       en: "Accountancy Department Global",
       he: "מחלקת הנהלת חשבונות גלובלית",
       de: "Globale Buchhaltungsabteilung",
+      it: "Dipartimento Contabilità Global",
     },
     accountancyDepartmentEurope: {
       pt: "Departamento de Contabilidade Europa",
@@ -117,6 +127,7 @@ export default async function ContactPage() {
       en: "Accountancy Department Europ",
       he: "מחלקת הנהלת חשבונות אירופה",
       de: "Buchhaltungsabteilung Europa",
+      it: "Dipartimento Contabilità Europa",
     },
     officesWarehouse: {
       pt: "Escritórios, armazém, loja física",
@@ -125,6 +136,7 @@ export default async function ContactPage() {
       en: "Offices, warehouse, physical store",
       he: "משרדים, מחסן, חנות פיזית",
       de: "Büros, Lager, Ladengeschäft",
+      it: "Uffici, magazzino, negozio fisico",
     },
     officeHours: {
       pt: "Horário de Atendimento",
@@ -133,6 +145,7 @@ export default async function ContactPage() {
       en: "Office Hours",
       he: "שעות פעילות",
       de: "Öffnungszeiten",
+      it: "Orari di Apertura",
     },
     mondayFriday: {
       pt: "Segunda - Sexta 9h - 18h",
@@ -141,6 +154,7 @@ export default async function ContactPage() {
       en: "Monday - Friday 9 AM - 6 PM",
       he: "יום שני - יום שישי 9:00 - 18:00",
       de: "Montag - Freitag 9:00 - 18:00 Uhr",
+      it: "Lunedì - Venerdì 9:00 - 18:00",
     },
     addressLine1: {
       pt: "Quinta das rosas lote 3 RC Esq 6200-551 Covilha Portugal",

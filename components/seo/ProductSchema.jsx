@@ -2,7 +2,7 @@
 // Google uses this to show price, stock, rating in search results
 // Includes BreadcrumbList for rich snippets and dynamic domain for canonical correctness
 
-export default function ProductSchema({ product, currency, lang = "en", domain = "https://hdotrade.pt" }) {
+export default function ProductSchema({ product, currency, lang = "en", domain = "https://www.hdotrade.pt" }) {
   if (!product) return null;
 
   const price =

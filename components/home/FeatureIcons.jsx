@@ -40,6 +40,12 @@ const FEATURES_MAP = {
     { title: "Vertrauensmarken", desc: "Wir arbeiten mit führenden Herstellern" },
     { title: "Kundensupport", desc: "Unser Team hilft Ihnen, das richtige Teil zu finden" },
   ],
+  it: [
+    { title: "Spedizione Mondiale", desc: "Consegna rapida in tutto il mondo" },
+    { title: "Alta Qualità", desc: "Ricambi originali e di alta qualità" },
+    { title: "Marchi Affidabili", desc: "Lavoriamo con i principali produttori" },
+    { title: "Assistenza Clienti", desc: "Il nostro team è qui per aiutarti a trovare il pezzo giusto" },
+  ],
 };
 
 const ICONS = [FaGlobe, FaShieldAlt, FaMedal, FaHeadset];

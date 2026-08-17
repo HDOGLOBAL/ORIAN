@@ -50,13 +50,13 @@ export async function generateMetadata(props) {
       type: "website",
       siteName: "HDO Trade",
       url: canonical,
-      images: [{ url: "https://hdotrade.pt/client/logo.png", width: 1200, height: 630, alt: "HDO Trade" }],
+      images: [{ url: "https://www.hdotrade.pt/client/logo.png", width: 1200, height: 630, alt: "HDO Trade" }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: ["https://hdotrade.pt/client/logo.png"],
+      images: ["https://www.hdotrade.pt/client/logo.png"],
     },
     alternates: {
       canonical,

@@ -32,6 +32,7 @@ export default function Footer() {
       en: "Find Product",
       he: "מצא מוצר",
       de: "Produkt finden",
+      it: "Trova Prodotto",
     },
     getHelp: {
       pt: "Obter Ajuda",
@@ -40,6 +41,7 @@ export default function Footer() {
       en: "Get help",
       he: "קבל עזרה",
       de: "Hilfe erhalten",
+      it: "Chiedi Aiuto",
     },
     aboutUs: {
       pt: "Sobre N׳s",
@@ -48,6 +50,7 @@ export default function Footer() {
       en: "About us",
       he: "אודותינו",
       de: "Über uns",
+      it: "Chi Siamo",
     },
     privacyPolicy: {
       pt: "Política de Privacidade",
@@ -56,6 +59,7 @@ export default function Footer() {
       en: "Privacy Policy",
       he: "מדיניות פרטיות",
       de: "Datenschutzrichtlinie",
+      it: "Privacy Policy",
     },
     refundsReturns: {
       pt: "Reembolsos e Devoluções",
@@ -64,6 +68,7 @@ export default function Footer() {
       en: "Refunds & Returns",
       he: "החזרות והחלפות",
       de: "Rückerstattungen & Rücksendungen",
+      it: "Rimborsi e Resi",
     },
     termsConditions: {
       pt: "Termos e Condições",
@@ -72,6 +77,7 @@ export default function Footer() {
       en: "Terms Conditions",
       he: "תנאים והגבלות",
       de: "AGB",
+      it: "Termini e Condizioni",
     },
     onlineComplaintsBook: {
       pt: "Livro de Reclamações Online",
@@ -80,6 +86,7 @@ export default function Footer() {
       en: "Online Complaints Book",
       he: "ספר תלונות מקוון",
       de: "Online-Beschwerdeformular",
+      it: "Libro dei Reclami Online",
     },
     followUs: {
       pt: "Siga-nos",
@@ -88,6 +95,7 @@ export default function Footer() {
       en: "Follow us",
       he: "עקב אחרינו",
       de: "Folgen Sie uns",
+      it: "Seguici",
     },
     copyright: {
       pt: "Direitos de autor © {company} {year}",
@@ -96,6 +104,7 @@ export default function Footer() {
       en: "Copyright © {company} {year}",
       he: "זכויות יוצרים © {company} {year}",
       de: "Urheberrecht © {company} {year}",
+      it: "Diritti d'autore © {company} {year}",
     },
     weAccept: {
       pt: "Aceitamos",
@@ -104,6 +113,7 @@ export default function Footer() {
       en: "We accept",
       he: "אנו מקבלים",
       de: "Wir akzeptieren",
+      it: "Accettiamo",
     },
     worldwideShipping: {
       pt: "Envio Mundial",
@@ -112,6 +122,7 @@ export default function Footer() {
       en: "Worldwide Shipping",
       he: "משלוח בינלאומי",
       de: "Weltweiter Versand",
+      it: "Spedizione Mondiale",
     },
     visa: {
       pt: "Visa",
