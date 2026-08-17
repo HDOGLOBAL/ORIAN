@@ -150,6 +150,8 @@ import Rating from "../shop/Rating";
 import AddCard from "../shop/AddCard";
 
 export default function Detail({ product, userId, lan, currency, rates = { usd: 1.08, gbp: 0.86 } }) {
+  const isOutOfStock = !product?.quantity || product?.quantity <= 0;
+
   return (
     <>
       <div className="container grid grid-cols-2 gap-6">
@@ -228,8 +230,8 @@ export default function Detail({ product, userId, lan, currency, rates = { usd: 
             <h3 className="text-sm text-gray-800 uppercase mb-1">
               {lan?.quantity}
             </h3>
-            <div className="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
-              <QuantityAdjuster />
+            <div className={`flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max ${isOutOfStock ? "opacity-50 pointer-events-none" : ""}`}>
+              <QuantityAdjuster maxQuantity={product?.quantity} disabled={isOutOfStock} />
             </div>
           </div>
 
@@ -240,6 +242,7 @@ export default function Detail({ product, userId, lan, currency, rates = { usd: 
               quantity={product?.quantity}
               productId={product?.id}
               detail={true}
+              disabled={isOutOfStock}
             />
             <Addwish
               lan={lan?.wish}

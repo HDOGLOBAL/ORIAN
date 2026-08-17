@@ -186,9 +186,14 @@ export default function List({ product, user, trackingId, currency: currencyProp
               {getText("inStock")} ({product.quantity})
             </span>
           ) : (
-            <span className="text-red-600"> {getText("outOfStock")}</span>
+            <span className="text-red-600 font-semibold"> {getText("outOfStock")}</span>
           )}
         </p>
+        {product.quantity <= 0 && (
+          <p className="text-red-500 text-xs mt-1">
+            {getText("noMoreAvailable")}
+          </p>
+        )}
       </div>
       {/* Price */}
       <div className="text-primary text-lg font-semibold">
@@ -207,7 +212,7 @@ export default function List({ product, user, trackingId, currency: currencyProp
         <button
           className="px-3 py-1 bg-gray-200 rounded text-gray-700 hover:bg-gray-300 disabled:opacity-50"
           onClick={handleIncrease}
-          disabled={isUpdating || product.quantity <= 0}
+          disabled={isUpdating || product.quantity <= 0 || quantity >= product.quantity}
         >
           +
         </button>

@@ -2,11 +2,13 @@
 
 import React, { useState } from "react";
 
-export default function QuantityAdjuster() {
+export default function QuantityAdjuster({ maxQuantity = Infinity, disabled = false }) {
   const [quantity, setQuantity] = useState(1);
 
   const increaseQuantity = () => {
-    setQuantity(quantity + 1);
+    if (quantity < maxQuantity) {
+      setQuantity(quantity + 1);
+    }
   };
 
   const decreaseQuantity = () => {
@@ -18,8 +20,8 @@ export default function QuantityAdjuster() {
   return (
     <>
       <div
-        onClick={decreaseQuantity}
-        className="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none"
+        onClick={disabled ? undefined : decreaseQuantity}
+        className={`h-8 w-8 text-xl flex items-center justify-center select-none ${disabled ? "text-gray-400 cursor-not-allowed" : "cursor-pointer"}`}
       >
         -
       </div>
@@ -27,8 +29,8 @@ export default function QuantityAdjuster() {
         {quantity}
       </div>
       <div
-        onClick={increaseQuantity}
-        className="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none"
+        onClick={disabled ? undefined : increaseQuantity}
+        className={`h-8 w-8 text-xl flex items-center justify-center select-none ${disabled ? "text-gray-400 cursor-not-allowed" : quantity >= maxQuantity ? "text-gray-400 cursor-not-allowed" : "cursor-pointer"}`}
       >
         +
       </div>

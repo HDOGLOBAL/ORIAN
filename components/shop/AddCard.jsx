@@ -116,12 +116,12 @@ export default function AddCard({
     },
 
     outOfStock: {
-      pt: "Desculpe! Este produto está fora de estoque",
-      fr: "Désolé! Ce produit est en rupture de stock",
-      es: "¡Lo siento! Este producto está agotado",
-      en: "Sorry! This product is out of stock",
-      he: "מצטערים! מוצר זה אזל מהמלאי",
-      de: "Entschuldigung! Dieses Produkt ist nicht auf Lager",
+      pt: "Fora de Estoque",
+      fr: "Rupture de stock",
+      es: "Agotado",
+      en: "Out of Stock",
+      he: "אזל מהמלאי",
+      de: "Nicht auf Lager",
     },
     addedToCart: {
       pt: "Adicionado ao carrinho",
@@ -154,19 +154,13 @@ export default function AddCard({
     return textMap[key][uiLang] || textMap[key].en;
   };
 
+  const isOutOfStock = disabled || !quantities || quantities <= 0;
+
   const handleClick = async () => {
-    if (disabled || isLoading) return;
+    if (isOutOfStock || isLoading) return;
 
     try {
       setIsLoading(true);
-
-      // Prevent adding if out of stock
-      if (!quantities || quantities <= 0) {
-        toast.error(getText("outOfStock"), {
-          position: "bottom-right",
-        });
-        return;
-      }
 
       // Ensure trackingId exists
       let trackingId = Cookies.get("trackingId");
@@ -209,14 +203,17 @@ export default function AddCard({
     "rounded-full py-3 font-bold text-[16px] cursor-pointer transition duration-300 flex items-center justify-center";
 
   // Classes for single product style
-  const singleProductClasses = "border border-red-600 hover:bg-red-50";
+  const singleProductClasses = isOutOfStock
+    ? "border border-gray-400 bg-gray-100 text-gray-500 cursor-not-allowed"
+    : "border border-red-600 hover:bg-red-50";
 
   // Classes for regular style
-  const regularClasses =
-    "text-white bg-red-600 hover:bg-red-700 hover:shadow-md px-6";
+  const regularClasses = isOutOfStock
+    ? "text-white bg-gray-400 cursor-not-allowed"
+    : "text-white bg-red-600 hover:bg-red-700 hover:shadow-md px-6";
 
   // Disabled state classes
-  const disabledClasses = "opacity-50 cursor-not-allowed";
+  const disabledClasses = isOutOfStock ? "" : isLoading ? "opacity-50 cursor-not-allowed" : "";
 
   // Combine classes based on props
   const buttonClasses = `
@@ -229,11 +226,13 @@ export default function AddCard({
   return (
     <button
       onClick={handleClick}
-      disabled={disabled || isLoading}
+      disabled={isOutOfStock || isLoading}
       className={buttonClasses}
-      aria-label={getText("addToCart")}
+      aria-label={isOutOfStock ? getText("outOfStock") : getText("addToCart")}
     >
-      {isLoading ? (
+      {isOutOfStock ? (
+        getText("outOfStock")
+      ) : isLoading ? (
         <>
           <FaSpinner className="animate-spin mr-2" />
           {singleProduct ? "" : getText("addToCart")}

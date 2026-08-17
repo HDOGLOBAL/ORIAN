@@ -148,6 +148,8 @@ export default function ProductCard({
   const lang = useDomain();
   const uiLang = getUiLanguage(lang);
 
+  const isOutOfStock = !product?.quantity || product?.quantity <= 0;
+
   const textMap = {
     viewDetails: {
       en: "View Details",
@@ -156,6 +158,14 @@ export default function ProductCard({
       es: "Ver Detalles",
       he: "צפה בפרטים",
       de: "Details anzeigen",
+    },
+    outOfStock: {
+      en: "Out of Stock",
+      pt: "Fora de Estoque",
+      fr: "Rupture de stock",
+      es: "Agotado",
+      he: "אזל מהמלאי",
+      de: "Nicht auf Lager",
     },
   };
 
@@ -186,8 +196,16 @@ export default function ProductCard({
       <Link href={`/shop/${product?.id}`} className="absolute inset-0 z-[1]" />
 
       {!relatedProduct && (
-        <div className="absolute top-7 z-10 left-3 flex items-center text-green-600 font-semibold">
-          {product?.quantity > 0 && <InStock />}
+        <div className="absolute top-7 z-10 left-3 flex items-center">
+          {isOutOfStock ? (
+            <span className="text-red-600 font-bold text-xs bg-white/90 px-2 py-1 rounded">
+              {getText("outOfStock")}
+            </span>
+          ) : (
+            <span className="text-green-600 font-semibold">
+              <InStock />
+            </span>
+          )}
         </div>
       )}
       <div className="flex flex-col h-full">
@@ -226,7 +244,7 @@ export default function ProductCard({
                 {getText("viewDetails")}
               </Link>
             </button>
-            <AddCard quantities={product?.quantity} productId={product?.id} />
+            <AddCard quantities={product?.quantity} productId={product?.id} disabled={isOutOfStock} />
           </div>
         </div>
       </div>
