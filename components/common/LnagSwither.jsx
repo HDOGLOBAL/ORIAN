@@ -57,7 +57,7 @@ export default function LanguageSwitcher() {
       countryCode: "PT",
       language: "Português -  € EUR",
       title: "PT",
-      link: "https://hdotrade.pt/",
+      link: "https://www.hdotrade.pt/",
       domainMatch: ".pt",
     },
     {

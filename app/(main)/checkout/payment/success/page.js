@@ -1,8 +1,19 @@
 import { clearGuestCart, StripeFun, markOrderAsPaid } from "@/database/queries";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
+import { getLanguageFromHost } from "@/utils/seoMetadata";
 import ClearCookie from "./ClearCookie";
+
+const successTexts = {
+  en: { paymentSucceeded: "Payment Succeeded", paymentFailed: "Payment Failed", paymentProcessing: "Payment Processing", confirmed: "Your order has been confirmed. Thank you!", failed: "Your payment was not completed. Please try again.", processing: "Your payment is being processed. We'll update you shortly.", details: "Payment Details", reference: "Reference", status: "Status", amount: "Amount", tryAgain: "Try Again", returnHome: "Return Home", goHome: "Go Home", somethingWrong: "Something went wrong" },
+  pt: { paymentSucceeded: "Pagamento Bem-Sucedido", paymentFailed: "Pagamento Falhou", paymentProcessing: "Processamento de Pagamento", confirmed: "O seu pedido foi confirmado. Obrigado!", failed: "O seu pagamento não foi concluído. Por favor, tente novamente.", processing: "O seu pagamento está a ser processado. Atualizaremos brevemente.", details: "Detalhes do Pagamento", reference: "Referência", status: "Estado", amount: "Montante", tryAgain: "Tentar Novamente", returnHome: "Voltar ao Início", goHome: "Ir para o Início", somethingWrong: "Algo correu mal" },
+  fr: { paymentSucceeded: "Paiement Réussi", paymentFailed: "Paiement Échoué", paymentProcessing: "Traitement du Paiement", confirmed: "Votre commande a été confirmée. Merci!", failed: "Votre paiement n'a pas été complété. Veuillez réessayer.", processing: "Votre paiement est en cours de traitement. Nous vous tiendrons informé.", details: "Détails du Paiement", reference: "Référence", status: "Statut", amount: "Montant", tryAgain: "Réessayer", returnHome: "Retour à l'Accueil", goHome: "Retourner à l'Accueil", somethingWrong: "Une erreur s'est produite" },
+  es: { paymentSucceeded: "Pago Exitoso", paymentFailed: "Pago Fallido", paymentProcessing: "Procesamiento de Pago", confirmed: "Su pedido ha sido confirmado. ¡Gracias!", failed: "Su pago no se completó. Por favor, inténtelo de nuevo.", processing: "Su pago está siendo procesado. Le informaremos pronto.", details: "Detalles del Pago", reference: "Referencia", status: "Estado", amount: "Monto", tryAgain: "Intentar de Nuevo", returnHome: "Volver al Inicio", goHome: "Ir al Inicio", somethingWrong: "Algo salió mal" },
+  he: { paymentSucceeded: "התשלום הצליח", paymentFailed: "התשלום נכשל", paymentProcessing: "מעבד תשלום", confirmed: "ההזמנה שלך אושרה. תודה!", failed: "התשלום שלך לא הושלם. אנא נסה שוב.", processing: "התשלום שלך במעבד. נעדכן אותך בקרוב.", details: "פרטי תשלום", reference: "מספר הזמנה", status: "סטטוס", amount: "סכום", tryAgain: "נסה שוב", returnHome: "חזרה לדף הבית", goHome: "חזרה לדף הבית", somethingWrong: "משהו השתבש" },
+  de: { paymentSucceeded: "Zahlung Erfolgreich", paymentFailed: "Zahlung Fehlgeschlagen", paymentProcessing: "Zahlungsverarbeitung", confirmed: "Ihre Bestellung wurde bestätigt. Vielen Dank!", failed: "Ihre Zahlung wurde nicht abgeschlossen. Bitte versuchen Sie es erneut.", processing: "Ihre Zahlung wird bearbeitet. Wir aktualisieren Sie in Kürze.", details: "Zahlungsdetails", reference: "Referenz", status: "Status", amount: "Betrag", tryAgain: "Erneut versuchen", returnHome: "Zurück zur Startseite", goHome: "Zur Startseite", somethingWrong: "Etwas ist schiefgelaufen" },
+  it: { paymentSucceeded: "Pagamento Riuscito", paymentFailed: "Pagamento Fallito", paymentProcessing: "Elaborazione Pagamento", confirmed: "Il tuo ordine è stata confermata. Grazie!", failed: "Il tuo pagamento non è stato completato. Riprova.", processing: "Il tuo pagamento è in elaborazione. Ti aggiorneremo a breve.", details: "Dettagli Pagamento", reference: "Riferimento", status: "Stato", amount: "Importo", tryAgain: "Riprova", returnHome: "Torna alla Home", goHome: "Vai alla Home", somethingWrong: "Qualcosa è andato storto" },
+};
 
 export const metadata = {
   robots: { index: false, follow: false },
@@ -13,6 +24,11 @@ export default async function SuccessPage({ searchParams }) {
   const { session_id: sessionId, payment_intent: paymentIntentId } = params;
 
   if (!sessionId && !paymentIntentId) redirect("/");
+
+  const headersList = await headers();
+  const host = headersList.get("host") || "";
+  const lang = getLanguageFromHost(host);
+  const t = successTexts[lang] || successTexts.en;
 
   let stripe;
   try {
@@ -96,34 +112,34 @@ export default async function SuccessPage({ searchParams }) {
             )}
           </div>
           <h2 className={`text-2xl font-bold mb-2 ${isSuccess ? "text-green-800" : isFailed ? "text-red-800" : "text-blue-800"}`}>
-            {isSuccess ? "Payment Succeeded" : isFailed ? "Payment Failed" : "Payment Processing"}
+            {isSuccess ? t.paymentSucceeded : isFailed ? t.paymentFailed : t.paymentProcessing}
           </h2>
           <p className="text-gray-600">
             {isSuccess
-              ? "Your order has been confirmed. Thank you!"
+              ? t.confirmed
               : isFailed
-                ? "Your payment was not completed. Please try again."
-                : "Your payment is being processed. We'll update you shortly."}
+                ? t.failed
+                : t.processing}
           </p>
         </div>
 
         <div className="p-6">
           <div className="mb-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Payment Details</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">{t.details}</h3>
             <div className="border rounded-lg overflow-hidden">
               <table className="min-w-full divide-y divide-gray-200">
                 <tbody className="bg-white divide-y divide-gray-200">
                   <tr>
-                    <td className="px-4 py-3 text-sm font-medium text-gray-500 w-24">Reference</td>
+                    <td className="px-4 py-3 text-sm font-medium text-gray-500 w-24">{t.reference}</td>
                     <td className="px-4 py-3 text-sm text-gray-900 font-mono break-all">{displayId}</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-3 text-sm font-medium text-gray-500">Status</td>
+                    <td className="px-4 py-3 text-sm font-medium text-gray-500">{t.status}</td>
                     <td className="px-4 py-3 text-sm text-gray-900 capitalize">{status.replace(/_/g, " ")}</td>
                   </tr>
                   {amount > 0 && (
                     <tr>
-                      <td className="px-4 py-3 text-sm font-medium text-gray-500">Amount</td>
+                      <td className="px-4 py-3 text-sm font-medium text-gray-500">{t.amount}</td>
                       <td className="px-4 py-3 text-sm text-gray-900">
                         {(amount / 100).toLocaleString("en-US", {
                           style: "currency",
@@ -143,14 +159,14 @@ export default async function SuccessPage({ searchParams }) {
                 href="/checkout"
                 className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 transition-colors"
               >
-                Try Again
+                {t.tryAgain}
               </Link>
             )}
             <Link
               href="/"
               className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
             >
-              Return Home
+              {t.returnHome}
             </Link>
           </div>
         </div>

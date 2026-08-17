@@ -29,7 +29,7 @@ export default async function robots() {
       },
     ],
     sitemap: [
-      "https://hdotrade.pt/sitemap.xml",
+      "https://www.hdotrade.pt/sitemap.xml",
       "https://hdotrade.com/sitemap.xml",
       "https://hdotrade.eu/sitemap.xml",
       "https://hdotrade.de/sitemap.xml",

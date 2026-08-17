@@ -21,6 +21,7 @@ export default function Search() {
       en: "All",
       he: "הכל",
       de: "Alle",
+      it: "Tutti",
     },
     searchPlaceholder: {
       pt: "Pesquisar um produto...",
@@ -29,6 +30,7 @@ export default function Search() {
       en: "Search a product ...",
       he: "חפש מוצר...",
       de: "Produkt suchen...",
+      it: "Cerca un prodotto...",
     },
   };
 

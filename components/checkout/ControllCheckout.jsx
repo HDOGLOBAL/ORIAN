@@ -54,6 +54,7 @@ export default function CheckoutPage({
       es: "Nombre",
       he: "שם פרטי",
       de: "Vorname",
+      it: "Nome",
     },
     lastName: {
       en: "Last Name",
@@ -62,6 +63,7 @@ export default function CheckoutPage({
       es: "Apellido",
       he: "שם משפחה",
       de: "Nachname",
+      it: "Cognome",
     },
     emailAddress: {
       en: "Email Address",
@@ -70,6 +72,7 @@ export default function CheckoutPage({
       es: "Dirección de Email",
       he: "כתובת אימייל",
       de: "E-Mail-Adresse",
+      it: "Indirizzo Email",
     },
     streetAddress: {
       en: "Street Address",
@@ -78,6 +81,7 @@ export default function CheckoutPage({
       es: "Dirección",
       he: "כתובת רחוב",
       de: "Straßenadresse",
+      it: "Indirizzo",
     },
     countryState: {
       en: "Country/State",
@@ -86,6 +90,7 @@ export default function CheckoutPage({
       es: "País/Estado",
       he: "מדינה/אזור",
       de: "Land/Bundesland",
+      it: "Paese/Provincia",
     },
     city: {
       en: "City",
@@ -94,6 +99,7 @@ export default function CheckoutPage({
       es: "Ciudad",
       he: "עיר",
       de: "Stadt",
+      it: "Città",
     },
     zipPostal: {
       en: "Zip/Postal Code",
@@ -102,6 +108,7 @@ export default function CheckoutPage({
       es: "Código Postal",
       he: "מיקוד",
       de: "Postleitzahl",
+      it: "CAP/Codice Postale",
     },
     phoneNumber: {
       en: "Phone number",
@@ -110,6 +117,7 @@ export default function CheckoutPage({
       es: "Número de Teléfono",
       he: "מספר טלפון",
       de: "Telefonnummer",
+      it: "Numero di telefono",
     },
 
     // Section titles
@@ -120,6 +128,7 @@ export default function CheckoutPage({
       es: "Dirección de Facturación / Envío",
       he: "כתובת חיוב / משלוח",
       de: "Rechnungs-/Lieferadresse",
+      it: "Indirizzo di Fatturazione / Spedizione",
     },
     euVat: {
       en: "EU VAT Validation",
@@ -128,6 +137,7 @@ export default function CheckoutPage({
       es: "Validación de IVA de la UE",
       he: "אימות מע\"מ אירופאי",
       de: "EU-MwSt.-Validierung",
+      it: "Validazione IVA UE",
     },
     orderReview: {
       en: "Order Review",
@@ -136,6 +146,7 @@ export default function CheckoutPage({
       es: "Revisión del Pedido",
       he: "סקירת הזמנה",
       de: "Bestellübersicht",
+      it: "Riepilogo Ordine",
     },
     discountCodes: {
       en: "Discount Codes",
@@ -144,6 +155,7 @@ export default function CheckoutPage({
       es: "Códigos de Descuento",
       he: "קודי הנחה",
       de: "Rabattcodes",
+      it: "Codici Sconto",
     },
     billingSummary: {
       en: "Billing Summary",
@@ -152,6 +164,7 @@ export default function CheckoutPage({
       es: "Resumen de Facturación",
       he: "סיכום חיוב",
       de: "Rechnungsübersicht",
+      it: "Riepilogo Fatturazione",
     },
 
     // Placeholders
@@ -162,6 +175,7 @@ export default function CheckoutPage({
       es: "Ingrese el número de IVA de la UE (ej: ES123456789)",
       he: "הזן מספר מע\"מ אירופאי (לדוג' DE123456789)",
       de: "EU-MwSt.-Nummer eingeben (z.B. DE123456789)",
+      it: "Inserire il numero IVA UE (es. IT12345678901)",
     },
     couponPlaceholder: {
       en: "Enter your coupon code",
@@ -170,6 +184,7 @@ export default function CheckoutPage({
       es: "Ingrese su código de cupón",
       he: "הזן את קוד הקופון שלך",
       de: "Gutscheincode eingeben",
+      it: "Inserisci il codice coupon",
     },
     orderCommentPlaceholder: {
       en: "Order Comment",
@@ -178,6 +193,7 @@ export default function CheckoutPage({
       es: "Comentario del Pedido",
       he: "הערת הזמנה",
       de: "Bestellkommentar",
+      it: "Commento all'Ordine",
     },
     selectCountry: {
       en: "-- Select Country/State --",
@@ -186,6 +202,7 @@ export default function CheckoutPage({
       es: "-- Seleccionar País/Estado --",
       he: "-- בחר מדינה/אזור --",
       de: "-- Land/Bundesland wählen --",
+      it: "-- Seleziona Paese/Provincia --",
     },
 
     // Buttons
@@ -196,6 +213,7 @@ export default function CheckoutPage({
       es: "Validar IVA",
       he: "אמת מע\"מ",
       de: "MwSt. validieren",
+      it: "Valida IVA",
     },
     validating: {
       en: "Validating...",
@@ -204,6 +222,7 @@ export default function CheckoutPage({
       es: "Validando...",
       he: "מאמת...",
       de: "Validierung...",
+      it: "Validazione...",
     },
     apply: {
       en: "Apply",
@@ -212,6 +231,7 @@ export default function CheckoutPage({
       es: "Aplicar",
       he: "החל",
       de: "Anwenden",
+      it: "Applica",
     },
     remove: {
       en: "Remove",
@@ -220,6 +240,7 @@ export default function CheckoutPage({
       es: "Eliminar",
       he: "הסר",
       de: "Entfernen",
+      it: "Rimuovi",
     },
     checkout: {
       en: "Checkout",
@@ -228,6 +249,7 @@ export default function CheckoutPage({
       es: "Proceder al Pago",
       he: "לתשלום",
       de: "Zur Kasse",
+      it: "Cassa",
     },
     processing: {
       en: "Processing...",
@@ -236,6 +258,7 @@ export default function CheckoutPage({
       es: "Procesando...",
       he: "מעבד...",
       de: "Verarbeitung...",
+      it: "Elaborazione...",
     },
 
     // Messages
@@ -246,6 +269,7 @@ export default function CheckoutPage({
       es: "✓ Número IVA registrado - IVA aún aplica (los clientes portugueses siempre pagan IVA)",
       he: "✓ מספר מע\"מ נרשם - מע\"מ עדיין חל (לקוחות פורטוגל תמיד משלמים מע\"מ)",
       de: "✓ USt-IdNr. erfasst - MwSt. gilt weiterhin (portugiesische Kunden zahlen immer MwSt.)",
+      it: "✓ Numero IVA registrato - IVA ancora applicabile (i clienti portoghesi pagano sempre l'IVA)",
     },
     vatValid: {
       en: "✓ Valid EU VAT Number - Tax Free",
@@ -254,6 +278,7 @@ export default function CheckoutPage({
       es: "✓ Número de IVA de la UE válido - Libre de impuestos",
       he: "✓ מספר מע\"מ אירופאי תקין - פטור ממס",
       de: "✓ Gültige EU-MwSt.-Nummer - Steuerfrei",
+      it: "✓ Numero IVA UE valido - Esente da tasse",
     },
     vatInvalid: {
       en: "✗ Invalid VAT Number - 23% Tax Applies",
@@ -262,6 +287,7 @@ export default function CheckoutPage({
       es: "✗ Número de IVA inválido - Se aplica 23% de impuesto",
       he: "✗ מספר מע\"מ לא תקין - 23% מס",
       de: "✗ Ungültige MwSt.-Nummer - 23% Steuer fällig",
+      it: "✗ Numero IVA non valido - Si applica il 23% di tasse",
     },
     vatError: {
       en: "Error checking VAT number",
@@ -270,6 +296,7 @@ export default function CheckoutPage({
       es: "Error al verificar el número de IVA",
       he: "שגיאה בבדיקת מספר מע\"מ",
       de: "Fehler bei der MwSt.-Nummernprüfung",
+      it: "Errore durante la verifica del numero IVA",
     },
     vatShort: {
       en: "Enter VAT number starting with country code (e.g. DE123456789)",
@@ -278,6 +305,7 @@ export default function CheckoutPage({
       es: "Ingrese el número de IVA comenzando con el código del país (ej: ES123456789)",
       he: "הזן מספר מע\"מ עם קוד מדינה (לדוג' DE123456789)",
       de: "MwSt.-Nummer mit Ländercode eingeben (z.B. DE123456789)",
+      it: "Inserire il numero IVA con il codice paese (es. IT12345678901)",
     },
     couponApplied: {
       en: "Coupon Applied: ",
@@ -286,6 +314,7 @@ export default function CheckoutPage({
       es: "Cupón Aplicado: ",
       he: "קופון הוחל: ",
       de: "Gutschein angewendet: ",
+      it: "Coupon applicato: ",
     },
     discount: {
       en: " discount",
@@ -294,6 +323,7 @@ export default function CheckoutPage({
       es: " descuento",
       he: " הנחה",
       de: " Rabatt",
+      it: " sconto",
     },
 
     enterCoupon: {
@@ -303,6 +333,7 @@ export default function CheckoutPage({
       es: "Por favor, ingrese un código de cupón",
       he: "נא להזין קוד קופון",
       de: "Bitte Gutscheincode eingeben",
+      it: "Inserisci un codice coupon",
     },
     invalidCoupon: {
       en: "Invalid or expired coupon code",
@@ -311,6 +342,7 @@ export default function CheckoutPage({
       es: "Código de cupón inválido o expirado",
       he: "קוד קופון לא תקין או פג תוקף",
       de: "Ungültiger oder abgelaufener Gutscheincode",
+      it: "Codice coupon non valido o scaduto",
     },
     sameAddress: {
       en: "My billing and shipping address are the same",
@@ -319,6 +351,7 @@ export default function CheckoutPage({
       es: "Mi dirección de facturación y envío son las mismas",
       he: "כתובת החיוב והמשלוח שלי זהות",
       de: "Meine Rechnungs- und Lieferadresse sind identisch",
+      it: "Il mio indirizzo di fatturazione e spedizione sono gli stessi",
     },
     agreeTerms: {
       en: "Please check to acknowledge our",
@@ -327,6 +360,7 @@ export default function CheckoutPage({
       es: "Por favor, marque para aceptar nuestros",
       he: "סמן כדי לאשר את",
       de: "Bitte bestätigen Sie unsere",
+      it: "Si prega di confermare le nostre",
     },
     privacyTerms: {
       en: "Privacy & Terms Policy",
@@ -335,6 +369,7 @@ export default function CheckoutPage({
       es: "Política de Privacidad y Términos",
       he: "מדיניות הפרטיות ותנאי השימוש",
       de: "Datenschutz- & Nutzungsbedingungen",
+      it: "Privacy e Termini di Servizio",
     },
 
     // Validation errors
@@ -345,6 +380,7 @@ export default function CheckoutPage({
       es: "El nombre es obligatorio",
       he: "שם פרטי הוא שדה חובה",
       de: "Vorname ist erforderlich",
+      it: "Il nome è obbligatorio",
     },
     lastNameRequired: {
       en: "Last name is required",
@@ -353,6 +389,7 @@ export default function CheckoutPage({
       es: "El apellido es obligatorio",
       he: "שם משפחה הוא שדה חובה",
       de: "Nachname ist erforderlich",
+      it: "Il cognome è obbligatorio",
     },
     emailRequired: {
       en: "Email is required",
@@ -361,6 +398,7 @@ export default function CheckoutPage({
       es: "El email es obligatorio",
       he: "אימייל הוא שדה חובה",
       de: "E-Mail ist erforderlich",
+      it: "L'email è obbligatoria",
     },
     invalidEmail: {
       en: "Invalid email format",
@@ -369,6 +407,7 @@ export default function CheckoutPage({
       es: "Formato de email inválido",
       he: "פורמט אימייל לא תקין",
       de: "Ungültiges E-Mail-Format",
+      it: "Formato email non valido",
     },
     addressRequired: {
       en: "Address is required",
@@ -377,6 +416,7 @@ export default function CheckoutPage({
       es: "La dirección es obligatoria",
       he: "כתובת היא שדה חובה",
       de: "Adresse ist erforderlich",
+      it: "L'indirizzo è obbligatorio",
     },
     cityRequired: {
       en: "City is required",
@@ -385,6 +425,7 @@ export default function CheckoutPage({
       es: "La ciudad es obligatoria",
       he: "עיר היא שדה חובה",
       de: "Stadt ist erforderlich",
+      it: "La città è obbligatoria",
     },
     zipRequired: {
       en: "ZIP code is required",
@@ -393,6 +434,7 @@ export default function CheckoutPage({
       es: "El código postal es obligatorio",
       he: "מיקוד הוא שדה חובה",
       de: "Postleitzahl ist erforderlich",
+      it: "Il CAP è obbligatorio",
     },
     phoneRequired: {
       en: "Phone is required",
@@ -401,6 +443,7 @@ export default function CheckoutPage({
       es: "El teléfono es obligatorio",
       he: "טלפון הוא שדה חובה",
       de: "Telefon ist erforderlich",
+      it: "Il telefono è obbligatorio",
     },
     agreeTermsRequired: {
       en: "You must agree to the terms",
@@ -409,6 +452,7 @@ export default function CheckoutPage({
       es: "Debe aceptar los términos",
       he: "עליך להסכים לתנאים",
       de: "Sie müssen den Bedingungen zustimmen",
+      it: "Devi accettare i termini",
     },
 
     // Order summary
@@ -419,6 +463,7 @@ export default function CheckoutPage({
       es: "Subtotal",
       he: "סכום ביניים",
       de: "Zwischensumme",
+      it: "Subtotale",
     },
 
     shipping: {
@@ -428,6 +473,7 @@ export default function CheckoutPage({
       es: "Envío",
       he: "משלוח",
       de: "Versand",
+      it: "Spedizione",
     },
     tax: {
       en: "Tax",
@@ -436,6 +482,7 @@ export default function CheckoutPage({
       es: "Impuesto",
       he: "מס",
       de: "Steuer",
+      it: "Tasse",
     },
     grandTotal: {
       en: "Grand Total",
@@ -444,6 +491,7 @@ export default function CheckoutPage({
       es: "Total",
       he: "סה\"כ",
       de: "Gesamtbetrag",
+      it: "Totale Generale",
     },
     qty: {
       en: "Qty",
@@ -452,6 +500,7 @@ export default function CheckoutPage({
       es: "Cant",
       he: "כמות",
       de: "Menge",
+      it: "Qtà",
     },
   };
 

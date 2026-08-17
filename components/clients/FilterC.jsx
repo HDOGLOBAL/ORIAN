@@ -37,6 +37,7 @@ export default function FilterCWrapper() {
       en: "SELECT MANUFACTURER",
       he: "בחר יצרן",
       de: "HERSTELLER WÄHLEN",
+      it: "SELEZIONA PRODUTTORE",
     },
     selectCategory: {
       pt: "SELECIONE CATEGORIA",
@@ -45,6 +46,7 @@ export default function FilterCWrapper() {
       en: "SELECT CATEGORY",
       he: "בחר קטגוריה",
       de: "KATEGORIE WÄHLEN",
+      it: "SELEZIONA CATEGORIA",
     },
     selectSubcategory: {
       pt: "SELECIONE SUBCATEGORIA",
@@ -53,6 +55,7 @@ export default function FilterCWrapper() {
       en: "SELECT SUBCATEGORY",
       he: "בחר תת-קטגוריה",
       de: "UNTERKATEGORIE WÄHLEN",
+      it: "SELEZIONA SOTTOCATEGORIA",
     },
     noSubcategory: {
       pt: "SEM SUBCATEGORIA",
@@ -61,6 +64,7 @@ export default function FilterCWrapper() {
       en: "NO SUBCATEGORY",
       he: "אין תת-קטגוריה",
       de: "KEINE UNTERKATEGORIE",
+      it: "NESSUNA SOTTOCATEGORIA",
     },
     selectManufacturerFirst: {
       pt: "SELECIONE UM FABRICANTE PRIMEIRO",
@@ -69,6 +73,7 @@ export default function FilterCWrapper() {
       en: "SELECT MANUFACTURER FIRST",
       he: "בחר יצרן תחילה",
       de: "ERST HERSTELLER WÄHLEN",
+      it: "SELEZIONA PRIMA IL PRODUTTORE",
     },
     selectCategoryFirst: {
       pt: "SELECIONE UMA CATEGORIA PRIMEIRO",
@@ -77,6 +82,7 @@ export default function FilterCWrapper() {
       en: "SELECT CATEGORY FIRST",
       he: "בחר קטגוריה תחילה",
       de: "ERST KATEGORIE WÄHLEN",
+      it: "SELEZIONA PRIMA LA CATEGORIA",
     },
     search: {
       pt: "Pesquisar",
@@ -85,6 +91,7 @@ export default function FilterCWrapper() {
       en: "Search",
       he: "חיפוש",
       de: "Suchen",
+      it: "Cerca",
     },
   };
 
@@ -103,6 +110,7 @@ export default function FilterCWrapper() {
       es: obj.nameEs,
       he: obj.nameHe,
       de: obj.nameDe,
+      it: obj.nameIt,
       en: obj.name,
     };
 

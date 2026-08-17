@@ -16,6 +16,7 @@ const NoProduct = () => {
       es: "No se Encontraron Productos",
       he: "לא נמצאו מוצרים",
       de: "Keine Produkte gefunden",
+      it: "Nessun Prodotto Trovato",
     },
     message: {
       en: "Try changing your search criteria",
@@ -24,6 +25,7 @@ const NoProduct = () => {
       es: "Intente cambiar sus criterios de búsqueda",
       he: "נסה לשנות את קריטריוני החיפוש",
       de: "Versuchen Sie, Ihre Suchkriterien zu ändern",
+      it: "Prova a modificare i tuoi criteri di ricerca",
     },
   };
 

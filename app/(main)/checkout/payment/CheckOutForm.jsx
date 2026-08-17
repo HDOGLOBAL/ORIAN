@@ -32,6 +32,8 @@ function PaymentForm({ totals }) {
       fr: "Finaliser le Paiement",
       es: "Completar Pago",
       he: "השלם תשלום",
+      de: "Zahlung abschließen",
+      it: "Completa Pagamento",
     },
     total: {
       en: "Total:",
@@ -39,6 +41,8 @@ function PaymentForm({ totals }) {
       fr: "Total:",
       es: "Total:",
       he: "סה\"כ:",
+      de: "Gesamt:",
+      it: "Totale:",
     },
     payNow: {
       en: "Pay Now",
@@ -46,6 +50,8 @@ function PaymentForm({ totals }) {
       fr: "Payer Maintenant",
       es: "Pagar Ahora",
       he: "שלם עכשיו",
+      de: "Jetzt bezahlen",
+      it: "Paga Ora",
     },
     processing: {
       en: "Processing...",
@@ -53,6 +59,8 @@ function PaymentForm({ totals }) {
       fr: "Traitement...",
       es: "Procesando...",
       he: "מעבד...",
+      de: "Verarbeitung...",
+      it: "Elaborazione...",
     },
     cardError: {
       en: "An error occurred with your card. Please try again.",
@@ -60,6 +68,8 @@ function PaymentForm({ totals }) {
       fr: "Une erreur est survenue avec votre carte. Veuillez réessayer.",
       es: "Ocurrió un error con su tarjeta. Por favor, inténtelo de nuevo.",
       he: "אירעה שגיאה בכרטיסך. נסה שוב.",
+      de: "Ein Fehler ist mit Ihrer Karte aufgetreten. Bitte versuchen Sie es erneut.",
+      it: "Si è verificato un errore con la tua carta. Riprova.",
     },
     unexpectedError: {
       en: "An unexpected error occurred.",
@@ -67,6 +77,8 @@ function PaymentForm({ totals }) {
       fr: "Une erreur inattendue s'est produite.",
       es: "Ocurrió un error inesperado.",
       he: "אירעה שגיאה בלתי צפויה.",
+      de: "Ein unerwarteter Fehler ist aufgetreten.",
+      it: "Si è verificato un errore imprevisto.",
     },
   };
 

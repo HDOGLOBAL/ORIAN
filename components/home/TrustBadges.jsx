@@ -40,6 +40,12 @@ const BADGES_MAP = {
     { title: "Einfache Rückgabe", desc: "Unkomplizierte Rückgaben" },
     { title: "100% Zufriedenheit", desc: "Wir garantieren Qualität" },
   ],
+  it: [
+    { title: "Pagamento Sicuro", desc: "Checkout 100% sicuro" },
+    { title: "Spedizione Mondiale", desc: "Consegna rapida e affidabile" },
+    { title: "Resi Facili", desc: "Resi senza problemi" },
+    { title: "100% Soddisfazione", desc: "Garantiamo la qualità" },
+  ],
 };
 
 const ICONS = [FaLock, FaGlobe, FaUndo, FaStar];

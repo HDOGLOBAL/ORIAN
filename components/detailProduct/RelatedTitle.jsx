@@ -15,6 +15,7 @@ export default function RelatedTitle() {
     en: "Related Products",
     he: "מוצרים קשורים",
     de: "Verwandte Produkte",
+    it: "Prodotti Correlati",
   };
 
   // Get localized title with fallback to English
