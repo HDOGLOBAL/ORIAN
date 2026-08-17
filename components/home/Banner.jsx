@@ -108,6 +108,7 @@ export default function Banner() {
       en: { line1: "All Types of", line2: "Commercial Faucets" },
       he: { line1: "כל סוגי", line2: "ברזי מסחר" },
       de: { line1: "Alle Arten von", line2: "Gewerblichen Armaturen" },
+      it: { line1: "Tutti i Tipi di", line2: "Rubinetteria Commerciale" },
     },
     sparePartsAccessories: {
       pt: { line1: "TODAS AS PEÇAS SOBRESSELENTES &", line2: "ACESSÓRIOS PARA MISTURADOR DINÂMICO" },
@@ -116,9 +117,10 @@ export default function Banner() {
       en: { line1: "ALL THE SPARE PARTS &", line2: "ACCESSORIES FOR DYNAMIC MIXER" },
       he: { line1: "כל חלקי החילוף והאביזרים", line2: "למיקסר דינמי" },
       de: { line1: "ALLE ERSATZTEILE &", line2: "ZUBEHÖR FÜR DYNAMISCHEN MIXER" },
+      it: { line1: "TUTTI I RICAMBI &", line2: "ACCESSORI PER MIXER DINAMICO" },
     },
-    shopNow: { pt: "Comprar Agora", fr: "Acheter Maintenant", es: "Comprar Ahora", en: "Shop Now", he: "קנה עכשיו", de: "Jetzt kaufen" },
-    viewMore: { pt: "Ver Mais", fr: "Voir Plus", es: "Ver Más", en: "View More", he: "ראה עוד", de: "Mehr anzeigen" },
+    shopNow: { pt: "Comprar Agora", fr: "Acheter Maintenant", es: "Comprar Ahora", en: "Shop Now", he: "קנה עכשיו", de: "Jetzt kaufen", it: "Acquista Ora" },
+    viewMore: { pt: "Ver Mais", fr: "Voir Plus", es: "Ver Más", en: "View More", he: "ראה עוד", de: "Mehr anzeigen", it: "Vedi Altro" },
   };
 
   const getText = (key) => textMap[key][uiLang] || textMap[key].en;

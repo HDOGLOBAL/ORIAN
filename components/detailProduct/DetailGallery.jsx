@@ -1,15 +1,24 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import { useDomain } from "@/providers/useDomain";
+import { getUiLanguage } from "@/utils/uiLanguage";
+
+const noImageText = {
+  en: "No image", pt: "Sem imagem", fr: "Pas d'image", es: "Sin imagen",
+  he: "ללא תמונה", de: "Kein Bild", it: "Nessuna immagine",
+};
 
 export default function DetailGallery({ images = [] }) {
+  const lang = useDomain();
+  const uiLang = getUiLanguage(lang);
   const safeImages = Array.isArray(images) && images.length > 0 ? images : [];
   const [selected, setSelected] = useState(0);
 
   if (safeImages.length === 0) {
     return (
       <div className="w-full aspect-square bg-gray-100 flex items-center justify-center rounded">
-        <span className="text-gray-400 text-sm">No image</span>
+        <span className="text-gray-400 text-sm">{noImageText[uiLang] || noImageText.en}</span>
       </div>
     );
   }

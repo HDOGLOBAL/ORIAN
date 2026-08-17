@@ -175,7 +175,8 @@ export default async function SuccessPage({ searchParams }) {
   );
 }
 
-function ErrorPage({ message }) {
+function ErrorPage({ message, lang = "en" }) {
+  const t = successTexts[lang] || successTexts.en;
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="max-w-md w-full bg-white rounded-xl shadow-md p-8 text-center">
@@ -184,10 +185,10 @@ function ErrorPage({ message }) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M12 3a9 9 0 100 18A9 9 0 0012 3z" />
           </svg>
         </div>
-        <h2 className="text-xl font-bold text-gray-900 mb-2">Something went wrong</h2>
+        <h2 className="text-xl font-bold text-gray-900 mb-2">{t.somethingWrong}</h2>
         <p className="text-gray-600 mb-6">{message}</p>
         <Link href="/" className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-          Go Home
+          {t.returnHome}
         </Link>
       </div>
     </div>
