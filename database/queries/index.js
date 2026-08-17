@@ -2612,6 +2612,7 @@ export async function getPaginatedProducts({
   limit = 10,
   searchQuery = "",
   categoryId = "",
+  stockFilter = "",
   lean = true,
   sort = { createdAt: -1 },
   /** Admin dashboard: list private (isActive: false) products too */
@@ -2665,6 +2666,22 @@ export async function getPaginatedProducts({
           { categoryId: catObjId },
           { categoryIds: catObjId },
         ],
+      };
+    }
+
+    // Filter by stock status
+    if (stockFilter === "outOfStock") {
+      searchConditions = { ...searchConditions, quantity: 0 };
+    } else if (stockFilter === "lowStock") {
+      searchConditions = {
+        ...searchConditions,
+        quantity: { $gt: 0 },
+        $expr: { $lte: ["$quantity", "$minStock"] },
+      };
+    } else if (stockFilter === "inStock") {
+      searchConditions = {
+        ...searchConditions,
+        $expr: { $gt: ["$quantity", "$minStock"] },
       };
     }
 

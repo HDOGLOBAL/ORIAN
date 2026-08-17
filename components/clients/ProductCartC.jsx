@@ -470,6 +470,8 @@ const ProductPage = ({
   const productDescription = descriptionMap[lang] || descriptionMap.en;
   const quantityText = quantityMap[uiLang] || quantityMap.en;
 
+  const isOutOfStock = !product?.quantity || product?.quantity <= 0;
+
   const { fetchCart } = useCart();
   const router = useRouter();
 
@@ -679,7 +681,7 @@ const ProductPage = ({
 
               {/* Stock Status */}
               <p className="flex items-center gap-2 mt-3">
-                {product?.quantity > 0 ? (
+                {!isOutOfStock ? (
                   <>
                     <RiCheckboxCircleLine className="text-3xl text-green-600" />
                     <span className="font-bold text-2xl sm:text-3xl text-green-600">
@@ -810,11 +812,11 @@ const ProductPage = ({
                     currency,
                   )}
                 </p>
-                <div className="flex items-center justify-center border border-gray-400 rounded-2xl px-2 py-1 w-[120px] space-x-2 mb-2">
+                <div className={`flex items-center justify-center border border-gray-400 rounded-2xl px-2 py-1 w-[120px] space-x-2 mb-2 ${isOutOfStock ? "opacity-50 pointer-events-none" : ""}`}>
                   <button
                     onClick={() => handleCountChange("decrement")}
                     className="text-4xl font-bold cursor-pointer text-gray-600"
-                    disabled={count <= 1}
+                    disabled={count <= 1 || isOutOfStock}
                   >
                     −
                   </button>
@@ -822,7 +824,7 @@ const ProductPage = ({
                   <button
                     onClick={() => handleCountChange("increment")}
                     className="text-4xl font-bold cursor-pointer text-gray-600"
-                    disabled={count >= product?.quantity}
+                    disabled={count >= product?.quantity || isOutOfStock}
                   >
                     +
                   </button>
@@ -839,13 +841,14 @@ const ProductPage = ({
                   quantities={product?.quantity}
                   singleProduct={true}
                   className="h-full w-full py-8"
+                  disabled={isOutOfStock}
                 />
                 <button
                   onClick={handleShopNow}
-                  disabled={isLoading}
-                  className="h-full w-full bg-[#e91325] rounded-full text-white font-bold text-2xl sm:text-2xl cursor-pointer hover:bg-[#e64351] transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={isLoading || isOutOfStock}
+                  className={`h-full w-full rounded-full text-white font-bold text-2xl sm:text-2xl transition-colors flex items-center justify-center ${isOutOfStock ? "bg-gray-400 cursor-not-allowed" : "bg-[#e91325] hover:bg-[#e64351] cursor-pointer"}`}
                 >
-                  {getText("shopNow")}
+                  {isOutOfStock ? getText("outOfStock") : getText("shopNow")}
                 </button>
               </div>
             </div>

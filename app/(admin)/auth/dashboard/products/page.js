@@ -444,6 +444,7 @@ function AllProductsInner() {
   });
   const [isSearching, setIsSearching] = useState(false);
   const [searchTimeout, setSearchTimeout] = useState(null);
+  const [stockFilter, setStockFilter] = useState("");
 
   // Track previous searchQuery to skip debounce on mount / StrictMode double-render
   const prevSearchQueryRef = useRef(searchQuery);
@@ -471,7 +472,7 @@ function AllProductsInner() {
         position: "bottom-right",
       });
       // Refresh data but don't reset pagination
-      fetchProducts(currentPage, itemsPerPage, searchQuery);
+      fetchProducts(currentPage, itemsPerPage, searchQuery, stockFilter);
     } catch (err) {
       // Revert optimistic update on error
       fetchProducts(currentPage, itemsPerPage, searchQuery);
@@ -483,29 +484,21 @@ function AllProductsInner() {
   };
 
   // FIXED: Proper offset calculation and removed server page override
-  const fetchProducts = useCallback(async (page, limit, query = "") => {
+  const fetchProducts = useCallback(async (page, limit, query = "", stock = "") => {
     try {
       setIsLoading(true);
       setIsSearching(!!query);
-      // FIXED: Calculate offset correctly for 0-based page
       const offset = page * limit;
-      console.log("CLIENT: Requesting page:", page, "Offset:", offset);
       const result = await getPaginatedProducts({
         offset,
         limit,
         searchQuery: query,
         categoryId,
+        stockFilter: stock,
         includeInactive: true,
       });
-      console.log(
-        "CLIENT: Server returned products:",
-        result.products.length,
-        "Total count:",
-        result.totalCount
-      );
       setProducts(result.products);
       setTotalProducts(result.totalCount);
-      // FIXED: Don't override currentPage from server response
     } catch (err) {
       setError("Failed to load products. Please try again.");
       console.error("Fetch error:", err);
@@ -523,7 +516,7 @@ function AllProductsInner() {
     if (searchTimeout) clearTimeout(searchTimeout);
     const timer = setTimeout(() => {
       setCurrentPage(0);
-      fetchProducts(0, itemsPerPage, searchQuery);
+      fetchProducts(0, itemsPerPage, searchQuery, stockFilter);
     }, 1000);
     setSearchTimeout(timer);
     return () => {
@@ -533,8 +526,8 @@ function AllProductsInner() {
 
   // Fetch products when page changes
   useEffect(() => {
-    fetchProducts(currentPage, itemsPerPage, searchQuery);
-  }, [currentPage, itemsPerPage, fetchProducts]);
+    fetchProducts(currentPage, itemsPerPage, searchQuery, stockFilter);
+  }, [currentPage, itemsPerPage, fetchProducts, stockFilter]);
 
   // Handle page change
   const handlePageChange = ({ selected }) => {
@@ -554,7 +547,7 @@ function AllProductsInner() {
       clearTimeout(searchTimeout);
     }
     setCurrentPage(0);
-    fetchProducts(0, itemsPerPage, searchQuery);
+    fetchProducts(0, itemsPerPage, searchQuery, stockFilter);
   };
 
   // Handle Enter key in search
@@ -646,6 +639,37 @@ function AllProductsInner() {
           <p className="text-sm text-gray-500 mt-2">
             Search by product name, ID or SKU. Results update as you type.
           </p>
+        </div>
+
+        {/* Stock Filter */}
+        <div className="mb-4 flex flex-col sm:flex-row sm:items-center gap-3">
+          <div className="flex items-center gap-2">
+            <label className="text-sm font-medium text-gray-700">Stock:</label>
+            <select
+              value={stockFilter}
+              onChange={(e) => {
+                setStockFilter(e.target.value);
+                setCurrentPage(0);
+              }}
+              className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+            >
+              <option value="">All</option>
+              <option value="outOfStock">Out of Stock</option>
+              <option value="lowStock">Low Stock</option>
+              <option value="inStock">In Stock</option>
+            </select>
+          </div>
+          {stockFilter && (
+            <button
+              onClick={() => {
+                setStockFilter("");
+                setCurrentPage(0);
+              }}
+              className="text-sm text-blue-600 hover:text-blue-800 underline"
+            >
+              Clear filter
+            </button>
+          )}
         </div>
 
         {/* Items per page selector and pagination info */}
@@ -754,17 +778,27 @@ function AllProductsInner() {
                       €{product?.price?.eur || "0.00"}
                     </td>
                     <td className="px-4 py-2 border">
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs ${
-                          product?.quantity > 10
-                            ? "bg-green-100 text-green-800"
-                            : product?.quantity > 0
-                              ? "bg-yellow-100 text-yellow-800"
-                              : "bg-red-100 text-red-800"
+                      <div className="flex flex-col gap-1">
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs font-medium w-fit ${
+                            product?.quantity > 10
+                              ? "bg-green-100 text-green-800"
+                              : product?.quantity > 0
+                                ? "bg-yellow-100 text-yellow-800"
+                                : "bg-red-100 text-red-800"
                           }`}
-                      >
-                        {product?.quantity || 0}
-                      </span>
+                        >
+                          {product?.quantity > 10
+                            ? "In Stock"
+                            : product?.quantity > 0
+                              ? "Low Stock"
+                              : "Out of Stock"}
+                        </span>
+                        <span className="text-xs text-gray-500">
+                          Qty: {product?.quantity || 0}
+                          {product?.minStock ? ` / Min: ${product.minStock}` : ""}
+                        </span>
+                      </div>
                     </td>
                     <td className="hidden lg:table-cell px-4 py-2 border">
                       <span>
