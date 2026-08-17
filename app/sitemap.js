@@ -19,6 +19,8 @@ const staticPages = [
   { path: "/about",            priority: 0.7, freq: "monthly" },
   { path: "/contact",          priority: 0.7, freq: "monthly" },
   { path: "/terms-conditions", priority: 0.5, freq: "yearly"  },
+  { path: "/privacy-policy",   priority: 0.5, freq: "yearly"  },
+  { path: "/refunds-returns",  priority: 0.5, freq: "yearly"  },
 ];
 
 // Static category slugs — always available, no DB needed
