@@ -257,9 +257,9 @@ export default async function About() {
             </div>
           </section>
         </div>
-        <div className="w-full py-[50px] bg-[#e91325]">
-          <section className="w-full  max-w-[1280px] mx-auto bg-[#e91325] px-4 overflow-hidden">
-            <OurBrand title={getText("ourPopularBrand")} color="#FFFFFF" />
+        <div className="w-full py-[50px] bg-[#f9f9f9]">
+          <section className="w-full max-w-[1280px] mx-auto bg-[#f9f9f9] px-4 overflow-hidden">
+            <OurBrand />
           </section>
         </div>
       </div>
