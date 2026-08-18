@@ -44,7 +44,7 @@ export default function Footer() {
       it: "Chiedi Aiuto",
     },
     aboutUs: {
-      pt: "Sobre N׳s",
+      pt: "Sobre Nós",
       fr: "À Propos",
       es: "Sobre Nosotros",
       en: "About us",

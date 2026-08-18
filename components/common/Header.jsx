@@ -32,7 +32,7 @@ export default function Header() {
   const textMap = {
     home: { pt: "Início", fr: "Accueil", es: "Inicio", en: "Home", he: "בית", de: "Startseite", it: "Home" },
     store: { pt: "Loja", fr: "Boutique", es: "Tienda", en: "Store", he: "חנות", de: "Shop", it: "Negozio" },
-    aboutUs: { pt: "Sobre N׳s", fr: "À Propos", es: "Sobre Nosotros", en: "About Us", he: "אודותינו", de: "Über uns", it: "Chi Siamo" },
+    aboutUs: { pt: "Sobre Nós", fr: "À Propos", es: "Sobre Nosotros", en: "About Us", he: "אודותינו", de: "Über uns", it: "Chi Siamo" },
     contactUs: { pt: "Contato", fr: "Contact", es: "Contacto", en: "Contact Us", he: "צור קשר", de: "Kontakt", it: "Contattaci" },
     cart: { pt: "Carrinho", fr: "Panier", es: "Carrito", en: "Cart", he: "עגלת קניות", de: "Warenkorb", it: "Carrello" },
     search: { pt: "Pesquisar", fr: "Rechercher", es: "Buscar", en: "Search", he: "חיפוש", de: "Suchen", it: "Cerca" },
