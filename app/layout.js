@@ -200,6 +200,8 @@ export default async function RootLayout(props) {
         <link rel="preconnect" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="preconnect" href="https://img.hdotrade.com" />
+        <link rel="dns-prefetch" href="https://img.hdotrade.com" />
 
         {/* OG locale is set dynamically per domain */}
         <meta property="og:locale" content={ogLocale} />

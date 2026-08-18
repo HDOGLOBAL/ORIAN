@@ -316,7 +316,7 @@ export function getLocalizedProductSeo(product, lang = DEFAULT_LANG, currentDoma
     openGraph: {
       title: `${title} | HDO Trade`,
       description,
-      type: "article",
+      type: "website",
       siteName: "HDO Trade",
       images: image
         ? [{ url: image, width: 800, height: 800, alt: title }]
