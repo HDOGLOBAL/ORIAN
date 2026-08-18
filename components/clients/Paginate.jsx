@@ -102,6 +102,8 @@
 import ReactPaginate from "react-paginate";
 import ProductCard from "../shop/ProductCard";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useDomain } from "@/providers/useDomain";
+import { getUiLanguage } from "@/utils/uiLanguage";
 
 export default function ClientPaginatedProducts({
   products,
@@ -111,6 +113,45 @@ export default function ClientPaginatedProducts({
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const lang = useDomain();
+  const uiLang = getUiLanguage(lang);
+
+  const textMap = {
+    showing: {
+      en: "Showing",
+      pt: "A mostrar",
+      fr: "Affichage de",
+      es: "Mostrando",
+      de: "Anzeige von",
+      it: "Mostrando",
+    },
+    of: {
+      en: "of",
+      pt: "de",
+      fr: "sur",
+      es: "de",
+      de: "von",
+      it: "di",
+    },
+    products: {
+      en: "products",
+      pt: "produtos",
+      fr: "produits",
+      es: "productos",
+      de: "Produkte",
+      it: "prodotti",
+    },
+    noProducts: {
+      en: "No active products found",
+      pt: "Nenhum produto ativo encontrado",
+      fr: "Aucun produit actif trouvé",
+      es: "No se encontraron productos activos",
+      de: "Keine aktiven Produkte gefunden",
+      it: "Nessun prodotto attivo trovato",
+    },
+  };
+
+  const getText = (key) => textMap[key][uiLang] || textMap[key].en;
 
   if (!paginationData) {
     return (
@@ -153,7 +194,7 @@ export default function ClientPaginatedProducts({
     <div className="col-span-3 max-w-[1280px] w-full mx-auto">
       {/* Results count */}
       <div className="text-sm text-gray-600 mb-4">
-        Showing {activeProducts.length} of {totalCount} products
+        {getText("showing")} {activeProducts.length} {getText("of")} {totalCount} {getText("products")}
       </div>
       {/* Products Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
@@ -169,7 +210,7 @@ export default function ClientPaginatedProducts({
       {/* No products message */}
       {activeProducts.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">No active products found</p>
+          <p className="text-gray-500 text-lg">{getText("noProducts")}</p>
         </div>
       )}
  

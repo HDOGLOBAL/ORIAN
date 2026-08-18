@@ -113,6 +113,7 @@ export default function AddCard({
       en: "Add to Cart",
       he: "הוסף לעגלה",
       de: "Warenkorb",
+      it: "Aggiungi",
     },
 
     outOfStock: {
@@ -122,6 +123,7 @@ export default function AddCard({
       en: "Out of Stock",
       he: "אזל מהמלאי",
       de: "Nicht auf Lager",
+      it: "Esaurito",
     },
     addedToCart: {
       pt: "Adicionado ao carrinho",
@@ -130,6 +132,7 @@ export default function AddCard({
       en: "Added to cart",
       he: "נוסף לעגלה",
       de: "Zum Warenkorb hinzugefügt",
+      it: "Aggiunto al carrello",
     },
     alreadyAdded: {
       pt: "Já adicionado",
@@ -138,6 +141,7 @@ export default function AddCard({
       en: "Already added",
       he: "כבר נוסף",
       de: "Bereits hinzugefügt",
+      it: "Già aggiunto",
     },
     somethingWentWrong: {
       pt: "Algo deu errado.",
@@ -146,6 +150,7 @@ export default function AddCard({
       en: "Something went wrong.",
       he: "משהו השתבש.",
       de: "Etwas ist schiefgelaufen.",
+      it: "Qualcosa è andato storto.",
     },
   };
 
