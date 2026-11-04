@@ -112,7 +112,7 @@ export default function AdminSidebar() {
   // Menu items configuration for better maintainability
   const menuItems = {
     auth: {
-      title: "General Panel",
+      title: "Generals Panel",
       items: [
         {
           href: "/auth/dashboard",
