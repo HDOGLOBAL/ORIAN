@@ -1467,29 +1467,35 @@ export default function AddUpdate({ updateId = false }) {
   };
 
   const uploadImageToImgBB = async (imageFile) => {
+    if (!IMGBB_API_KEY) {
+      throw new Error("Image upload is not configured. Set NEXT_PUBLIC_imageBB_key and rebuild the app.");
+    }
+
     const formData = new FormData();
     formData.append("image", imageFile);
 
+    const response = await fetch(
+      `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+    const responseText = await response.text();
+    let data;
 
     try {
-      const response = await fetch(
-        `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-
-      if (!response.ok) {
-        throw new Error("Image upload failed");
-      }
-      const data = await response.json();
-      return data.data.url;
-    } catch (error) {
-      console.error("Error uploading image to ImgBB:", error);
-      throw error;
+      data = JSON.parse(responseText);
+    } catch {
+      throw new Error(`ImgBB returned an unreadable response (HTTP ${response.status}).`);
     }
+
+    if (!response.ok || data?.success !== true || !data?.data?.url) {
+      const detail = data?.error?.message || data?.message || `HTTP ${response.status}`;
+      throw new Error(`ImgBB upload failed: ${detail}`);
+    }
+
+    return data.data.url;
   };
 
 
@@ -1498,12 +1504,21 @@ export default function AddUpdate({ updateId = false }) {
     setIsSubmitting(true);
     try {
       // Upload any new file-based images to ImgBB
-      const uploadedUrls = await Promise.all(
-        imagePreviews.map(async ({ url, file }) => {
-          if (file) return await uploadImageToImgBB(file);
-          return url; // already a remote URL
-        })
-      );
+      const uploadedUrls = [];
+      for (const [index, { url, file }] of imagePreviews.entries()) {
+        if (!file) {
+          uploadedUrls.push(url);
+          continue;
+        }
+
+        try {
+          uploadedUrls.push(await uploadImageToImgBB(file));
+        } catch (error) {
+          throw new Error(
+            `Could not upload image ${index + 1} (${file.name}): ${error.message}`
+          );
+        }
+      }
 
       const primaryImage = uploadedUrls[0] || form.image || "";
       const eurPrice = form.priceEUR?.toString().trim() || "";
@@ -1552,12 +1567,14 @@ export default function AddUpdate({ updateId = false }) {
             : [],
       };
       let res;
-      if (updateId) {
-        console.log("here is the update data.......", productData);
-        res = await updateProduct(updateId, productData);
-      } else {
-        console.log("here is the data.......", productData);
-        res = await createProduct(productData);
+      try {
+        if (updateId) {
+          res = await updateProduct(updateId, productData);
+        } else {
+          res = await createProduct(productData);
+        }
+      } catch (error) {
+        throw new Error(`Product save failed: ${error.message || "server action error"}`);
       }
       const ok =
         res?.success === true ||
@@ -1627,7 +1644,10 @@ export default function AddUpdate({ updateId = false }) {
         const parts = [res?.message, ...(Array.isArray(res?.errors) ? res.errors : [])].filter(
           Boolean
         );
-        throw new Error(parts.length ? parts.join(" ") : "Error processing product");
+        const status = res?.status ? ` (HTTP ${res.status})` : "";
+        throw new Error(
+          `Product save failed${status}: ${parts.length ? parts.join(" ") : "Error processing product"}`
+        );
       }
     } catch (error) {
       console.error("Error submitting form:", error);
