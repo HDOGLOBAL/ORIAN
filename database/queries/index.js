@@ -2205,8 +2205,8 @@ function sanitizeDescription(value) {
 }
 
 export async function createProduct(data) {
-  await dbConnect();
   try {
+    await dbConnect();
     await requireAdmin();
     const requiredFields = [
       "name",
@@ -2388,9 +2388,8 @@ export async function createProduct(data) {
 }
 
 export async function updateProduct(productId, data) {
-  await dbConnect();
-
   try {
+    await dbConnect();
     await requireAdmin();
     if (!productId) {
       return {
